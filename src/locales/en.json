@@ -1,0 +1,218 @@
+{
+    "hero": {
+        "iam": "i’m",
+        "name": "Kabirou Djantchiemo",
+        "description": "I am Kabirou Djantchiemo, a passionate Web & Mobile Developer with a Professional License in Software Engineering from IAI-TOGO. I specialize in building robust backend systems with Laravel and modern, responsive frontends with React.js.",
+        "cv_button": "View Portfolio"
+    },
+    "titles": {
+        "backend": "Backend Developer",
+        "frontend": "Frontend ",
+        "web_developer": "Web Developer",
+        "mobile_developer": "Mobile Developer",
+        "software_engineer": "Software Engineer"
+    },
+    "navigation": {
+        "home": "Home",
+        "about": "About",
+        "skills": "Skills",
+        "service": "Service",
+        "portfolio": "Portfolio",
+        "experiences": "Experiences",
+        "blog": "Blog",
+        "contact": "Contact",
+        "features": "Features",
+        "clients": "Clients",
+        "pricing": "Pricing"
+    },
+    "pricing": {
+        "subtitle": "PRICING PLAN",
+        "title": "Unleash your Creativity with",
+        "starter": "Starter Page",
+        "standard": "Standard Page",
+        "premium": "Premium Page",
+        "month": "Month",
+        "buy_now": "Buy Now",
+        "features": {
+            "hosting": "Hosting Included",
+            "support": "24/7 Support",
+            "custom": "Custom Domain",
+            "seo": "SEO Optimized"
+        }
+    },
+    "services": {
+        "subtitle": "My Expertise",
+        "title": "What I Do",
+        "web_app": {
+            "title": "Web App Development",
+            "description": "Building high-quality, responsive web applications using React.js and Laravel for diverse clients."
+        },
+        "mobile": {
+            "title": "Mobile Development",
+            "description": "Creating seamless cross-platform mobile experiences with Flutter, focusing on performance."
+        },
+        "consulting": {
+            "title": "Consulting IT & Digital Strategy",
+            "description": "Strategic guidance and technical expertise to transform your ideas into digital solutions."
+        },
+        "automation": {
+            "title": "Task Automation",
+            "description": "Optimization of your business processes through automated tools to increase productivity."
+        }
+    },
+    "portfolio": {
+        "subtitle": "Latest Portfolio",
+        "title_1": "Transforming Ideas",
+        "title_2": "into Exceptional Projects",
+        "description": "A collection of my recent projects, demonstrating my technical skills and dedication to quality.",
+        "projects": {
+            "code_route": {
+                "title": "DriveCert",
+                "description": "Learning Platform",
+                "role": "Full-Stack Developer: Architecting the system, database management, and building the interactive UI.",
+                "content": "A comprehensive interactive platform for learning driving rules. It offers structured theoretical courses, thematic mock exam series, and progress tracking to guide candidates toward exam success.",
+                "impact_title": "Democratizing Access to Driving Licenses",
+                "impact_content": "The goal was to create a modern educational tool allowing everyone to train at their own pace, thereby reducing failure rates and promoting mobility independence for future drivers."
+            },
+            "ticketing": {
+                "title": "Ticketing System",
+                "description": "Internal Management",
+                "role": "Frontend Developer: Firebase integration for real-time updates and development of the ticket management interface.",
+                "content": "Robust web application developed for Cognitive Factory to centralize and efficiently manage internal client requests. It enables real-time tracking of interventions, task assignment, and performance analysis for support teams.",
+                "impact_title": "Increased Operational Efficiency",
+                "impact_content": "The solution helped reduce internal response times and provided total clarity on workflow, transforming administrative management into a smooth and controllable process."
+            },
+            "anb_corporate": {
+                "title": "ANB Corporate",
+                "description": "Showcase Website",
+                "role": "Web Developer at Genuine Service Provider: Creation of the showcase website and integration of performance tracking tools.",
+                "content": "Design and development of a showcase website for ANB Corporate at Genuine Service Provider. This consulting firm uses the platform to present its expertise in business creation and performance monitoring.",
+                "impact_title": "Digital Visibility and Expertise",
+                "impact_content": "The showcase website allows ANB Corporate to establish its online credibility and present its strategic consulting and performance analysis services in a professional and impactful manner."
+            },
+            "ter_maximum": {
+                "title": "TER Maximum Ltd",
+                "description": "Showcase Website",
+                "role": "Web Developer at Genuine Service Provider: Developing the showcase website for brand image management and logistics services.",
+                "content": "Development of a showcase website for TER Maximum Ltd at Genuine Service Provider. The company, a logistics expert in Ghana, uses this tool to present its global freight and import/export solutions.",
+                "impact_title": "International Logistics Reach",
+                "impact_content": "The showcase website simplifies the presentation of complex logistics services, providing a clear digital entry point for international partners and strengthening TER Maximum's market presence."
+            },
+            "aljannah_jet": {
+                "title": "Al Jannah Jet",
+                "description": "Private jet booking plateforme",
+                "role": "Frontend Developer at Genuine Service Provider: Developing an elegant user interface for instant jet bookings.",
+                "content": "Premium interface for Al Jannah Jet, developed at Genuine Service Provider. Offering an exclusive travel experience, it focuses on discretion and instant booking for business clientele.",
+                "impact_title": "Excellence in Travel Services",
+                "impact_content": "The objective was to translate luxury and exclusivity through a fluid digital interface, where every interaction is designed to offer a frictionless experience for the most demanding travelers."
+            },
+            "kapygpt": {
+                "title": "KapyGPT",
+                "description": "KapyGPT is a virtual assistant that uses AI (Artificial Intelligence) to help users solve problems and get answers to their questions.",
+                "role": "AI R&D Contributor: AI tools research (Firecrawl, Crawl4AI), requirement analysis, technical integration, and assistant performance optimization.",
+                "content": "KapyGPT is an innovative intelligent assistant specifically designed to meet African needs and contexts. It helps boost productivity through content generation and solving local problems using advanced AI.",
+                "impact_title": "Empowerment through Artificial Intelligence",
+                "impact_content": "KapyGPT aims to bridge the technological gap by providing a contextualized AI assistant capable of helping African entrepreneurs and creatives meet their daily challenges with cutting-edge tools."
+            }
+        },
+        "features": {
+            "theoretical_courses": "Structured Theoretical Courses",
+            "mock_exams": "Thematic Mock Exams",
+            "progress_tracking": "Personalized Progress Tracking",
+            "real_time_tracking": "Real-time Request Tracking",
+            "task_assignment": "Dynamic Task Assignment",
+            "performance_analytics": "Support Performance Analytics",
+            "account_management": "Multi-currency Account Management",
+            "secure_transfers": "Secure Fund Transfers",
+            "transaction_history": "Full Transactional History",
+            "showcase_platform": "Institutional Showcase Platform",
+            "performance_tracking": "Performance Monitoring Tools",
+            "business_tool": "Tax & Legal Management Optimization",
+            "business_tools": "Tax & Legal Management Optimization",
+            "freight_management": "Maritime & Land Freight Management",
+            "import_export_solutions": "Global Import/Export Solutions",
+            "operational_optimization": "Supply Chain Optimization",
+            "elegant_ui": "Haute Couture User Interface",
+            "instant_booking": "Instant Booking System",
+            "luxury_focus": "Discretion & Absolute Comfort",
+            "ai_tools_research": "AI Tools Research (Firecrawl, etc.)",
+            "technical_integration": "Tools Integration (Crawl4AI)",
+            "performance_optimization": "AI Response Optimization"
+        },
+        "details": {
+            "title": "Project Details",
+            "name": "Name",
+            "author": "Author",
+            "date": "Date",
+            "tags": "Tags",
+            "visit_website": "Visit Website",
+            "my_role": "My Role",
+            "prev": "Prev",
+            "next": "Next",
+            "features_title": "Key Features"
+        }
+    },
+    "resume": {
+        "subtitle": "Experience & Education",
+        "title": "Empowering Creativity through",
+        "education_title": "Education",
+        "experience_title": "Experiences",
+        "description": "Professional and technical experience in web and mobile development.",
+        "education": {
+            "license": {
+                "role": "Professional License in Software Engineering",
+                "duration": "2021 - 2024",
+                "description": "Institut Africain d'Informatique (IAI-TOGO), Lomé, Togo. Focus on Software Engineering and Information Systems."
+            }
+        },
+        "experience": {
+            "genuine": {
+                "title": "Web & Mobile Developer",
+                "years": "2025 - Present",
+                "description": "Contribution to web and mobile projects at Genuine Service Provider (Accra, Ghana). Team collaboration for feature definition using React.js, Laravel, MySQL, and REST APIs."
+            },
+            "medlitebill": {
+                "title": "Web Developer (Remote)",
+                "years": "2023 - Present",
+                "description": "Design and implementation of responsive web apps with React.js for Medlitebill (New York). Laravel back-end integration and international team coordination."
+            },
+            "itplex": {
+                "title": "Developer Intern",
+                "years": "2024",
+                "description": "Developed a certification platform for code examination using React.js and Laravel at ITPLEX-Consult (Lomé, Togo)."
+            },
+            "cognitive": {
+                "title": "Developer Intern",
+                "years": "2023",
+                "description": "Built a ticketing platform using React.js and Firebase at Cognitive Factory (Lomé, Togo), reducing ticket processing time by 50%."
+            }
+        }
+    },
+    "contact": {
+        "subtitle": "GET IN TOUCH",
+        "title": "Elevate your brand with Me",
+        "description": "Feel free to reach out for collaborations or inquiries. I'm always open to discussing new projects.",
+        "name": "Your Name",
+        "email": "Your Email",
+        "subject": "Subject",
+        "message": "Your Message",
+        "button": "Appointment Now",
+        "sending": "Sending..."
+    },
+    "footer": {
+        "get_ready": "Get Ready To Create Great",
+        "quick_link": "Quick Link",
+        "contact": "Contact",
+        "find_me": "Find With Me"
+    },
+    "skills": {
+        "development_title": "Development Skills",
+        "other_title": "Other Skills",
+        "category_all": "All",
+        "category_development": "Development",
+        "category_others": "Others"
+    },
+    "blog": {
+        "title": "Innovating through Knowledge Sharing"
+    }
+}

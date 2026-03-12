@@ -1,0 +1,113 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Project {
+  id              String   @id @default(cuid())
+  title           String
+  slug            String   @unique
+  summaryEn       String?  @map("summary_en")
+  summaryFr       String?  @map("summary_fr")
+  descriptionEn   String?  @map("description_en")
+  descriptionFr   String?  @map("description_fr")
+  imageUrl        String?  @map("image_url")
+  link            String?
+  categories      String[]
+  features        String[]
+  tags            String[]
+  impactTitleEn   String?  @map("impact_title_en")
+  impactTitleFr   String?  @map("impact_title_fr")
+  impactContentEn String?  @map("impact_content_en")
+  impactContentFr String?  @map("impact_content_fr")
+  projectDate     String?  @map("project_date")
+  myRoleEn        String?  @map("my_role_en")
+  myRoleFr        String?  @map("my_role_fr")
+  displayOrder    Int      @default(0) @map("display_order")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  @@map("projects")
+}
+
+model Experience {
+  id            String   @id @default(cuid())
+  titleFr       String   @map("title_fr")
+  titleEn       String   @map("title_en")
+  organization  String
+  duration      String
+  type          ExpType  @default(WORK)
+  descriptionEn String?  @map("description_en")
+  descriptionFr String?  @map("description_fr")
+  displayOrder  Int      @default(0) @map("display_order")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  @@map("experiences")
+}
+
+model Skill {
+  id           String        @id @default(cuid())
+  name         String
+  iconUrl      String?       @map("icon_url")
+  category     SkillCategory @default(DEVELOPMENT)
+  displayOrder Int           @default(0) @map("display_order")
+  createdAt    DateTime      @default(now()) @map("created_at")
+  updatedAt    DateTime      @updatedAt @map("updated_at")
+
+  @@map("skills")
+}
+
+model BlogPost {
+  id           String   @id @default(cuid())
+  titleEn      String   @map("title_en")
+  titleFr      String   @map("title_fr")
+  slug         String   @unique
+  contentEn    String?  @map("content_en")
+  contentFr    String?  @map("content_fr")
+  imageUrl     String?  @map("image_url")
+  author       String?  @default("Admin")
+  date         String?
+  tags         String[]
+  categories   String[]
+  displayOrder Int      @default(0) @map("display_order")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("blog_posts")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String?
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  image     String?
+
+  @@map("users")
+}
+
+model SiteStats {
+  id        String   @id @default("global")
+  visits    Int      @default(0)
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("site_stats")
+}
+
+enum ExpType {
+  WORK
+  EDUCATION
+}
+
+enum SkillCategory {
+  DEVELOPMENT
+  OTHERS
+}

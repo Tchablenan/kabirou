@@ -1,0 +1,220 @@
+{
+    "hero": {
+        "iam": "je suis",
+        "name": "Kabirou Djantchiemo",
+        "description": "Je suis Kabirou Djantchiemo, un développeur Web & Mobile passionné, titulaire d'une licence professionnelle en Génie Logiciel de l'IAI-TOGO. Je me spécialise dans la création de systèmes backend robustes avec Laravel et de frontends modernes et réactifs avec React.js.",
+        "cv_button": "Voir le Portfolio"
+    },
+    "titles": {
+        "backend": "Développeur Backend",
+        "frontend": "FRONTEND",
+        "web_developer": "Développeur Web",
+        "mobile_developer": "Développeur Mobile",
+        "software_engineer": "Ingénieur Logiciel"
+    },
+    "navigation": {
+        "home": "Accueil",
+        "about": "À Propos",
+        "skills": "Compétences",
+        "service": "Service",
+        "portfolio": "Portfolio",
+        "experiences": "Expériences",
+        "blog": "Blog",
+        "contact": "Contact",
+        "features": "Fonctionnalités",
+        "clients": "Clients",
+        "pricing": "Tarifs"
+    },
+    "pricing": {
+        "subtitle": "NOS TARIFS",
+        "title": "Libérez votre Créativité avec",
+        "starter": "Page Starter",
+        "standard": "Page Standard",
+        "premium": "Page Premium",
+        "month": "Mois",
+        "buy_now": "Acheter",
+        "features": {
+            "hosting": "Hébergement inclus",
+            "support": "Support 24/7",
+            "custom": "Domaine personnalisé",
+            "seo": "Optimisé SEO"
+        }
+    },
+    "services": {
+        "subtitle": "Mon Expertise",
+        "title": "Mes Services",
+        "web_app": {
+            "title": "Développement Web App",
+            "description": "Création d'applications web réactives et de haute qualité utilisant React.js et Laravel."
+        },
+        "mobile": {
+            "title": "Développement Mobile",
+            "description": "Création d'expériences mobiles cross-platform avec Flutter, axées sur la performance."
+        },
+        "consulting": {
+            "title": "Consulting IT & Stratégie Digitale",
+            "description": "Accompagnement stratégique et expertise technique pour vos solutions numériques."
+        },
+        "automation": {
+            "title": "Automatisation des tâches",
+            "description": "Optimisation de vos processus métier par des outils automatisés pour gagner en productivité."
+        }
+    },
+    "portfolio": {
+        "subtitle": "Mon Portfolio",
+        "title_1": "Transformer les Idées",
+        "title_2": "en Projets Exceptionnels",
+        "description": "Une collection de mes projets récents, démontrant mes compétences techniques et mon dévouement à la qualité.",
+        "projects": {
+            "code_route": {
+                "title": "DriveCert",
+                "description": "Plateforme d'Apprentissage",
+                "role": "Développeur Full-Stack : Conception de l'architecture, gestion de la base de données et création de l'interface utilisateur interactive.",
+                "content": "Une plateforme interactive complète pour l'apprentissage du code de la route. Elle propose des cours théoriques structurés, des séries d'examens blancs thématiques et un suivi de progression pour accompagner les candidats vers le succès à l'examen.",
+                "impact_title": "Démocratiser l'Accès au Permis",
+                "impact_content": "L'objectif était de créer un outil pédagogique moderne permettant à chacun de s'entraîner à son rythme, réduisant ainsi les échecs et favorisant l'indépendance de mobilité pour les futurs conducteurs."
+            },
+            "ticketing": {
+                "title": "Système de Ticketing",
+                "description": "Gestion Interne",
+                "role": "Développeur Frontend : Intégration de Firebase pour le temps réel et développement de l'interface de gestion des tickets.",
+                "content": "Application web robuste développée pour Cognitive Factory afin de centraliser et gérer efficacement les requêtes clients internes. Elle permet le suivi en temps réel des interventions, l'attribution des tâches et l'analyse de performance des support sails.",
+                "impact_title": "Efficacité Opérationnelle Accrue",
+                "impact_content": "La solution a permis de réduire les délais de réponse internes et d'apporter une clarté totale sur le flux de travail, transformant la gestion administrative en un processus fluide et pilotable."
+            },
+            "anb_corporate": {
+                "title": "ANB Corporate",
+                "description": "Site Web Vitrine",
+                "role": "Développeur Web chez Genuine Service Provider : Création du site vitrine et intégration d'outils de suivi de performance.",
+                "content": "Conception et développement d'un site web vitrine pour ANB Corporate chez Genuine Service Provider. Ce cabinet spécialisé utilise la plateforme pour présenter son expertise en création d'entreprise et pilotage de performance.",
+                "impact_title": "Visibilité et Expertise Digitale",
+                "impact_content": "Le site vitrine permet à ANB Corporate d'asseoir sa crédibilité en ligne et de présenter ses services de conseil stratégique et d'analyse de performance de manière professionnelle et percutante."
+            },
+            "ter_maximum": {
+                "title": "TER Maximum Ltd",
+                "description": "Site Web Vitrine",
+                "role": "Développeur Web chez Genuine Service Provider : Développement du site vitrine pour la gestion de l'image de marque et des services logistiques.",
+                "content": "Développement d'un site web vitrine pour TER Maximum Ltd chez Genuine Service Provider. L'entreprise, experte en logistique au Ghana, utilise cet outil pour présenter ses solutions d'import/export et de gestion du fret mondial.",
+                "impact_title": "Rayonnement Logistique International",
+                "impact_content": "Le site vitrine simplifie la présentation de services logistiques complexes, offrant une porte d'entrée numérique claire pour les partenaires internationaux et renforçant la présence de TER Maximum sur le marché du fret."
+            },
+            "aljannah_jet": {
+                "title": "Al Jannah Jet",
+                "description": "Une plateforme de reservation de jet prive",
+                "role": "Développeur Frontend chez Genuine Service Provider : Développement d'une interface utilisateur élégante pour la réservation instantanée de jets privés.",
+                "content": "Interface premium pour Al Jannah Jet développée chez Genuine Service Provider. Offrant une expérience de voyage exclusive, elle met l'accent sur la discrétion et la réservation instantanée pour une clientèle d'affaires.",
+                "impact_title": "L'Excellence au Service du Voyage",
+                "impact_content": "L'objectif était de retranscrire le luxe et l'exclusivité à travers une interface digitale fluide, où chaque interaction est pensée pour offrir une expérience sans friction aux voyageurs les plus exigeants."
+            },
+            "kapygpt": {
+                "title": "KapyGPT",
+                "description": "Kapygpt est un assistant virtuel qui utilise l'IA (Intelligence Artificielle) pour aider les utilisateurs à résoudre des problèmes et à obtenir des réponses à leurs questions.",
+                "role": "Contributeur R&D IA : Recherche d'outils (Firecrawl, Crawl4AI), analyse des besoins, intégration technique et optimisation des performances de l'assistant.",
+                "content": "KapyGPT est un assistant intelligent innovant conçu spécifiquement pour répondre aux besoins et au contexte africain. Il aide à décupler la productivité par la génération de contenu et la résolution de problèmes locaux grâce à l'IA avancée.",
+                "impact_title": "Autonomisation par l'Intelligence Artificielle",
+                "impact_content": "KapyGPT vise à combler le fossé technologique en fournissant un assistant IA contextualisé, capable d'aider les entrepreneurs et créatifs africains à relever leurs défis quotidiens avec des outils de pointe."
+            }
+        },
+        "features": {
+            "theoretical_courses": "Cours Théoriques Structurés",
+            "mock_exams": "Examens Blancs Thématiques",
+            "progress_tracking": "Suivi de Progression Personnalisé",
+            "real_time_tracking": "Suivi des Requêtes en Temps Réel",
+            "task_assignment": "Attribution Dynamique des Tâches",
+            "performance_analytics": "Analyses de Performance Support",
+            "account_management": "Gestion de Comptes Multi-devises",
+            "secure_transfers": "Transferts de Fonds Sécurisés",
+            "transaction_history": "Historique Transactionnel Complet",
+            "showcase_platform": "Plateforme Vitrine Institutionnelle",
+            "performance_tracking": "Outils de Pilotage de Performance",
+            "business_tool": "Optimisation Gestion Fiscale/Juridique",
+            "business_tools": "Optimisation Gestion Fiscale/Juridique",
+            "freight_management": "Gestion du Fret Maritime et Terrestre",
+            "import_export_solutions": "Solutions Import/Export Mondiales",
+            "operational_optimization": "Optimisation de la Supply Chain",
+            "elegant_ui": "Interface Utilisateur Haute Couture",
+            "instant_booking": "Système de Réservation Instantanée",
+            "luxury_focus": "Discrétion et Confort Absolu",
+            "ai_tools_research": "Recherche d'Outils IA (Firecrawl, etc.)",
+            "technical_integration": "Intégration d'Outils (Crawl4AI)",
+            "performance_optimization": "Optimisation des Réponses de l'IA"
+        },
+        "details": {
+            "title": "Détails du Projet",
+            "name": "Nom",
+            "author": "Auteur",
+            "date": "Date",
+            "tags": "Tags",
+            "back_to_home": "Retour à l'Accueil",
+            "elevate_title": "Élevez votre entreprise avec des solutions informatiques",
+            "features_title": "Caractéristiques Clés",
+            "visit_website": "Visiter le Site",
+            "my_role": "Mon Rôle",
+            "prev": "Précédent",
+            "next": "Suivant"
+        }
+    },
+    "resume": {
+        "subtitle": "Expérience & Formation",
+        "title": "Propulser la Créativité ",
+        "education_title": "Éducation",
+        "experience_title": "Expériences",
+        "description": "Expériences professionnelles et techniques dans le développement de solutions web et mobiles.",
+        "education": {
+            "license": {
+                "role": "Licence Professionnelle en Génie Logiciel",
+                "duration": "2021 - 2024",
+                "description": "Institut Africain d'Informatique (IAI-TOGO), Lomé, Togo. Spécialisation en Génie Logiciel et Systèmes d'Information."
+            }
+        },
+        "experience": {
+            "genuine": {
+                "title": "Développeur Web & Mobile",
+                "years": "2025 - Présent",
+                "description": "Contribution à des projets web et mobiles chez Genuine Service Provider (Accra, Ghana). Collaboration d'équipe pour la définition des fonctionnalités utilisant React.js, Laravel, MySQL et les API REST."
+            },
+            "medlitebill": {
+                "title": "Développeur Web (Remote)",
+                "years": "2023 - Présent",
+                "description": "Conception et mise en œuvre d'applications web responsives avec React.js pour Medlitebill (New York). Intégration back-end Laravel et coordination d'équipe internationale."
+            },
+            "itplex": {
+                "title": "Stagiaire Développeur",
+                "years": "2024",
+                "description": "Développement d'une plateforme de certification pour l'examen de code utilisant React.js et Laravel chez ITPLEX-Consult (Lomé, Togo)."
+            },
+            "cognitive": {
+                "title": "Stagiaire Développeur",
+                "years": "2023",
+                "description": "Construction d'une plateforme de billetterie utilisant React.js et Firebase chez Cognitive Factory (Lomé, Togo), réduisant le temps de traitement des tickets de 50%."
+            }
+        }
+    },
+    "contact": {
+        "subtitle": "CONTACTEZ-MOI",
+        "title": "Élevez votre marque avec Moi",
+        "description": "N'hésitez pas à me contacter pour des collaborations ou des questions. Je suis toujours ouvert à discuter de nouveaux projets.",
+        "name": "Votre Nom",
+        "email": "Votre Email",
+        "subject": "Sujet",
+        "message": "Votre Message",
+        "button": "Prendre RDV",
+        "sending": "Envoi..."
+    },
+    "footer": {
+        "get_ready": "Prêt à créer l'exceptionnel",
+        "quick_link": "Liens Rapides",
+        "contact": "Contact",
+        "find_me": "Me Trouver"
+    },
+    "skills": {
+        "development_title": "Compétences en Développement",
+        "other_title": "Autres Compétences",
+        "category_all": "Tous",
+        "category_development": "Développement",
+        "category_others": "Autres"
+    },
+    "blog": {
+        "title": "Innover par le Partage de Connaissances"
+    }
+}

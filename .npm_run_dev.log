@@ -1,0 +1,448 @@
+
+> migration_temp@0.1.0 dev
+> next dev
+
+▲ Next.js 16.1.6 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.0.114:3000
+- Environments: .env.local, .env
+
+✓ Starting...
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+✓ Ready in 1633ms
+○ Compiling /[locale] ...
+🌐 i18next is maintained with support from Locize — consider powering your project with managed localization (AI, CDN, integrations): https://locize.com 💙
+ GET /fr 200 in 9.4s (compile: 8.9s, proxy.ts: 112ms, render: 475ms)
+ GET /fr/admin/dashboard 200 in 9.3s (compile: 9.1s, proxy.ts: 10ms, render: 208ms)
+ GET /api/auth/session 200 in 2.4s (compile: 2.3s, render: 39ms)
+ GET /api/projects 200 in 3.1s (compile: 704ms, render: 2.4s)
+ GET /api/auth/session 200 in 188ms (compile: 164ms, render: 25ms)
+ GET /api/auth/session 200 in 41ms (compile: 12ms, render: 28ms)
+ GET /api/auth/session 200 in 35ms (compile: 7ms, render: 28ms)
+ GET /api/auth/session 200 in 34ms (compile: 8ms, render: 27ms)
+ GET /api/skills 200 in 2.9s (compile: 11ms, render: 2.9s)
+ GET /api/experiences 200 in 3.9s (compile: 954ms, render: 3.0s)
+ GET /api/skills 200 in 4.0s (compile: 764ms, render: 3.3s)
+ GET /api/projects 200 in 3.0s (compile: 22ms, render: 3.0s)
+ GET /api/experiences 200 in 2.3s (compile: 5ms, render: 2.3s)
+ GET /fr/admin/experiences 200 in 2.5s (compile: 2.5s, proxy.ts: 20ms, render: 29ms)
+ GET /api/experiences 200 in 1375ms (compile: 5ms, render: 1370ms)
+ GET /api/experiences 200 in 1099ms (compile: 7ms, render: 1092ms)
+ GET /api/auth/session 200 in 160ms (compile: 134ms, render: 26ms)
+ GET /api/auth/session 200 in 43ms (compile: 9ms, render: 34ms)
+ GET /api/auth/session 200 in 174ms (compile: 147ms, render: 27ms)
+ GET /api/auth/session 200 in 22ms (compile: 7ms, render: 15ms)
+ GET /api/auth/session 200 in 216ms (compile: 180ms, render: 35ms)
+ GET /api/auth/session 200 in 19ms (compile: 5ms, render: 14ms)
+✓ Compiled in 2.8s
+ GET /fr/project-details/anb-corporate 200 in 2.5s (compile: 2.4s, proxy.ts: 20ms, render: 57ms)
+ GET /fr/project-details/anb-corporate 200 in 311ms (compile: 191ms, proxy.ts: 17ms, render: 102ms)
+✓ Compiled in 945ms
+ GET /api/projects 200 in 1756ms (compile: 16ms, render: 1740ms)
+ GET /api/skills 200 in 1800ms (compile: 5ms, render: 1795ms)
+ GET /api/experiences 200 in 1817ms (compile: 10ms, render: 1806ms)
+ GET /api/projects 200 in 727ms (compile: 9ms, render: 718ms)
+ GET /api/experiences 200 in 705ms (compile: 9ms, render: 696ms)
+ GET /api/skills 200 in 748ms (compile: 19ms, render: 729ms)
+ GET /fr/project-details/al-jannah-jet 200 in 304ms (compile: 188ms, proxy.ts: 12ms, render: 103ms)
+ GET /api/experiences 200 in 963ms (compile: 10ms, render: 953ms)
+ GET /api/skills 200 in 971ms (compile: 8ms, render: 963ms)
+ GET /api/projects 200 in 962ms (compile: 7ms, render: 955ms)
+ GET /api/auth/session 200 in 199ms (compile: 160ms, render: 39ms)
+ GET /api/auth/session 200 in 13ms (compile: 3ms, render: 9ms)
+ GET /api/projects 200 in 849ms (compile: 15ms, render: 835ms)
+ GET /api/skills 200 in 874ms (compile: 8ms, render: 866ms)
+ GET /api/experiences 200 in 897ms (compile: 4ms, render: 893ms)
+○ Compiling /[locale]/admin/experiences/new ...
+ GET /fr/admin/experiences/new 200 in 4.4s (compile: 4.3s, proxy.ts: 13ms, render: 116ms)
+ GET /fr/admin/experiences/new 200 in 725ms (compile: 474ms, proxy.ts: 72ms, render: 179ms)
+ GET /fr/admin/experiences/new 200 in 733ms (compile: 422ms, proxy.ts: 75ms, render: 236ms)
+ GET /fr/admin/experiences/new 200 in 743ms (compile: 348ms, proxy.ts: 81ms, render: 315ms)
+ GET /fr/admin/experiences/new 200 in 728ms (compile: 519ms, proxy.ts: 76ms, render: 134ms)
+ GET /fr/admin/experiences/new 200 in 701ms (compile: 506ms, proxy.ts: 84ms, render: 111ms)
+ GET /fr/admin/experiences/new 200 in 687ms (compile: 515ms, proxy.ts: 82ms, render: 90ms)
+ GET /fr/admin/experiences/new 200 in 672ms (compile: 528ms, proxy.ts: 72ms, render: 71ms)
+ GET /fr/admin/experiences/new 200 in 641ms (compile: 530ms, proxy.ts: 56ms, render: 55ms)
+ GET /api/experiences 200 in 1336ms (compile: 6ms, render: 1330ms)
+ GET /api/experiences 200 in 1024ms (compile: 9ms, render: 1015ms)
+ GET /fr/admin/experiences 200 in 561ms (compile: 205ms, proxy.ts: 16ms, render: 340ms)
+ GET /api/auth/session 200 in 212ms (compile: 167ms, render: 45ms)
+ GET /api/auth/session 200 in 20ms (compile: 6ms, render: 13ms)
+ GET /api/auth/session 200 in 20ms (compile: 5ms, render: 15ms)
+ GET /api/experiences 200 in 1248ms (compile: 2ms, render: 1246ms)
+ GET /api/experiences 200 in 1015ms (compile: 7ms, render: 1009ms)
+ GET /fr/admin/experiences/new 200 in 414ms (compile: 273ms, proxy.ts: 15ms, render: 126ms)
+ GET /fr/admin/login?callbackUrl=%2Ffr%2Fadmin%2Fexperiences 200 in 2.9s (compile: 2.8s, proxy.ts: 11ms, render: 66ms)
+ GET /fr/admin/skills 200 in 2.5s (compile: 2.4s, proxy.ts: 13ms, render: 88ms)
+ GET /api/auth/session 200 in 255ms (compile: 183ms, render: 72ms)
+ GET /api/auth/session 200 in 23ms (compile: 6ms, render: 17ms)
+ GET /api/auth/session 200 in 10ms (compile: 2ms, render: 8ms)
+ GET /api/skills 200 in 1114ms (compile: 5ms, render: 1109ms)
+ GET /api/skills 200 in 878ms (compile: 4ms, render: 875ms)
+ GET /fr/admin/projects 200 in 2.6s (compile: 2.5s, proxy.ts: 17ms, render: 143ms)
+ GET /api/auth/session 200 in 158ms (compile: 142ms, render: 16ms)
+ GET /api/auth/session 200 in 30ms (compile: 6ms, render: 23ms)
+ GET /api/auth/session 200 in 37ms (compile: 7ms, render: 30ms)
+ GET /api/projects 200 in 1259ms (compile: 4ms, render: 1255ms)
+ GET /api/projects 200 in 898ms (compile: 6ms, render: 892ms)
+ GET /fr/admin/projects/new 200 in 2.2s (compile: 2.2s, proxy.ts: 18ms, render: 23ms)
+ GET /fr/admin/projects/new 200 in 276ms (compile: 218ms, proxy.ts: 6ms, render: 53ms)
+ GET /fr/admin/projects/new 200 in 291ms (compile: 236ms, proxy.ts: 5ms, render: 50ms)
+ GET /fr/admin/projects/new 200 in 256ms (compile: 222ms, proxy.ts: 8ms, render: 25ms)
+✓ Compiled in 602ms
+✓ Compiled in 731ms
+✓ Compiled in 940ms
+✓ Compiled in 762ms
+ GET /fr 200 in 780ms (compile: 294ms, proxy.ts: 31ms, render: 454ms)
+ GET /fr/admin/projects/new 200 in 777ms (compile: 646ms, proxy.ts: 33ms, render: 98ms)
+ GET /api/auth/session 200 in 278ms (compile: 235ms, render: 44ms)
+ GET /api/auth/session 200 in 14ms (compile: 3ms, render: 11ms)
+ GET /fr 200 in 224ms (compile: 188ms, proxy.ts: 9ms, render: 26ms)
+ GET /fr 200 in 184ms (compile: 138ms, proxy.ts: 8ms, render: 38ms)
+✓ Compiled in 812ms
+ GET /api/auth/session 200 in 291ms (compile: 262ms, render: 28ms)
+ GET /api/auth/session 200 in 13ms (compile: 2ms, render: 11ms)
+ GET /fr/admin/projects/new 200 in 1078ms (compile: 372ms, proxy.ts: 20ms, render: 686ms)
+ GET /api/auth/session 200 in 259ms (compile: 174ms, render: 86ms)
+ GET /api/auth/session 200 in 51ms (compile: 10ms, render: 41ms)
+ GET /fr/admin/experiences 200 in 496ms (compile: 251ms, proxy.ts: 17ms, render: 228ms)
+ GET /api/auth/session 200 in 131ms (compile: 116ms, render: 15ms)
+ GET /api/auth/session 200 in 21ms (compile: 6ms, render: 15ms)
+ GET /api/experiences 200 in 2.2s (compile: 8ms, render: 2.2s)
+ GET /api/experiences 200 in 704ms (compile: 7ms, render: 697ms)
+ GET /fr/admin/experiences/new 200 in 518ms (compile: 357ms, proxy.ts: 9ms, render: 152ms)
+ GET /fr/admin/experiences/new 200 in 102ms (compile: 28ms, proxy.ts: 21ms, render: 54ms)
+✓ Compiled in 651ms
+ GET /fr/admin/skills 200 in 458ms (compile: 396ms, proxy.ts: 12ms, render: 50ms)
+ GET /api/skills 200 in 1210ms (compile: 4ms, render: 1206ms)
+ GET /api/skills 200 in 877ms (compile: 2ms, render: 875ms)
+ GET /fr/admin/projects 200 in 461ms (compile: 251ms, proxy.ts: 18ms, render: 192ms)
+ GET /api/projects 200 in 822ms (compile: 2ms, render: 820ms)
+ GET /api/projects 200 in 905ms (compile: 7ms, render: 898ms)
+ GET /fr/admin/projects/new 200 in 357ms (compile: 241ms, proxy.ts: 4ms, render: 112ms)
+ GET /api/projects 200 in 693ms (compile: 2ms, render: 691ms)
+ GET /api/projects 200 in 815ms (compile: 6ms, render: 808ms)
+ GET /api/skills 200 in 2.1s (compile: 2ms, render: 2.1s)
+ GET /api/skills 200 in 968ms (compile: 6ms, render: 961ms)
+○ Compiling /[locale]/admin/skills/edit/[id] ...
+ GET /fr/admin/skills/edit/cmmma1te3000axrnvecve8st3 200 in 1594ms (compile: 1524ms, proxy.ts: 6ms, render: 64ms)
+ GET /fr/admin/skills/edit/cmmma1t2s0009xrnv2n1mloq2 200 in 5.5s (compile: 5.4s, proxy.ts: 17ms, render: 65ms)
+ GET /fr/admin/skills/edit/cmmma1t2s0009xrnv2n1mloq2 200 in 225ms (compile: 154ms, proxy.ts: 13ms, render: 59ms)
+ GET /api/skills/cmmma1te3000axrnvecve8st3 404 in 1000ms (compile: 882ms, render: 118ms)
+ GET /api/skills/cmmma1te3000axrnvecve8st3 404 in 99ms (compile: 10ms, render: 89ms)
+ GET /api/skills 200 in 1052ms (compile: 11ms, render: 1041ms)
+ GET /api/skills 200 in 1005ms (compile: 7ms, render: 998ms)
+ GET /fr/admin/skills/edit/cmmma1tk3000bxrnv0rpwzo33 200 in 299ms (compile: 260ms, proxy.ts: 13ms, render: 26ms)
+ GET /api/skills/cmmma1tk3000bxrnv0rpwzo33 404 in 47ms (compile: 7ms, render: 40ms)
+ GET /api/skills/cmmma1tk3000bxrnv0rpwzo33 404 in 43ms (compile: 4ms, render: 39ms)
+ GET /api/skills 200 in 1065ms (compile: 5ms, render: 1061ms)
+ GET /api/skills 200 in 887ms (compile: 10ms, render: 878ms)
+ GET /fr/admin/skills/new 200 in 2.4s (compile: 2.3s, proxy.ts: 12ms, render: 21ms)
+ GET /api/skills 200 in 1245ms (compile: 3ms, render: 1242ms)
+ GET /api/skills 200 in 897ms (compile: 6ms, render: 890ms)
+ GET /fr/admin/skills 200 in 592ms (compile: 159ms, proxy.ts: 7ms, render: 426ms)
+ GET /api/auth/session 200 in 154ms (compile: 141ms, render: 13ms)
+ GET /api/auth/session 200 in 14ms (compile: 3ms, render: 12ms)
+ GET /api/auth/session 200 in 23ms (compile: 5ms, render: 19ms)
+ GET /api/auth/session 200 in 292ms (compile: 275ms, render: 17ms)
+ GET /api/auth/session 200 in 13ms (compile: 3ms, render: 11ms)
+ GET /api/skills 200 in 1363ms (compile: 7ms, render: 1356ms)
+ GET /api/skills 200 in 887ms (compile: 6ms, render: 881ms)
+ GET /api/auth/session 200 in 266ms (compile: 245ms, render: 21ms)
+ GET /api/auth/session 200 in 20ms (compile: 6ms, render: 14ms)
+✓ Compiled in 1204ms
+✓ Compiled in 1402ms
+✓ Compiled in 664ms
+ GET /fr/admin/skills 200 in 296ms (compile: 182ms, proxy.ts: 22ms, render: 92ms)
+ GET /api/auth/session 200 in 159ms (compile: 135ms, render: 23ms)
+ GET /api/auth/session 200 in 16ms (compile: 4ms, render: 12ms)
+ GET /api/auth/session 200 in 30ms (compile: 6ms, render: 24ms)
+ GET /api/skills 200 in 2.4s (compile: 2ms, render: 2.4s)
+ GET /api/skills 200 in 1007ms (compile: 9ms, render: 997ms)
+✓ Compiled in 848ms
+ GET /fr/admin/skills 200 in 637ms (compile: 508ms, proxy.ts: 9ms, render: 120ms)
+ GET /fr 200 in 1061ms (compile: 200ms, proxy.ts: 10ms, render: 851ms)
+ GET /fr/admin/skills 200 in 422ms (compile: 37ms, proxy.ts: 18ms, render: 367ms)
+ GET /fr 200 in 327ms (compile: 264ms, proxy.ts: 13ms, render: 50ms)
+ GET /fr 200 in 331ms (compile: 233ms, proxy.ts: 14ms, render: 83ms)
+ GET /api/auth/session 200 in 161ms (compile: 145ms, render: 16ms)
+ GET /api/auth/session 200 in 37ms (compile: 11ms, render: 26ms)
+ GET /api/auth/session 200 in 15ms (compile: 2ms, render: 12ms)
+ GET /api/skills 200 in 1041ms (compile: 3ms, render: 1038ms)
+ GET /api/skills 200 in 1007ms (compile: 6ms, render: 1001ms)
+✓ Compiled in 1685ms
+✓ Compiled in 46.7s
+ GET /fr 200 in 12.6s (compile: 309ms, proxy.ts: 90ms, render: 12.2s)
+ GET /fr/admin/skills 200 in 12.6s (compile: 936ms, proxy.ts: 37ms, render: 11.7s)
+✓ Finished filesystem cache database compaction in 23.8s
+✓ Finished writing to filesystem cache in 15.6s
+✓ Compiled in 4.7s
+ GET /fr/admin/skills 200 in 806ms (compile: 356ms, proxy.ts: 35ms, render: 415ms)
+ GET /api/auth/session 200 in 154ms (compile: 132ms, render: 22ms)
+ GET /api/skills 200 in 2.2s (compile: 4ms, render: 2.2s)
+ GET /api/skills 200 in 853ms (compile: 5ms, render: 847ms)
+ GET /fr 200 in 419ms (compile: 276ms, proxy.ts: 14ms, render: 129ms)
+ GET /api/auth/session 200 in 227ms (compile: 162ms, render: 65ms)
+ GET /api/auth/session 200 in 259ms (compile: 180ms, render: 79ms)
+ GET /api/auth/session 200 in 26ms (compile: 10ms, render: 16ms)
+ GET /api/skills 200 in 813ms (compile: 12ms, render: 802ms)
+ GET /api/experiences 200 in 1678ms (compile: 20ms, render: 1659ms)
+ GET /api/projects 200 in 1727ms (compile: 28ms, render: 1698ms)
+ GET /api/skills 200 in 691ms (compile: 6ms, render: 684ms)
+ GET /api/projects 200 in 267ms (compile: 13ms, render: 255ms)
+ GET /api/experiences 200 in 292ms (compile: 6ms, render: 287ms)
+ GET /api/auth/session 200 in 127ms (compile: 116ms, render: 10ms)
+✓ Compiled in 965ms
+ GET /fr/admin/skills 200 in 480ms (compile: 407ms, proxy.ts: 18ms, render: 55ms)
+ GET /fr/admin/skills 200 in 234ms (compile: 6ms, proxy.ts: 6ms, render: 223ms)
+ GET /api/auth/session 200 in 186ms (compile: 165ms, render: 20ms)
+ GET /api/auth/session 200 in 186ms (compile: 170ms, render: 16ms)
+ GET /api/skills 200 in 701ms (compile: 6ms, render: 695ms)
+ GET /api/skills 200 in 874ms (compile: 6ms, render: 868ms)
+✓ Compiled in 770ms
+ GET /fr/admin/skills 200 in 504ms (compile: 417ms, proxy.ts: 7ms, render: 80ms)
+ GET /fr/admin/skills 200 in 402ms (compile: 8ms, proxy.ts: 6ms, render: 389ms)
+ GET /api/auth/session 200 in 166ms (compile: 145ms, render: 20ms)
+ GET /api/auth/session 200 in 167ms (compile: 153ms, render: 14ms)
+ GET /api/skills 200 in 1005ms (compile: 3ms, render: 1002ms)
+ GET /api/skills 200 in 1004ms (compile: 8ms, render: 995ms)
+ GET /fr/admin/skills 200 in 293ms (compile: 250ms, proxy.ts: 12ms, render: 30ms)
+ GET /fr/admin/skills 200 in 40ms (compile: 6ms, proxy.ts: 15ms, render: 19ms)
+✓ Compiled in 792ms
+ GET /fr/admin/skills 200 in 567ms (compile: 324ms, proxy.ts: 15ms, render: 229ms)
+ GET /api/auth/session 200 in 232ms (compile: 204ms, render: 29ms)
+ GET /api/auth/session 200 in 233ms (compile: 209ms, render: 23ms)
+ GET /api/skills 500 in 5.0s (compile: 2ms, render: 5.0s)
+ GET /api/skills 200 in 2.2s (compile: 8ms, render: 2.2s)
+⚠ Fast Refresh had to perform a full reload due to a runtime error.
+✓ Compiled in 905ms
+ GET /fr/admin/skills 200 in 422ms (compile: 246ms, proxy.ts: 13ms, render: 162ms)
+ GET /api/auth/session 200 in 200ms (compile: 165ms, render: 35ms)
+ GET /api/skills 200 in 1102ms (compile: 3ms, render: 1098ms)
+ GET /api/skills 200 in 1013ms (compile: 6ms, render: 1007ms)
+ GET /fr/admin/experiences 200 in 418ms (compile: 354ms, proxy.ts: 12ms, render: 51ms)
+ GET /api/experiences 200 in 805ms (compile: 7ms, render: 798ms)
+ GET /api/experiences 200 in 796ms (compile: 6ms, render: 790ms)
+ GET /fr/admin/projects 200 in 561ms (compile: 404ms, proxy.ts: 23ms, render: 134ms)
+ GET /api/projects 200 in 656ms (compile: 3ms, render: 653ms)
+ GET /api/projects 200 in 779ms (compile: 11ms, render: 768ms)
+ GET /fr/admin/skills 200 in 461ms (compile: 424ms, proxy.ts: 12ms, render: 26ms)
+ GET /fr/admin/projects 200 in 1270ms (compile: 1045ms, proxy.ts: 18ms, render: 207ms)
+✓ Compiled in 0ms
+ GET /fr/admin/projects 200 in 323ms (compile: 126ms, proxy.ts: 29ms, render: 168ms)
+ GET /fr/admin/projects 200 in 329ms (compile: 103ms, proxy.ts: 31ms, render: 195ms)
+ GET /fr/admin/projects 200 in 334ms (compile: 70ms, proxy.ts: 34ms, render: 230ms)
+ GET /fr/admin/projects 200 in 295ms (compile: 180ms, proxy.ts: 27ms, render: 87ms)
+ GET /fr/admin/projects 200 in 310ms (compile: 145ms, proxy.ts: 33ms, render: 132ms)
+ GET /fr/admin/projects 200 in 288ms (compile: 218ms, proxy.ts: 26ms, render: 43ms)
+ GET /fr/admin/projects 200 in 650ms (compile: 285ms, proxy.ts: 27ms, render: 338ms)
+ GET /fr/admin/projects 200 in 650ms (compile: 348ms, proxy.ts: 25ms, render: 277ms)
+ GET /fr/admin/projects 200 in 649ms (compile: 400ms, proxy.ts: 23ms, render: 227ms)
+ GET /fr/admin/projects 200 in 649ms (compile: 448ms, proxy.ts: 23ms, render: 178ms)
+ GET /fr/admin/projects 200 in 676ms (compile: 498ms, proxy.ts: 23ms, render: 155ms)
+ GET /fr/admin/projects 200 in 680ms (compile: 549ms, proxy.ts: 23ms, render: 109ms)
+ GET /fr/admin/projects 200 in 202ms (compile: 78ms, proxy.ts: 19ms, render: 106ms)
+ GET /fr/admin/projects 200 in 199ms (compile: 97ms, proxy.ts: 16ms, render: 87ms)
+ GET /fr/admin/projects 200 in 210ms (compile: 25ms, proxy.ts: 22ms, render: 163ms)
+ GET /fr/admin/projects 200 in 208ms (compile: 54ms, proxy.ts: 20ms, render: 133ms)
+ GET /fr/admin/projects 200 in 201ms (compile: 106ms, proxy.ts: 12ms, render: 83ms)
+ GET /fr/admin/projects 200 in 203ms (compile: 41ms, proxy.ts: 103ms, render: 59ms)
+ GET /fr/admin/projects 200 in 336ms (compile: 52ms, proxy.ts: 16ms, render: 268ms)
+ GET /fr/admin/projects 200 in 336ms (compile: 74ms, proxy.ts: 16ms, render: 246ms)
+ GET /fr/admin/projects 200 in 344ms (compile: 31ms, proxy.ts: 17ms, render: 297ms)
+ GET /fr/admin/projects 200 in 342ms (compile: 96ms, proxy.ts: 11ms, render: 234ms)
+ GET /fr/admin/projects 200 in 348ms (compile: 245ms, proxy.ts: 11ms, render: 92ms)
+ GET /fr/admin/projects 200 in 341ms (compile: 191ms, proxy.ts: 80ms, render: 71ms)
+ GET /fr/admin/projects 200 in 212ms (compile: 27ms, proxy.ts: 21ms, render: 164ms)
+ GET /fr/admin/projects 200 in 208ms (compile: 40ms, proxy.ts: 20ms, render: 148ms)
+ GET /fr/admin/projects 200 in 210ms (compile: 58ms, proxy.ts: 16ms, render: 135ms)
+ GET /fr/admin/projects 200 in 218ms (compile: 75ms, proxy.ts: 9ms, render: 135ms)
+ GET /fr/admin/projects 200 in 223ms (compile: 88ms, proxy.ts: 11ms, render: 124ms)
+ GET /fr/admin/projects 200 in 230ms (compile: 77ms, proxy.ts: 45ms, render: 108ms)
+ GET /fr/admin/projects 200 in 364ms (compile: 37ms, proxy.ts: 24ms, render: 303ms)
+ GET /fr/admin/projects 200 in 363ms (compile: 60ms, proxy.ts: 22ms, render: 281ms)
+ GET /fr/admin/projects 200 in 362ms (compile: 99ms, proxy.ts: 20ms, render: 243ms)
+ GET /fr/admin/projects 200 in 352ms (compile: 245ms, proxy.ts: 11ms, render: 96ms)
+ GET /fr/admin/projects 200 in 361ms (compile: 232ms, proxy.ts: 42ms, render: 87ms)
+ GET /fr/admin/projects 200 in 344ms (compile: 212ms, proxy.ts: 50ms, render: 82ms)
+ GET /fr/admin/projects 200 in 177ms (compile: 31ms, proxy.ts: 10ms, render: 136ms)
+ GET /fr/admin/projects 200 in 167ms (compile: 39ms, proxy.ts: 19ms, render: 108ms)
+ GET /fr/admin/projects 200 in 169ms (compile: 57ms, proxy.ts: 18ms, render: 94ms)
+ GET /fr/admin/projects 200 in 162ms (compile: 76ms, proxy.ts: 11ms, render: 75ms)
+ GET /fr/admin/projects 200 in 128ms (compile: 48ms, proxy.ts: 28ms, render: 52ms)
+ GET /fr/admin/projects 200 in 125ms (compile: 46ms, proxy.ts: 45ms, render: 34ms)
+ GET /api/skills 200 in 722ms (compile: 3ms, render: 720ms)
+ GET /api/skills 200 in 708ms (compile: 7ms, render: 700ms)
+ GET /fr/admin/experiences 200 in 304ms (compile: 260ms, proxy.ts: 15ms, render: 29ms)
+ GET /api/experiences 200 in 1063ms (compile: 5ms, render: 1059ms)
+ GET /api/experiences 200 in 856ms (compile: 9ms, render: 847ms)
+ GET /fr/admin/projects 200 in 482ms (compile: 397ms, proxy.ts: 8ms, render: 76ms)
+ GET /api/projects 200 in 691ms (compile: 3ms, render: 688ms)
+ GET /api/projects 200 in 741ms (compile: 4ms, render: 738ms)
+ GET /fr/admin/dashboard 200 in 350ms (compile: 300ms, proxy.ts: 6ms, render: 44ms)
+ GET /fr/admin/projects 200 in 329ms (compile: 290ms, proxy.ts: 10ms, render: 28ms)
+ GET /api/projects 200 in 1194ms (compile: 5ms, render: 1189ms)
+ GET /api/projects 200 in 914ms (compile: 2ms, render: 912ms)
+ GET /fr/admin/profile 200 in 2.3s (compile: 2.2s, proxy.ts: 9ms, render: 29ms)
+ GET /fr/admin/profile 200 in 318ms (compile: 270ms, proxy.ts: 10ms, render: 38ms)
+ GET /fr/admin/dashboard 200 in 166ms (compile: 123ms, proxy.ts: 5ms, render: 38ms)
+ GET /fr/admin/profile 200 in 206ms (compile: 170ms, proxy.ts: 6ms, render: 30ms)
+ GET /fr/admin/profile 200 in 741ms (compile: 499ms, proxy.ts: 179ms, render: 63ms)
+ GET /fr/admin/profile 200 in 317ms (compile: 105ms, proxy.ts: 17ms, render: 195ms)
+ GET /fr/admin/profile 200 in 312ms (compile: 129ms, proxy.ts: 30ms, render: 153ms)
+ GET /fr/admin/profile 200 in 307ms (compile: 140ms, proxy.ts: 42ms, render: 125ms)
+ GET /fr/admin/profile 200 in 302ms (compile: 159ms, proxy.ts: 45ms, render: 98ms)
+ GET /fr/admin/profile 200 in 311ms (compile: 168ms, proxy.ts: 38ms, render: 104ms)
+ GET /fr/admin/profile 200 in 311ms (compile: 180ms, proxy.ts: 40ms, render: 91ms)
+ GET /fr/admin/profile 200 in 501ms (compile: 112ms, proxy.ts: 39ms, render: 350ms)
+ GET /fr/admin/profile 200 in 487ms (compile: 315ms, proxy.ts: 41ms, render: 131ms)
+ GET /fr/admin/profile 200 in 495ms (compile: 289ms, proxy.ts: 43ms, render: 163ms)
+ GET /fr/admin/profile 200 in 476ms (compile: 332ms, proxy.ts: 37ms, render: 107ms)
+ GET /fr/admin/profile 200 in 474ms (compile: 354ms, proxy.ts: 22ms, render: 98ms)
+ GET /fr/admin/profile 200 in 477ms (compile: 387ms, proxy.ts: 17ms, render: 73ms)
+ GET /fr/admin/profile 200 in 588ms (compile: 55ms, proxy.ts: 16ms, render: 516ms)
+ GET /fr/admin/profile 200 in 582ms (compile: 112ms, proxy.ts: 18ms, render: 453ms)
+ GET /fr/admin/profile 200 in 600ms (compile: 180ms, proxy.ts: 22ms, render: 398ms)
+ GET /fr/admin/profile 200 in 599ms (compile: 214ms, proxy.ts: 22ms, render: 364ms)
+ GET /fr/admin/profile 200 in 590ms (compile: 453ms, proxy.ts: 23ms, render: 114ms)
+ GET /fr/admin/profile 200 in 591ms (compile: 424ms, proxy.ts: 75ms, render: 92ms)
+ GET /fr/admin/profile 200 in 394ms (compile: 42ms, proxy.ts: 28ms, render: 324ms)
+ GET /fr/admin/profile 200 in 377ms (compile: 81ms, proxy.ts: 15ms, render: 281ms)
+ GET /fr/admin/profile 200 in 378ms (compile: 185ms, proxy.ts: 12ms, render: 181ms)
+ GET /fr/admin/profile 200 in 381ms (compile: 118ms, proxy.ts: 12ms, render: 250ms)
+ GET /fr/admin/profile 200 in 378ms (compile: 244ms, proxy.ts: 20ms, render: 114ms)
+ GET /fr/admin/profile 200 in 344ms (compile: 209ms, proxy.ts: 51ms, render: 85ms)
+ GET /fr/admin/profile 200 in 633ms (compile: 46ms, proxy.ts: 15ms, render: 573ms)
+ GET /fr/admin/profile 200 in 633ms (compile: 95ms, proxy.ts: 12ms, render: 526ms)
+ GET /fr/admin/profile 200 in 635ms (compile: 153ms, proxy.ts: 15ms, render: 467ms)
+ GET /fr/admin/profile 200 in 639ms (compile: 198ms, proxy.ts: 15ms, render: 427ms)
+ GET /fr/admin/profile 200 in 633ms (compile: 477ms, proxy.ts: 20ms, render: 135ms)
+ GET /fr/admin/profile 200 in 541ms (compile: 402ms, proxy.ts: 19ms, render: 120ms)
+ GET /fr/admin/profile 200 in 202ms (compile: 34ms, proxy.ts: 15ms, render: 153ms)
+ GET /fr/admin/profile 200 in 195ms (compile: 53ms, proxy.ts: 12ms, render: 131ms)
+ GET /fr/admin/profile 200 in 179ms (compile: 65ms, proxy.ts: 15ms, render: 98ms)
+ GET /fr/admin/profile 200 in 176ms (compile: 85ms, proxy.ts: 16ms, render: 75ms)
+ GET /fr/admin/profile 200 in 175ms (compile: 82ms, proxy.ts: 32ms, render: 61ms)
+ GET /fr/admin/profile 200 in 140ms (compile: 75ms, proxy.ts: 9ms, render: 56ms)
+ GET /fr/admin/profile 200 in 289ms (compile: 45ms, proxy.ts: 16ms, render: 228ms)
+ GET /fr/admin/profile 200 in 292ms (compile: 28ms, proxy.ts: 18ms, render: 247ms)
+ GET /fr/admin/profile 200 in 291ms (compile: 67ms, proxy.ts: 16ms, render: 209ms)
+ GET /fr/admin/profile 200 in 291ms (compile: 87ms, proxy.ts: 15ms, render: 189ms)
+ GET /fr/admin/profile 200 in 300ms (compile: 109ms, proxy.ts: 10ms, render: 181ms)
+ GET /fr/admin/profile 200 in 301ms (compile: 134ms, proxy.ts: 101ms, render: 66ms)
+ GET /fr/admin/profile 200 in 124ms (compile: 33ms, proxy.ts: 13ms, render: 77ms)
+ GET /fr/admin/profile 200 in 120ms (compile: 50ms, proxy.ts: 20ms, render: 51ms)
+ GET /fr/admin/profile 200 in 119ms (compile: 66ms, proxy.ts: 20ms, render: 33ms)
+ GET /api/auth/session 200 in 405ms (compile: 357ms, render: 47ms)
+✓ Compiled in 607ms
+ GET /api/auth/session 200 in 220ms (compile: 211ms, render: 9ms)
+ GET /api/auth/session 200 in 309ms (compile: 283ms, render: 25ms)
+Profile update error: Error [PrismaClientValidationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["default"].user.update()` invocation in
+/home/kb/Téléchargements/themeforest-rJ6z2cvs-reeni-personal-portfolio-cv-resume-reactjs-template/reeni-reactjs-template/kabirou/migration_temp/.next/dev/server/chunks/[root-of-the-server]__59c4cc1f._.js:285:170
+
+  282     imageUrl = `/uploads/avatars/${filename}`;
+  283 }
+  284 // Update user in database
+→ 285 const updatedUser = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["default"].user.update({
+        where: {
+          email: "kdjantchiemo@gmail.com"
+        },
+        data: {
+          name: "Kabirou Djantchiemo",
+          image: "/uploads/avatars/1773257296803-328293429-1KB.ico",
+          ~~~~~
+      ?   id?: String | StringFieldUpdateOperationsInput,
+      ?   email?: String | StringFieldUpdateOperationsInput,
+      ?   password?: String | StringFieldUpdateOperationsInput,
+      ?   createdAt?: DateTime | DateTimeFieldUpdateOperationsInput,
+      ?   updatedAt?: DateTime | DateTimeFieldUpdateOperationsInput
+        }
+      })
+
+Unknown argument `image`. Did you mean `name`? Available options are marked with ?.
+    at <unknown> (src/app/api/profile/route.ts:55:43)
+    at async PUT (src/app/api/profile/route.ts:55:25)
+  53 |
+  54 |     // Update user in database
+> 55 |     const updatedUser = await prisma.user.update({
+     |                                           ^
+  56 |       where: { email: session.user.email },
+  57 |       data: {
+  58 |         name, {
+  clientVersion: '6.19.2'
+}
+ PUT /api/profile 500 in 2.7s (compile: 894ms, render: 1799ms)
+ GET /fr/admin/login?callbackUrl=%2Ffr%2Fadmin%2Fskills 200 in 968ms (compile: 673ms, proxy.ts: 9ms, render: 286ms)
+Profile update error: Error [PrismaClientValidationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["default"].user.update()` invocation in
+/home/kb/Téléchargements/themeforest-rJ6z2cvs-reeni-personal-portfolio-cv-resume-reactjs-template/reeni-reactjs-template/kabirou/migration_temp/.next/dev/server/chunks/[root-of-the-server]__59c4cc1f._.js:285:170
+
+  282     imageUrl = `/uploads/avatars/${filename}`;
+  283 }
+  284 // Update user in database
+→ 285 const updatedUser = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["default"].user.update({
+        where: {
+          email: "kdjantchiemo@gmail.com"
+        },
+        data: {
+          name: "Kabirou Djantchiemo",
+          image: "/uploads/avatars/1773257315799-872025039-1KB.ico",
+          ~~~~~
+      ?   id?: String | StringFieldUpdateOperationsInput,
+      ?   email?: String | StringFieldUpdateOperationsInput,
+      ?   password?: String | StringFieldUpdateOperationsInput,
+      ?   createdAt?: DateTime | DateTimeFieldUpdateOperationsInput,
+      ?   updatedAt?: DateTime | DateTimeFieldUpdateOperationsInput
+        }
+      })
+
+Unknown argument `image`. Did you mean `name`? Available options are marked with ?.
+    at <unknown> (src/app/api/profile/route.ts:55:43)
+    at async PUT (src/app/api/profile/route.ts:55:25)
+  53 |
+  54 |     // Update user in database
+> 55 |     const updatedUser = await prisma.user.update({
+     |                                           ^
+  56 |       where: { email: session.user.email },
+  57 |       data: {
+  58 |         name, {
+  clientVersion: '6.19.2'
+}
+ PUT /api/profile 500 in 456ms (compile: 12ms, render: 443ms)
+Profile update error: Error [PrismaClientValidationError]: 
+Invalid `__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["default"].user.update()` invocation in
+/home/kb/Téléchargements/themeforest-rJ6z2cvs-reeni-personal-portfolio-cv-resume-reactjs-template/reeni-reactjs-template/kabirou/migration_temp/.next/dev/server/chunks/[root-of-the-server]__59c4cc1f._.js:285:170
+
+  282     imageUrl = `/uploads/avatars/${filename}`;
+  283 }
+  284 // Update user in database
+→ 285 const updatedUser = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["default"].user.update({
+        where: {
+          email: "kdjantchiemo@gmail.com"
+        },
+        data: {
+          name: "Kabirou Djantchiemo",
+          image: "/uploads/avatars/1773257318734-798424699-1KB.ico",
+          ~~~~~
+      ?   id?: String | StringFieldUpdateOperationsInput,
+      ?   email?: String | StringFieldUpdateOperationsInput,
+      ?   password?: String | StringFieldUpdateOperationsInput,
+      ?   createdAt?: DateTime | DateTimeFieldUpdateOperationsInput,
+      ?   updatedAt?: DateTime | DateTimeFieldUpdateOperationsInput
+        }
+      })
+
+Unknown argument `image`. Did you mean `name`? Available options are marked with ?.
+    at <unknown> (src/app/api/profile/route.ts:55:43)
+    at async PUT (src/app/api/profile/route.ts:55:25)
+  53 |
+  54 |     // Update user in database
+> 55 |     const updatedUser = await prisma.user.update({
+     |                                           ^
+  56 |       where: { email: session.user.email },
+  57 |       data: {
+  58 |         name, {
+  clientVersion: '6.19.2'
+}
+ PUT /api/profile 500 in 285ms (compile: 6ms, render: 279ms)

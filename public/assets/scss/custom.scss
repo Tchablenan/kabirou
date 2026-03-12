@@ -1,0 +1,90 @@
+.typeanimation {
+  transition: width 0.58s ease-out !important;
+  height: 100% !important;
+  //   margin-top: -10px;
+  padding-right: 10px;
+  b.is-visible {
+    padding-right: 10px !important;
+  }
+}
+.light-content {
+  display: none !important;
+}
+.light-content2 {
+  display: none !important;
+}
+.tmp-white-version {
+  .dark-content {
+    display: none !important;
+  }
+  .light-content {
+    display: flex !important;
+  }
+  .light-content2 {
+    display: block !important;
+  }
+}
+.Toastify__close-button {
+  width: fit-content !important;
+  top: 20px !important;
+}
+.tmp-white-version .dark-link {
+  display: none !important;
+}
+.demo-modal-area.active-light {
+  background-color: #eee4e7;
+
+  .wrapper {
+    .tmp-modal-inner {
+      background: #ededed;
+
+      .demo-top {
+        .title {
+          color: #141414; // Overriding previous white color
+        }
+
+        .subtitle {
+          color: #3d3d3d !important;
+        }
+      }
+    }
+  }
+
+  .single-demo {
+    background: #ffffff;
+
+    &::before {
+      background: linear-gradient(
+        180deg,
+        var(--color-primary) 0%,
+        var(--color-white) 100%
+      );
+    }
+
+    .inner {
+      .title {
+        border-top: 1px solid transparent;
+
+        a {
+          color: #141414;
+          transition: var(--transition);
+        }
+      }
+    }
+  }
+
+  .demo-close-btn {
+    background: var(--color-white);
+  }
+}
+
+.active-light {
+  .popuptab-area {
+    li {
+      a.nav-link {
+        background: #ffffff;
+        color: #141414;
+      }
+    }
+  }
+}
