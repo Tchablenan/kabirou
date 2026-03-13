@@ -7,8 +7,8 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 export default function Header1({
-  darkLogo = "/assets/images/logo/white-logo-reeni.png",
-  lightLogo = "/assets/images/logo/logo-white.png",
+  darkLogo = "/assets/images/kbi/df-scaled.png",
+  lightLogo = "/assets/images/kbi/df-scaled.png",
 }) {
   const { openModal } = useModalUI();
   const [isSticky, setIsSticky] = useState(false);
@@ -36,9 +36,8 @@ export default function Header1({
   }, []);
   return (
     <header
-      className={`tmp-header-area-start header-one header--sticky header--transparent ${
-        isSticky ? "sticky" : ""
-      } `}
+      className={`tmp-header-area-start header-one header--sticky header--transparent ${isSticky ? "sticky" : ""
+        } `}
     >
       <div className="container">
         <div className="row">
@@ -46,22 +45,7 @@ export default function Header1({
             <div className="header-content">
               <div className="logo">
                 <Link href={`/${locale}`}>
-                  <img
-                    loading="lazy"
-                    className="logo-dark"
-                    alt="Reeni - Personal Portfolio HTML Template for developers and freelancers"
-                    src={darkLogo}
-                    width={121}
-                    height={41}
-                  />
-                  <img
-                    loading="lazy"
-                    className="logo-white"
-                    alt="Reeni - Personal Portfolio HTML Template for developers and freelancers"
-                    src={lightLogo}
-                    width={121}
-                    height={40}
-                  />
+
                 </Link>
               </div>
               <nav className="tmp-mainmenu-nav d-none d-xl-block">

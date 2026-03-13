@@ -32,9 +32,9 @@ export default function Header5() {
               <div className="logo">
                 <Link href={`/${locale}`}>
                   <img
-                    src="/assets/images/logo/logo-01.png"
+                    src="/assets/images/kbi/df-scaled.png"
                     alt="corporate_logo"
-                    width={121}
+                    width={50}
                     height={41}
                   />
                 </Link>

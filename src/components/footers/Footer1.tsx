@@ -22,38 +22,23 @@ export default function Footer1({
             <div className="row g-5">
               <div className="col-lg-5 col-md-6">
                 <div className="single-footer-wrapper border-right mr--20">
-                  <div className="logo">
-                    <Link href={`/`}>
+                  <div className="logo mb--30">
+                    <Link href="/">
                       <img
-                        loading="lazy"
-                        className="logo-dark"
-                        alt="Reeni - Personal Portfolio"
-                        src={darkLogo}
-                        width={121}
-                        height={41}
-                      />
-                      <img
-                        loading="lazy"
-                        className="logo-white"
-                        alt="Reeni - Personal Portfolio"
-                        src={lightLogo}
-                        width={121}
-                        height={40}
+                        src="/assets/images/kbi/df-scaled.png"
+                        alt="KB IT SOLUTIONS"
+                        width={150}
+                        height={150}
+                        style={{ objectFit: 'contain' }}
                       />
                     </Link>
                   </div>
-                  <p className="description">
-                    {t("footer.get_ready")}
-                  </p>
-                  <form
-                    onSubmit={(e) => e.preventDefault()}
-                    className="newsletter-form-1 mt--40"
-                  >
-                    <input type="email" placeholder={t("contact.email")} />
-                    <span className="form-icon">
-                      <i className="fa-regular fa-envelope" />
-                    </span>
-                  </form>
+                  <h5 className="ft-title">Mes Valeurs</h5>
+                  <ul className="ft-link tmp-link-animation dark-content">
+                    <li>Expertise</li>
+                    <li>Innovation</li>
+                    <li>Confidentialité</li>
+                  </ul>
                 </div>
               </div>
               <div className="col-lg-4 col-md-6">
@@ -111,7 +96,8 @@ export default function Footer1({
           </div>
         </div>
       </footer>{" "}
-      <Chat />
+      {/* Messaging icon hidden per user request */}
+      {/* <Chat /> */}
       <ScrollTop />
       <Sidebar />
       <MobileMenu />
