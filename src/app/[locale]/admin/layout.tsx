@@ -3,11 +3,9 @@
 import { useSession } from "next-auth/react";
 import { useRouter, usePathname } from "next/navigation";
 import { useEffect } from "react";
+// Import Metronic components
 import { LayoutProvider } from "@/components/layouts/layout-1/components/context";
 import { Main } from "@/components/layouts/layout-1/components/main";
-
-// Import Metronic styles
-import "@/styles/metronic/globals.css";
 
 export default function AdminLayout({
   children,
@@ -19,21 +17,21 @@ export default function AdminLayout({
   const pathname = usePathname();
 
   useEffect(() => {
-    if (status === "unauthenticated") {
+    if (status === "unauthenticated" && !pathname.includes("/admin/login")) {
       router.push("/admin/login");
     }
-  }, [status, router]);
+  }, [status, router, pathname]);
 
   if (status === "loading") {
     return <div className="flex items-center justify-center min-h-screen">Chargement...</div>;
   }
 
-  if (!session) return null;
-
   // Don't show layout on login page
   if (pathname.includes("/admin/login")) {
     return <>{children}</>;
   }
+
+  if (!session) return null;
 
   return (
     <div className="light antialiased flex min-h-screen w-full flex-col text-base text-foreground bg-background">

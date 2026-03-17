@@ -97,7 +97,7 @@ export default function Footer1({
         </div>
       </footer>{" "}
       {/* Messaging icon hidden per user request */}
-      {/* <Chat /> */}
+      <Chat />
       <ScrollTop />
       <Sidebar />
       <MobileMenu />

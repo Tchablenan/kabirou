@@ -1,15 +1,23 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 
 export default function Contact({
   parentClass = "get-in-touch-area tmp-section-gapTop",
 }) {
+  const [mounted, setMounted] = useState(false);
   const { t } = useTranslation();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const form = useRef<HTMLFormElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  if (!mounted) return null;
 
   const validateEmail = (email: string): boolean => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

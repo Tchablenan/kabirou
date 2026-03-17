@@ -6,6 +6,39 @@ import { writeFile, mkdir } from "fs/promises";
 import { join } from "path";
 import fs from "fs";
 
+export async function GET(req: NextRequest) {
+  try {
+    const user = await prisma.user.findFirst({
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        image: true,
+        professionalTitleEn: true,
+        professionalTitleFr: true,
+        aboutEn: true,
+        aboutFr: true,
+        githubUrl: true,
+        linkedinUrl: true,
+        twitterUrl: true,
+        facebookUrl: true,
+      }
+    });
+
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
+    return NextResponse.json(user);
+  } catch (error: any) {
+    console.error("Profile GET error:", error);
+    return NextResponse.json(
+      { error: `Internal Server Error: ${error.message}` },
+      { status: 500 }
+    );
+  }
+}
+
 export async function PUT(req: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
@@ -16,9 +49,15 @@ export async function PUT(req: NextRequest) {
 
     const formData = await req.formData();
     const name = formData.get("name") as string | null;
+    const professionalTitleEn = formData.get("professionalTitleEn") as string | null;
+    const professionalTitleFr = formData.get("professionalTitleFr") as string | null;
+    const aboutEn = formData.get("aboutEn") as string | null;
+    const aboutFr = formData.get("aboutFr") as string | null;
+    const githubUrl = formData.get("githubUrl") as string | null;
+    const linkedinUrl = formData.get("linkedinUrl") as string | null;
+    const twitterUrl = formData.get("twitterUrl") as string | null;
+    const facebookUrl = formData.get("facebookUrl") as string | null;
     const avatar = formData.get("avatar") as File | null;
-
-    console.log("Profile update request:", { name, avatarName: avatar?.name, avatarSize: avatar?.size });
 
     if (!name || name.trim() === "") {
       return NextResponse.json(
@@ -31,16 +70,12 @@ export async function PUT(req: NextRequest) {
 
     // Handle avatar upload if provided
     if (avatar && avatar instanceof File && avatar.name && avatar.name !== "undefined") {
-      console.log("Processing avatar upload...");
       const bytes = await avatar.arrayBuffer();
       const buffer = Buffer.from(bytes);
 
-      // We save the file locally in the public folder.
       const uploadDir = join(process.cwd(), "public/uploads/avatars");
       
-      // Ensure the directory exists
       if (!fs.existsSync(uploadDir)) {
-        console.log("Creating upload directory:", uploadDir);
         await mkdir(uploadDir, { recursive: true });
       }
 
@@ -49,42 +84,36 @@ export async function PUT(req: NextRequest) {
       const filename = `${uniquePrefix}-${safeFilename}`;
       const filepath = join(uploadDir, filename);
 
-      console.log("Saving file to:", filepath);
       await writeFile(filepath, buffer);
-      
-      // The publicly accessible URL
       imageUrl = `/uploads/avatars/${filename}`;
-      console.log("New image URL:", imageUrl);
     }
 
     // Update user in database
-    console.log("Updating user in database for email:", session.user.email);
     const updatedUser = await prisma.user.update({
       where: { email: session.user.email },
       data: {
         name,
+        professionalTitleEn,
+        professionalTitleFr,
+        aboutEn,
+        aboutFr,
+        githubUrl,
+        linkedinUrl,
+        twitterUrl,
+        facebookUrl,
         ...(imageUrl !== undefined && { image: imageUrl }),
       },
     });
 
-    console.log("User updated successfully:", updatedUser.id);
-
     return NextResponse.json({
       message: "Profil mis à jour",
-      user: {
-        name: updatedUser.name,
-        image: updatedUser.image,
-      },
+      user: updatedUser,
       imageUrl,
     });
   } catch (error: any) {
-    console.error("Profile update error details:", {
-      message: error.message,
-      stack: error.stack,
-      error
-    });
+    console.error("Profile update error:", error);
     return NextResponse.json(
-      { error: `Erreur serveur lors de la mise à jour: ${error.message}` },
+      { error: `Erreur serveur: ${error.message}` },
       { status: 500 }
     );
   }

@@ -89,7 +89,19 @@ model User {
   password  String
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
-  image     String?
+  image        String?
+  
+  // Profile fields
+  professionalTitleEn String? @map("professional_title_en")
+  professionalTitleFr String? @map("professional_title_fr")
+  aboutEn             String? @map("about_en")
+  aboutFr             String? @map("about_fr")
+  
+  // Social links
+  githubUrl           String? @map("github_url")
+  linkedinUrl         String? @map("linkedin_url")
+  twitterUrl          String? @map("twitter_url")
+  facebookUrl         String? @map("facebook_url")
 
   @@map("users")
 }
@@ -97,6 +109,7 @@ model User {
 model SiteStats {
   id        String   @id @default("global")
   visits    Int      @default(0)
+  aiEnabled Boolean  @default(true) @map("ai_enabled")
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("site_stats")
@@ -110,4 +123,35 @@ enum ExpType {
 enum SkillCategory {
   DEVELOPMENT
   OTHERS
+}
+
+enum MessageRole {
+  USER
+  AI
+  ADMIN
+}
+
+model Conversation {
+  id           String    @id @default(cuid())
+  visitorId    String?   @map("visitor_id")
+  visitorName  String?   @map("visitor_name")
+  visitorEmail String?   @map("visitor_email")
+  visitorPhone String?   @map("visitor_phone")
+  status       String    @default("active")
+  messages     Message[]
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  @@map("conversations")
+}
+
+model Message {
+  id             String       @id @default(cuid())
+  content        String
+  role           MessageRole  @default(USER)
+  conversationId String       @map("conversation_id")
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  createdAt      DateTime     @default(now()) @map("created_at")
+
+  @@map("messages")
 }

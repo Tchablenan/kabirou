@@ -36,6 +36,7 @@ export default function Header5() {
                     alt="corporate_logo"
                     width={50}
                     height={41}
+                    className="rounded-full object-cover aspect-square"
                   />
                 </Link>
               </div>

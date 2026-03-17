@@ -8,6 +8,8 @@ import {
   MessageCircleMore,
   SquareArrowOutUpRight,
 } from 'lucide-react';
+import { useChat } from "@ai-sdk/react";
+import { DefaultChatTransport } from "ai";
 import { toAbsoluteUrl } from '@/lib/helpers';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -38,6 +40,57 @@ export function Header() {
 
   const scrollPosition = useScrollPosition();
   const headerSticky: boolean = scrollPosition > 0;
+
+  const [conversationId, setConversationId] = useState<string>("");
+
+  useEffect(() => {
+    let id = sessionStorage.getItem("chat_conversation_id");
+    if (!id) {
+      id = crypto.randomUUID();
+      sessionStorage.setItem("chat_conversation_id", id);
+    }
+    setConversationId(id);
+  }, []);
+
+  const { messages, sendMessage, status, setMessages } = useChat({
+    transport: new DefaultChatTransport({
+      api: "/api/chat",
+      body: { conversationId },
+    }),
+  });
+
+  useEffect(() => {
+    if (!conversationId) return;
+
+    const fetchHistory = async () => {
+      try {
+        const response = await fetch(`/api/chat/history?conversationId=${conversationId}`);
+        const data = await response.json();
+        if (data.messages && data.messages.length > 0) {
+          setMessages(data.messages);
+        } else {
+          setMessages([
+            {
+              id: "welcome",
+              role: "assistant",
+              parts: [
+                {
+                  type: "text",
+                  text: "Bonjour ! Je suis l'assistant de Kabirou. Il est actuellement très pris par ses projets, mais je peux répondre à vos questions sur son parcours ou prendre vos coordonnées. En quoi puis-je vous aider ?",
+                },
+              ],
+            },
+          ]);
+        }
+      } catch (error) {
+        console.error("Failed to load chat history:", error);
+      }
+    };
+
+    fetchHistory();
+  }, [conversationId, setMessages]);
+
+  const isLoading = status === "submitted" || status === "streaming";
 
   // Close sheet when route changes
   useEffect(() => {
@@ -129,6 +182,14 @@ export function Header() {
                 <MessageCircleMore className="size-4.5!" />
               </Button>
             }
+            messages={messages.map((m: any) => ({
+              id: m.id,
+              role: m.role as any,
+              content: m.parts.filter((p: any) => p.type === 'text').map((p: any) => p.text).join(''),
+              createdAt: m.createdAt
+            }))}
+            onSendMessage={(content) => sendMessage({ role: 'user', parts: [{ type: 'text', text: content }] })}
+            isLoading={isLoading}
           />
 
           <AppsDropdownMenu

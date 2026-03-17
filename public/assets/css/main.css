@@ -20592,6 +20592,10 @@ section.clients-testimonial-area {
   display: block !important;
 }
 
+body.chat-open .scrollToTop {
+  display: none !important;
+}
+
 .scrollToTop:hover {
   transform: translateY(-15%);
 }

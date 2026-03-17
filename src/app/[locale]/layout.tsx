@@ -12,6 +12,9 @@ export const metadata: Metadata = {
   description: "Kabirou Djantchiemo Portfolio - Freelancer & Developer",
 };
 
+// import Metronic styles
+import "@/styles/metronic/globals.css";
+
 export default async function RootLayout({
   children,
   params,

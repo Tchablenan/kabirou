@@ -1,7 +1,7 @@
 const { PrismaClient } = require("./node_modules/@prisma/client");
 
 const prisma = new PrismaClient({
-  datasourceUrl: "postgresql://postgres.seowehsfdtbolakosopf:Meinoussa2.0@aws-1-eu-central-1.pooler.supabase.com:5432/postgres",
+  datasourceUrl: process.env.DATABASE_URL,
 });
 
 async function main() {

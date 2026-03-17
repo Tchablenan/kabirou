@@ -11,17 +11,19 @@ import {
   Plus, 
   Settings,
   User as UserIcon,
-  Eye
+  Eye,
+  MessageSquare
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CountingNumber } from "@/components/ui/counting-number";
+import { toast } from "react-toastify";
 
 export default function AdminDashboard() {
   const { data: session, status } = useSession();
   const router = useRouter();
-  const [stats, setStats] = useState({ projects: 0, experiences: 0, skills: 0, visitors: 0 });
+  const [stats, setStats] = useState({ projects: 0, experiences: 0, skills: 0, visitors: 0, conversations: 0 });
   const [isLoadingStats, setIsLoadingStats] = useState(true);
 
   useEffect(() => {
@@ -31,6 +33,7 @@ export default function AdminDashboard() {
   }, [status, router]);
 
   useEffect(() => {
+
     const fetchStats = async () => {
       try {
         const res = await fetch("/api/admin/stats");
@@ -49,6 +52,7 @@ export default function AdminDashboard() {
       fetchStats();
     }
   }, [session]);
+
 
   if (status === "loading") {
     return (
@@ -99,6 +103,15 @@ export default function AdminDashboard() {
       bgColor: "bg-orange-50",
       description: "Visites totales du site",
       href: "#"
+    },
+    {
+      title: "Conversations",
+      value: stats.conversations,
+      icon: MessageSquare,
+      color: "text-pink-500",
+      bgColor: "bg-pink-50",
+      description: "Appels du chat direct",
+      href: "/admin/conversations"
     }
   ];
 
@@ -108,7 +121,7 @@ export default function AdminDashboard() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Bonjour, {session.user?.name} 👋</h1>
-          <p className="text-muted-foreground mt-1">
+          <p className="text-muted-foreground mt-2">
             Voici un aperçu de votre portfolio et de vos activités récentes.
           </p>
         </div>
@@ -125,7 +138,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-5 gap-6">
         {statCards.map((stat, index) => (
           <Card key={index} className="overflow-hidden group hover:border-primary/50 transition-all duration-300">
             <CardContent className="p-6">

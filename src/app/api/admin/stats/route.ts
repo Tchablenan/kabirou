@@ -13,10 +13,11 @@ export async function GET(req: Request) {
     }
 
     // Individual counts with fail-safes
-    const [projectsCount, experiencesCount, skillsCount] = await Promise.all([
+    const [projectsCount, experiencesCount, skillsCount, conversationsCount] = await Promise.all([
       prisma.project.count().catch(() => 0),
       prisma.experience.count().catch(() => 0),
       prisma.skill.count().catch(() => 0),
+      prisma.conversation.count().catch(() => 0),
     ]);
     
     let visitors = 0;
@@ -32,6 +33,7 @@ export async function GET(req: Request) {
       projects: projectsCount,
       experiences: experiencesCount,
       skills: skillsCount,
+      conversations: conversationsCount,
       visitors: visitors,
     });
   } catch (error: any) {
