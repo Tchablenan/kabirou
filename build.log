@@ -1,0 +1,24 @@
+
+> migration_temp@0.1.0 build
+> next build
+
+▲ Next.js 16.1.6 (Turbopack)
+- Environments: .env.local, .env
+
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+  Creating an optimized production build ...
+✓ Compiled successfully in 6.7s
+  Running TypeScript ...
+Failed to compile.
+
+./src/components/layouts/layout-11/components/header-menu-mobile.tsx:3:29
+Type error: Cannot find module '@/config/layout-11.config' or its corresponding type declarations.
+
+[0m [90m 1 |[39m [36mimport[39m { useMenu } [36mfrom[39m [32m"@/hooks/use-menu"[39m[33m;[39m
+ [90m 2 |[39m [36mimport[39m { [33mMenu[39m } [36mfrom[39m [32m"lucide-react"[39m[33m;[39m
+[31m[1m>[22m[39m[90m 3 |[39m [36mimport[39m { [33mMENU_HEADER[39m } [36mfrom[39m [32m"@/config/layout-11.config"[39m[33m;[39m
+ [90m   |[39m                             [31m[1m^[22m[39m
+ [90m 4 |[39m [36mimport[39m {
+ [90m 5 |[39m   [33mDropdownMenu[39m[33m,[39m
+ [90m 6 |[39m   [33mDropdownMenuContent[39m[33m,[39m[0m
+Next.js build worker exited with code: 1 and signal: null

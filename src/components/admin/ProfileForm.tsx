@@ -37,7 +37,7 @@ export default function ProfileForm() {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<ProfileFormValues>({
+  } = useForm<any>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
       name: session?.user?.name || "",
@@ -185,7 +185,7 @@ export default function ProfileForm() {
           <div>
             <label className="text-sm font-medium text-gray-700">Nom Complet</label>
             <Input {...register("name")} className="mt-1" placeholder="Kabirou Djantchiemo" />
-            {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>}
+            {errors.name && <p className="mt-1 text-sm text-red-600">{String(errors.name.message)}</p>}
           </div>
 
           <div>
@@ -242,7 +242,7 @@ export default function ProfileForm() {
               <InputAddon><Github className="size-4" /></InputAddon>
               <Input {...register("githubUrl")} placeholder="https://github.com/..." />
             </InputGroup>
-            {errors.githubUrl && <p className="mt-1 text-sm text-red-600">{errors.githubUrl.message}</p>}
+            {errors.githubUrl && <p className="mt-1 text-sm text-red-600">{String(errors.githubUrl.message)}</p>}
           </div>
           <div>
             <label className="text-sm font-medium text-gray-700">LinkedIn</label>
@@ -250,7 +250,7 @@ export default function ProfileForm() {
               <InputAddon><Linkedin className="size-4" /></InputAddon>
               <Input {...register("linkedinUrl")} placeholder="https://linkedin.com/in/..." />
             </InputGroup>
-            {errors.linkedinUrl && <p className="mt-1 text-sm text-red-600">{errors.linkedinUrl.message}</p>}
+            {errors.linkedinUrl && <p className="mt-1 text-sm text-red-600">{String(errors.linkedinUrl.message)}</p>}
           </div>
           <div>
             <label className="text-sm font-medium text-gray-700">Twitter</label>
@@ -258,7 +258,7 @@ export default function ProfileForm() {
               <InputAddon><Twitter className="size-4" /></InputAddon>
               <Input {...register("twitterUrl")} placeholder="https://twitter.com/..." />
             </InputGroup>
-            {errors.twitterUrl && <p className="mt-1 text-sm text-red-600">{errors.twitterUrl.message}</p>}
+            {errors.twitterUrl && <p className="mt-1 text-sm text-red-600">{String(errors.twitterUrl.message)}</p>}
           </div>
           <div>
             <label className="text-sm font-medium text-gray-700">Facebook</label>
@@ -266,7 +266,7 @@ export default function ProfileForm() {
               <InputAddon><Facebook className="size-4" /></InputAddon>
               <Input {...register("facebookUrl")} placeholder="https://facebook.com/..." />
             </InputGroup>
-            {errors.facebookUrl && <p className="mt-1 text-sm text-red-600">{errors.facebookUrl.message}</p>}
+            {errors.facebookUrl && <p className="mt-1 text-sm text-red-600">{String(errors.facebookUrl.message)}</p>}
           </div>
         </div>
       </div>

@@ -49,7 +49,7 @@ export default function BlogForm({ initialData, onSuccess, onCancel }: BlogFormP
     watch,
     setValue,
     formState: { errors },
-  } = useForm<BlogFormValues>({
+  } = useForm<any>({
     resolver: zodResolver(blogSchema),
     defaultValues: {
       titleEn: initialData?.titleEn || "",
@@ -120,12 +120,12 @@ export default function BlogForm({ initialData, onSuccess, onCancel }: BlogFormP
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-foreground">Titre (FR)</label>
                   <Input {...register("titleFr")} placeholder="Titre en français" aria-invalid={!!errors.titleFr} />
-                  {errors.titleFr && <p className="text-xs text-destructive">{errors.titleFr.message}</p>}
+                  {errors.titleFr && <p className="text-xs text-destructive">{String(errors.titleFr.message)}</p>}
                 </div>
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-foreground">Title (EN)</label>
                   <Input {...register("titleEn")} placeholder="Title in English" aria-invalid={!!errors.titleEn} />
-                  {errors.titleEn && <p className="text-xs text-destructive">{errors.titleEn.message}</p>}
+                  {errors.titleEn && <p className="text-xs text-destructive">{String(errors.titleEn.message)}</p>}
                 </div>
               </div>
 
@@ -133,7 +133,7 @@ export default function BlogForm({ initialData, onSuccess, onCancel }: BlogFormP
                 <label className="text-sm font-medium text-foreground">Slug (URL)</label>
                 <Input {...register("slug")} placeholder="mon-article-de-blog" aria-invalid={!!errors.slug} />
                 <p className="text-[10px] text-muted-foreground italic">Sera généré automatiquement si laissé vide à la création.</p>
-                {errors.slug && <p className="text-xs text-destructive">{errors.slug.message}</p>}
+                {errors.slug && <p className="text-xs text-destructive">{String(errors.slug.message)}</p>}
               </div>
 
               <div className="grid grid-cols-1 gap-6">

@@ -1,4 +1,4 @@
-import { useBodyClass } from '@/hooks/use-body-class';
+import { useBodyClass } from '@/hooks/metronic/use-body-class';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Footer } from './footer';
 import { Header } from './header';

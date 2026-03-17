@@ -6,11 +6,14 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useModalUI } from "@/context/ModalUIContext";
 import { useTranslation } from "react-i18next";
+import { useProfile } from "@/hooks/useProfile";
+import OnepageNavMobile from "./OnepageNavMobile";
 
 export default function MobileMenu() {
   const { openModals, closeModal } = useModalUI();
   const pathname = usePathname();
   const { i18n } = useTranslation();
+  const { profile } = useProfile();
   const locale = i18n.language || "fr";
   const menuRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
@@ -47,19 +50,15 @@ export default function MobileMenu() {
               <Link href={`/${locale}`} className="logo-area">
                 <img
                   loading="lazy"
-                  className="logo-dark"
-                  alt="Reeni - Personal Portfolio"
-                  src="/assets/images/logo/white-logo-reeni.png"
-                  width={121}
-                  height={41}
-                />
-                <img
-                  loading="lazy"
-                  className="logo-white"
-                  alt="Reeni - Personal Portfolio"
-                  src="/assets/images/logo/logo-white.png"
-                  width={121}
-                  height={40}
+                  alt="personal-logo"
+                  src="/assets/images/kbi/4KB.jpeg"
+                  style={{ 
+                    width: "80px", 
+                    height: "80px", 
+                    borderRadius: "50%", 
+                    objectFit: "cover",
+                    display: "block"
+                  }}
                 />
               </Link>
             </div>
@@ -72,73 +71,47 @@ export default function MobileMenu() {
               </button>
             </div>
           </div>
-          <ul className="tmp-mainmenu">
-            {menuItems.map((item, index) => (
-              <li
-                key={index}
-                className={`${item.hasDropdown ? "has-dropdown" : ""} ${
-                  item.submenu
-                    ? item.submenu.some(
-                        (elm) =>
-                          elm.href.split("/")[1] == pathname.split("/")[1]
-                      )
-                      ? "menu-item-open"
-                      : ""
-                    : ""
-                }`}
-              >
-                {item.isLink ? (
-                  <Link
-                    className={`${
-                      item.href.split("/")[1] == pathname.split("/")[1]
-                        ? "active"
-                        : ""
-                    }`}
-                    href={item.href.startsWith("/") ? `/${locale}${item.href}` : item.href}
-                  >
-                    {item.label}
-                  </Link>
-                ) : (
-                  <a
-                    href={item.href.startsWith("/") ? `/${locale}${item.href}` : item.href}
-                    onClick={() =>
-                      setActiveParent((pre) => (pre == index ? -1 : index))
-                    }
-                    className={activeParent == index ? "open" : ""}
-                  >
-                    {item.label}
-                    {item.hasDropdown && (
-                      <i className="fa-regular fa-chevron-down" />
-                    )}
+          <OnepageNavMobile />
+          
+          <div className="footer mt--40">
+            <div className="social-share-style-1">
+              <span className="title">Find With Me</span>
+              <div className="social-link">
+                {profile?.githubUrl && (
+                  <a href={profile.githubUrl} target="_blank" rel="noreferrer">
+                    <i className="fa-brands fa-github" />
                   </a>
                 )}
-
-                {item.hasDropdown && (
-                  <ul
-                    className="submenu"
-                    style={{
-                      display: activeParent == index ? "block" : "none",
-                    }}
-                  >
-                    {item.submenu.map((subItem, subIndex) => (
-                      <li key={subIndex}>
-                        <Link
-                          className={`${
-                            subItem.href.split("/")[1] == pathname.split("/")[1]
-                              ? "active"
-                              : ""
-                          }`}
-                          href={subItem.href.startsWith("/") ? `/${locale}${subItem.href}` : subItem.href}
-                        >
-                          {subItem.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
+                {profile?.linkedinUrl && (
+                  <a href={profile.linkedinUrl} target="_blank" rel="noreferrer">
+                    <i className="fa-brands fa-linkedin-in" />
+                  </a>
                 )}
-              </li>
-            ))}
-          </ul>
+                {profile?.twitterUrl && (
+                  <a href={profile.twitterUrl} target="_blank" rel="noreferrer">
+                    <i className="fa-brands fa-twitter" />
+                  </a>
+                )}
+                {profile?.facebookUrl && (
+                  <a href={profile.facebookUrl} target="_blank" rel="noreferrer">
+                    <i className="fa-brands fa-facebook-f" />
+                  </a>
+                )}
+                
+                {/* Fallback social links if none are provided */}
+                {!profile?.githubUrl && !profile?.linkedinUrl && !profile?.twitterUrl && !profile?.facebookUrl && (
+                   <>
+                    <a href="https://github.com/Tchablenan" target="_blank" rel="noreferrer">
+                      <i className="fa-brands fa-github" />
+                    </a>
+                    <a href="https://linkedin.com/in/kabirou-djantchiemo" target="_blank" rel="noreferrer">
+                      <i className="fa-brands fa-linkedin-in" />
+                    </a>
+                   </>
+                )}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -93,6 +93,7 @@ export default function OnepageNavMobile({
             className="smoth-animation"
             onClick={(e) => handleClick(e, item.href)}
             href={item.href}
+            style={{ textTransform: "uppercase" }}
           >
             {t(`navigation.${item.text.toLowerCase()}`)}
           </a>
