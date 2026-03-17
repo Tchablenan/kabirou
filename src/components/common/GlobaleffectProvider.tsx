@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import gsap from "gsap";
 import { usePathname } from "next/navigation";
-import { SplitText } from "gsap/SplitText";
+// import { SplitText } from "gsap/SplitText";
 import React from "react";
 
 export default function GlobaleffectProvider({ children }: { children: React.ReactNode }) {
@@ -299,66 +299,76 @@ export default function GlobaleffectProvider({ children }: { children: React.Rea
   }, [normalizedPath]);
 
   useEffect(() => {
-    const elements = document.querySelectorAll<HTMLElement>(".tmp-title-split");
-    if (elements.length === 0) return;
+    const initSplitText = async () => {
+      const elements = document.querySelectorAll<HTMLElement>(".tmp-title-split");
+      if (elements.length === 0) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
+      try {
+        const { SplitText } = await import("gsap/SplitText");
+        
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
 
-          const el = entry.target as HTMLElement & {
-            split?: SplitText;
-            animation?: gsap.core.Animation;
-          };
+              const el = entry.target as HTMLElement & {
+                split?: any;
+                animation?: gsap.core.Animation;
+              };
 
-          if (el.animation) {
-            el.animation.progress(1).kill();
-          }
-          if (el.split) {
-            el.split.revert();
-          }
+              if (el.animation) {
+                el.animation.progress(1).kill();
+              }
+              if (el.split) {
+                el.split.revert();
+              }
 
-          el.split = new SplitText(el, { type: "chars" });
+              el.split = new SplitText(el, { type: "chars" });
 
-          gsap.set(el, { perspective: 400 });
-          gsap.set(el.split.chars, {
-            opacity: 0,
-            x: "-10",
-            rotateX: "0",
+              gsap.set(el, { perspective: 400 });
+              gsap.set(el.split.chars, {
+                opacity: 0,
+                x: "-10",
+                rotateX: "0",
+              });
+
+              el.animation = gsap.to(el.split.chars, {
+                x: "0",
+                y: "0",
+                rotateX: "0",
+                opacity: 1,
+                duration: 1,
+                ease: "back.out(1.7)",
+                stagger: 0.02,
+              });
+
+              observer.unobserve(el);
+            });
+          },
+          { threshold: 0.1 }
+        );
+
+        elements.forEach((el) => observer.observe(el));
+
+        return () => {
+          observer.disconnect();
+          elements.forEach((el) => {
+            const e = el as HTMLElement & {
+              split?: any;
+              animation?: gsap.core.Animation;
+            };
+            e.animation?.kill();
+            e.split?.revert();
+            delete e.animation;
+            delete e.split;
           });
-
-          el.animation = gsap.to(el.split.chars, {
-            x: "0",
-            y: "0",
-            rotateX: "0",
-            opacity: 1,
-            duration: 1,
-            ease: "back.out(1.7)",
-            stagger: 0.02,
-          });
-
-          observer.unobserve(el);
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    elements.forEach((el) => observer.observe(el));
-
-    return () => {
-      observer.disconnect();
-      elements.forEach((el) => {
-        const e = el as HTMLElement & {
-          split?: SplitText;
-          animation?: gsap.core.Animation;
         };
-        e.animation?.kill();
-        e.split?.revert();
-        delete e.animation;
-        delete e.split;
-      });
+      } catch (e) {
+        console.warn("GSAP SplitText plugin not available:", e);
+      }
     };
+
+    initSplitText();
   }, [normalizedPath]);
 
   useEffect(() => {

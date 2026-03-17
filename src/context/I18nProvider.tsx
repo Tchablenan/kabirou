@@ -11,11 +11,19 @@ export default function I18nProvider({
   children: React.ReactNode, 
   locale: string 
 }) {
-  // We sync the language synchronously during render if it's already initialized but wrong
-  // This avoids a flash of the wrong language or an empty screen
-  if (i18n.language !== locale) {
-    i18n.changeLanguage(locale);
-  }
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    const initI18n = async () => {
+      if (i18n.language !== locale) {
+        await i18n.changeLanguage(locale);
+      }
+      setIsReady(true);
+    };
+    initI18n();
+  }, [locale]);
+
+  if (!isReady) return null; // Or a loading spinner
 
   return (
     <I18nextProvider i18n={i18n}>
