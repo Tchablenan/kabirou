@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import OnepageNav2 from "./OnepageNav2";
 import LanguageSwitcher from "../common/LanguageSwitcher";
 import { useTranslation } from "react-i18next";
@@ -17,12 +18,12 @@ export default function Header3() {
         <div className="inner-wrapper">
           <div className="logo-area">
             <Link href={`/${locale}`}>
-              <img
-                loading="lazy"
+              <Image
                 alt="personal-logo"
                 src="/assets/images/kbi/4KB.jpeg"
                 width={350}
                 height={350}
+                priority
                 style={{ objectFit: "cover", width: "100%", height: "auto", aspectRatio: "1/1" }}
               />
             </Link>

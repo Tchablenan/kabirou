@@ -60,6 +60,9 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  verification: {
+    google: "google7eb8047818001ca5",
+  },
 };
 
 // import Metronic styles
@@ -75,7 +78,13 @@ export default async function RootLayout({
   const { locale } = await params;
 
   // Fetch user data for JSON-LD
-  const user = await prisma.user.findFirst();
+  let user = null;
+  try {
+    user = await prisma.user.findFirst();
+  } catch (error) {
+    // Silently ignore DB connection errors during dev to prevent Next.js error overlay
+  }
+  
   const name = user?.name || "Kabirou Djantchiemo";
   const title = locale === "fr" ? user?.professionalTitleFr : user?.professionalTitleEn;
   const description = locale === "fr" ? user?.aboutFr : user?.aboutEn;

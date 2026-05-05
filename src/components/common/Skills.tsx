@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import Image from "next/image";
 
 interface Skill {
   id: string;
@@ -28,7 +29,13 @@ export default function Skills({
   useEffect(() => {
     fetch("/api/skills")
       .then((res) => res.json())
-      .then((data) => setSkills(data))
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setSkills(data);
+        } else {
+          setSkills([]);
+        }
+      })
       .catch((err) => console.error("Failed to fetch skills", err))
       .finally(() => setIsLoading(false));
   }, []);
@@ -95,9 +102,11 @@ export default function Skills({
                    justifyContent: "center"
                 }}
               >
-                <img 
+                <Image 
                   src={skill.iconUrl || ""} 
                   alt={skill.name} 
+                  width={50}
+                  height={50}
                   style={{ 
                     maxWidth: "50px", 
                     maxHeight: "50px", 

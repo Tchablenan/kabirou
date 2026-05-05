@@ -3,6 +3,7 @@
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
+import Image from "next/image";
 
 interface Experience {
   id: string;
@@ -61,8 +62,7 @@ export default function Education() {
                 <h2 className="custom-title mb-32 tmp-scroll-trigger tmp-fade-in animation-order-1">
                   {t("resume.experience_title")}
                   <span>
-                    <img
-                      loading="lazy"
+                    <Image
                       alt="custom-line"
                       src="/assets/images/custom-line/custom-line.png"
                       width={81}
@@ -90,13 +90,13 @@ export default function Education() {
             </div>
             <div className="col-lg-6">
               <div className="experiences-wrap-right-content">
-                <img
-                  loading="lazy"
+                <Image
                   className="tmp-scroll-trigger tmp-zoom-in animation-order-1"
                   alt="expert-img"
                   src="/assets/images/kbi/5KB.jpeg"
                   width={945}
                   height={719}
+                  style={{ objectFit: "cover" }}
                 />
               </div>
             </div>
@@ -105,8 +105,7 @@ export default function Education() {
         <h2 className="custom-title mb-32 tmp-scroll-trigger tmp-fade-in animation-order-1 mt-5">
           {t("resume.education_title")}
           <span>
-            <img
-              loading="lazy"
+            <Image
               alt="custom-line"
               src="/assets/images/custom-line/custom-line.png"
               width={81}

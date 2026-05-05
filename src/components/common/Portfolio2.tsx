@@ -2,6 +2,7 @@
 
 import { useTranslation } from "react-i18next";
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 
@@ -68,13 +69,13 @@ export default function Portfolio({ isLight = false }) {
                       className="tmp-scroll-trigger tmp-zoom-in animation-order-1"
                       href={`/${locale}/project-details${isLight ? "-white" : ""}/${item.slug}`}
                     >
-                      <img
-                        loading="lazy"
+                      <Image
                         className="w-100"
                         alt={item.title}
                         src={item.imageUrl || "/assets/images/portfolio/portfolio-1.jpg"}
                         width={600}
                         height={400}
+                        style={{ objectFit: "cover" }}
                       />
                     </Link>
                   </div>

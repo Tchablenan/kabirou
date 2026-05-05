@@ -4,6 +4,7 @@ import { useModalUI } from "@/context/ModalUIContext";
 import LanguageSwitcher from "../common/LanguageSwitcher";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useTranslation } from "react-i18next";
 
 export default function Header5() {
@@ -31,11 +32,12 @@ export default function Header5() {
             <div className="header-mobile-inner d-flex justify-content-between align-items-center">
               <div className="logo">
                 <Link href={`/${locale}`}>
-                  <img
+                  <Image
                     src="/assets/images/kbi/df-scaled.png"
                     alt="corporate_logo"
                     width={50}
-                    height={41}
+                    height={50}
+                    priority
                     className="rounded-full object-cover aspect-square"
                   />
                 </Link>

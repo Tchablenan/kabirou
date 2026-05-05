@@ -1,9 +1,14 @@
 "use client";
 
-import ParticleComponent from "@/components/common/ParticleComponent";
+import dynamic from "next/dynamic";
+import Image from "next/image";
 import TyperComponent from "@/components/common/TyperComponent";
 import { useTranslation } from "react-i18next";
 import Link from "next/link";
+
+const ParticleComponent = dynamic(() => import("@/components/common/ParticleComponent"), {
+  ssr: false,
+});
 
 export default function Hero() {
   const { t } = useTranslation();
@@ -21,14 +26,17 @@ export default function Hero() {
           <div className="row align-items-center">
             <div className="col-lg-6 order-lg-2">
               <div className="banner-right-content">
-                <img
+                <Image
                   className="tmp-scroll-trigger tmp-zoom-in animation-order-1"
                   alt="banner-img"
                   src="/assets/images/kbi/Kabi.png"
                   width={542}
                   height={802}
+                  priority
                   style={{
                     objectFit: "cover",
+                    width: "auto",
+                    height: "auto",
                     maskImage: "radial-gradient(circle, black 60%, transparent 100%)",
                     WebkitMaskImage: "radial-gradient(circle, black 60%, transparent 100%)",
                   }}

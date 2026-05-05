@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import Link from "next/link";
+import Image from "next/image";
 
 interface BlogPost {
   id: string;
@@ -30,6 +31,8 @@ export default function Blogs3({
       .then((data) => {
         if (Array.isArray(data)) {
           setBlogs(data);
+        } else {
+          setBlogs([]);
         }
       })
       .catch((err) => console.error("Failed to fetch blogs", err))
@@ -57,21 +60,21 @@ export default function Blogs3({
                   <Link
                     href={`/blog-details/${blog.slug}`}
                   >
-                    <img
-                      loading="lazy"
+                    <Image
                       className="img-primary hidden-on-mobile"
                       alt={locale === "fr" ? blog.titleFr : blog.titleEn}
                       width={410}
                       height={294}
                       src={blog.imageUrl || "/assets/images/blog/blog-img-4.jpg"}
+                      style={{ objectFit: "cover" }}
                     />
-                    <img
-                      loading="lazy"
+                    <Image
                       className="img-secondary"
                       alt={locale === "fr" ? blog.titleFr : blog.titleEn}
                       width={410}
                       height={294}
                       src={blog.imageUrl || "/assets/images/blog/blog-img-4.jpg"}
+                      style={{ objectFit: "cover" }}
                     />
                   </Link>
                   <ul className="blog-tags">
