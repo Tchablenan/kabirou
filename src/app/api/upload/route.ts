@@ -40,9 +40,9 @@ export async function POST(req: NextRequest) {
     const safeFilename = file.name.replace(/[^a-zA-Z0-9.]/g, "_");
     const filepath = `${folder}/${uniquePrefix}-${safeFilename}`;
 
-    // Upload vers le bucket "portfolio"
+    // Upload vers le bucket "Portfolio"
     const { data, error } = await supabase.storage
-      .from('portfolio')
+      .from('Portfolio')
       .upload(filepath, buffer, {
         contentType: file.type,
         upsert: false
@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
 
     // Récupérer l'URL publique
     const { data: { publicUrl } } = supabase.storage
-      .from('portfolio')
+      .from('Portfolio')
       .getPublicUrl(filepath);
 
     return NextResponse.json({ 
