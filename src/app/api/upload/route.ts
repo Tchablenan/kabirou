@@ -24,26 +24,42 @@ export async function POST(req: NextRequest) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // Path to save the file
-    const relativePath = `uploads/${folder}`;
-    const uploadDir = join(process.cwd(), "public", relativePath);
+    // Initialiser le client Supabase
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-    // Ensure directory exists
-    if (!fs.existsSync(uploadDir)) {
-      await mkdir(uploadDir, { recursive: true });
+    if (!supabaseUrl || !supabaseKey) {
+      console.error("Supabase credentials missing. Check NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY.");
+      return NextResponse.json({ error: "Storage configuration error" }, { status: 500 });
     }
+
+    const { createClient } = require('@supabase/supabase-js');
+    const supabase = createClient(supabaseUrl, supabaseKey);
 
     const uniquePrefix = Date.now() + "-" + Math.round(Math.random() * 1e9);
     const safeFilename = file.name.replace(/[^a-zA-Z0-9.]/g, "_");
-    const filename = `${uniquePrefix}-${safeFilename}`;
-    const filepath = join(uploadDir, filename);
+    const filepath = `${folder}/${uniquePrefix}-${safeFilename}`;
 
-    await writeFile(filepath, buffer);
+    // Upload vers le bucket "portfolio"
+    const { data, error } = await supabase.storage
+      .from('portfolio')
+      .upload(filepath, buffer, {
+        contentType: file.type,
+        upsert: false
+      });
 
-    const imageUrl = `/${relativePath}/${filename}`;
+    if (error) {
+      console.error("Supabase Storage Error:", error);
+      return NextResponse.json({ error: "Failed to upload to cloud storage" }, { status: 500 });
+    }
+
+    // Récupérer l'URL publique
+    const { data: { publicUrl } } = supabase.storage
+      .from('portfolio')
+      .getPublicUrl(filepath);
 
     return NextResponse.json({ 
-      url: imageUrl,
+      url: publicUrl,
       message: "File uploaded successfully" 
     });
   } catch (error: any) {
