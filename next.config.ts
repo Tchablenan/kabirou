@@ -7,6 +7,14 @@ const nextConfig: NextConfig = {
   compress: true,
   images: {
     formats: ['image/avif', 'image/webp'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'seowehsfdtbolakosopf.supabase.co',
+        port: '',
+        pathname: '/**',
+      },
+    ],
   },
   async headers() {
     return [
