@@ -209,7 +209,7 @@ export default function AdminDashboard() {
         <Card className="bg-primary/5 border-primary/20">
           <CardContent className="p-8 flex flex-col items-center text-center justify-center min-h-[200px]">
             <div className="size-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-4">
-              <Settings className="size-8 text-primary animate-[spin_4s_linear_infinite]" />
+              <Settings className="size-8 text-primary" />
             </div>
             <h3 className="text-xl font-bold">Mode Administration</h3>
             <p className="text-sm text-muted-foreground mt-2 max-w-[280px]">

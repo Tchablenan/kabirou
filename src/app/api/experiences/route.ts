@@ -8,7 +8,9 @@ export async function GET() {
     const experiences = await prisma.experience.findMany({
       orderBy: { displayOrder: "asc" },
     });
-    return NextResponse.json(experiences);
+    return NextResponse.json(experiences, {
+      headers: { "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400" },
+    });
   } catch (error) {
     console.error("GET Experiences Error:", error);
     return NextResponse.json({ error: String(error) }, { status: 500 });

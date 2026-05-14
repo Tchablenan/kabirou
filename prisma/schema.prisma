@@ -64,20 +64,23 @@ model Skill {
 }
 
 model BlogPost {
-  id           String   @id @default(cuid())
-  titleEn      String   @map("title_en")
-  titleFr      String   @map("title_fr")
-  slug         String   @unique
-  contentEn    String?  @map("content_en")
-  contentFr    String?  @map("content_fr")
-  imageUrl     String?  @map("image_url")
-  author       String?  @default("Admin")
-  date         String?
+  id           String    @id @default(cuid())
+  titleEn      String    @map("title_en")
+  titleFr      String    @map("title_fr")
+  slug         String    @unique
+  excerptFr    String?   @map("excerpt_fr")
+  excerptEn    String?   @map("excerpt_en")
+  contentEn    String?   @map("content_en")
+  contentFr    String?   @map("content_fr")
+  imageUrl     String?   @map("image_url")
+  author       String?   @default("Admin")
+  published    Boolean   @default(true)
+  publishedAt  DateTime? @map("published_at")
   tags         String[]
   categories   String[]
-  displayOrder Int      @default(0) @map("display_order")
-  createdAt    DateTime @default(now()) @map("created_at")
-  updatedAt    DateTime @updatedAt @map("updated_at")
+  displayOrder Int       @default(0) @map("display_order")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
 
   @@map("blog_posts")
 }
@@ -123,6 +126,15 @@ enum ExpType {
 enum SkillCategory {
   DEVELOPMENT
   OTHERS
+}
+
+model Setting {
+  key       String   @id
+  value     String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("settings")
 }
 
 enum MessageRole {

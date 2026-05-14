@@ -3,7 +3,8 @@
         "iam": "je suis",
         "name": "Kabirou Djantchiemo",
         "description": "Je suis Kabirou Djantchiemo, un développeur Web & Mobile passionné, titulaire d'une licence professionnelle en Génie Logiciel de l'IAI-TOGO. Je me spécialise dans la création de systèmes backend robustes avec Laravel et de frontends modernes et réactifs avec React.js.",
-        "cv_button": "Voir le Portfolio"
+        "cv_button": "Voir le Portfolio",
+        "download_cv": "Télécharger mon CV"
     },
     "titles": {
         "backend": "Développeur Backend",
@@ -199,15 +200,25 @@
         "subject": "Sujet",
         "message": "Votre Message",
         "button": "Prendre RDV",
-        "sending": "Envoi..."
+        "sending": "Envoi en cours...",
+        "success_message": "Message envoyé avec succès ! Je vous répondrai dans les plus brefs délais.",
+        "error_fill_all": "Veuillez remplir tous les champs obligatoires.",
+        "error_invalid_email": "Veuillez entrer une adresse email valide.",
+        "error_failed": "L'envoi a échoué. Veuillez réessayer.",
+        "error_occurred": "Une erreur inattendue s'est produite. Veuillez réessayer."
     },
     "footer": {
         "get_ready": "Prêt à créer l'exceptionnel",
         "quick_link": "Liens Rapides",
         "contact": "Contact",
-        "find_me": "Me Trouver"
+        "find_me": "Me Trouver",
+        "values_title": "Mes Valeurs",
+        "value_expertise": "Expertise",
+        "value_innovation": "Innovation",
+        "value_trust": "Confidentialité"
     },
     "skills": {
+        "subtitle": "Mes Compétences",
         "development_title": "Compétences en Développement",
         "other_title": "Autres Compétences",
         "category_all": "Tous",

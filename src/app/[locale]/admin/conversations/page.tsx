@@ -4,22 +4,25 @@ import { useState, useEffect, useMemo } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import { 
-  getCoreRowModel, 
-  useReactTable, 
-  ColumnDef 
+import {
+  getCoreRowModel,
+  useReactTable,
+  ColumnDef,
+  getFilteredRowModel,
 } from '@tanstack/react-table';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { 
-  MessageSquare, 
-  ArrowLeft, 
-  Eye, 
-  User as UserIcon, 
-  Mail, 
-  Phone,
-  Clock
+import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
+import {
+  MessageSquare,
+  Eye,
+  User as UserIcon,
+  Mail,
+  Clock,
+  Search,
 } from "lucide-react";
+import { AdminBreadcrumb } from "@/components/admin/AdminBreadcrumb";
 import { 
   DataGrid, 
   DataGridContainer 
@@ -47,7 +50,8 @@ export default function AdminConversations() {
   const router = useRouter();
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  
+  const [search, setSearch] = useState("");
+
   // States for viewing a conversation
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -159,25 +163,62 @@ export default function AdminConversations() {
     },
   ], []);
 
+  const filteredConversations = useMemo(() => {
+    if (!search.trim()) return conversations;
+    const q = search.toLowerCase();
+    return conversations.filter(
+      (c) =>
+        c.visitorName?.toLowerCase().includes(q) ||
+        c.visitorEmail?.toLowerCase().includes(q) ||
+        c.lastMessage?.toLowerCase().includes(q)
+    );
+  }, [conversations, search]);
+
   const table = useReactTable({
-    data: conversations,
+    data: filteredConversations,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
   });
 
   const selectedConversation = conversations.find(c => c.id === selectedId);
 
   if (status === "loading" || isLoading) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[50vh] gap-4">
-        <div className="size-10 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-        <p className="text-muted-foreground animate-pulse">Chargement des conversations...</p>
+      <div className="flex flex-col gap-5 w-full">
+        <div className="flex items-center gap-3">
+          <Skeleton className="size-11 rounded-xl" />
+          <div className="flex flex-col gap-2">
+            <Skeleton className="h-6 w-48" />
+            <Skeleton className="h-4 w-64" />
+          </div>
+        </div>
+        <Card>
+          <CardContent className="p-0">
+            <div className="divide-y divide-border">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <div key={i} className="flex items-center gap-4 px-6 py-4">
+                  <div className="flex flex-col gap-1.5 flex-1">
+                    <Skeleton className="h-4 w-32" />
+                    <Skeleton className="h-3 w-48" />
+                  </div>
+                  <Skeleton className="h-4 w-48" />
+                  <Skeleton className="h-6 w-16 rounded-full" />
+                  <Skeleton className="h-4 w-24" />
+                  <Skeleton className="h-8 w-24 rounded-md" />
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
       </div>
     );
   }
 
   return (
     <div className="flex flex-col gap-5 lg:gap-7.5 w-full">
+      <AdminBreadcrumb items={[{ label: "Messages Visiteurs" }]} />
+
       <div className="flex flex-wrap items-center justify-between gap-5">
         <div className="flex items-center gap-3">
           <div className="p-2.5 bg-primary/10 rounded-xl">
@@ -188,15 +229,26 @@ export default function AdminConversations() {
             <p className="text-sm text-muted-foreground">Gérez les interactions directes avec vos visiteurs.</p>
           </div>
         </div>
-        <Button onClick={() => router.push("/admin/dashboard")} variant="outline" size="sm" className="gap-2">
-          <ArrowLeft className="size-4" />
-          Retour
-        </Button>
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+          <Input
+            placeholder="Rechercher un visiteur..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="pl-9 w-64"
+          />
+        </div>
       </div>
 
       <Card className="overflow-hidden border-border/60 shadow-sm">
         <CardHeader className="bg-muted/30 pb-4">
-          <CardTitle className="text-lg">Historique des échanges</CardTitle>
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-lg">Historique des échanges</CardTitle>
+            <span className="text-sm text-muted-foreground">
+              {filteredConversations.length} conversation{filteredConversations.length !== 1 ? "s" : ""}
+              {search && ` · filtrée${filteredConversations.length !== 1 ? "s" : ""}`}
+            </span>
+          </div>
         </CardHeader>
         <CardContent className="p-0">
           <DataGridContainer border={false}>
