@@ -33,11 +33,11 @@ export default function Footer1({
                       />
                     </Link>
                   </div>
-                  <h5 className="ft-title">Mes Valeurs</h5>
+                  <h5 className="ft-title">{t("footer.values_title")}</h5>
                   <ul className="ft-link tmp-link-animation dark-content">
-                    <li>Expertise</li>
-                    <li>Innovation</li>
-                    <li>Confidentialité</li>
+                    <li>{t("footer.value_expertise")}</li>
+                    <li>{t("footer.value_innovation")}</li>
+                    <li>{t("footer.value_trust")}</li>
                   </ul>
                 </div>
               </div>

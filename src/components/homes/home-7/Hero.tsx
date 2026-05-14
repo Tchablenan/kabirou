@@ -5,13 +5,23 @@ import Image from "next/image";
 import TyperComponent from "@/components/common/TyperComponent";
 import { useTranslation } from "react-i18next";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const ParticleComponent = dynamic(() => import("@/components/common/ParticleComponent"), {
   ssr: false,
 });
 
-export default function Hero() {
+export default function Hero({ initialCvUrl }: { initialCvUrl?: string }) {
   const { t } = useTranslation();
+  const [cvUrl, setCvUrl] = useState<string>(initialCvUrl ?? "");
+
+  useEffect(() => {
+    if (initialCvUrl !== undefined) return;
+    fetch("/api/settings")
+      .then((r) => r.json())
+      .then((data) => setCvUrl(data.cv_url ?? ""))
+      .catch(() => {});
+  }, [initialCvUrl]);
 
   const typerStrings = [
     t("titles.web_developer"),
@@ -67,7 +77,7 @@ export default function Hero() {
                 <p className="disc tmp-scroll-trigger tmp-fade-in animation-order-3">
                   {t("hero.description")}
                 </p>
-                <div className="button-area-banner-one tmp-scroll-trigger tmp-fade-in animation-order-4">
+                <div className="button-area-banner-one tmp-scroll-trigger tmp-fade-in animation-order-4" style={{ display: "flex", gap: "16px", flexWrap: "wrap", alignItems: "center" }}>
                   <Link
                     href="#portfolio"
                     className="tmp-btn hover-icon-reverse radius-round"
@@ -82,6 +92,29 @@ export default function Hero() {
                       </span>
                     </span>
                   </Link>
+                  {cvUrl && (
+                  <a
+                    href={cvUrl}
+                    download
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="tmp-btn radius-round"
+                    style={{ background: "transparent", border: "2px solid rgba(255,255,255,0.2)", color: "var(--color-heading)" }}
+                    onMouseEnter={e => {
+                      (e.currentTarget as HTMLAnchorElement).style.borderColor = "var(--color-primary)";
+                      (e.currentTarget as HTMLAnchorElement).style.color = "var(--color-primary)";
+                    }}
+                    onMouseLeave={e => {
+                      (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(255,255,255,0.2)";
+                      (e.currentTarget as HTMLAnchorElement).style.color = "var(--color-heading)";
+                    }}
+                  >
+                    <span style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                      <i className="fa-solid fa-download" style={{ fontSize: "0.85rem" }} />
+                      {t("hero.download_cv")}
+                    </span>
+                  </a>
+                  )}
                 </div>
               </div>
             </div>

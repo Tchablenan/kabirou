@@ -8,9 +8,12 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Pencil, Trash2, Plus, ArrowLeft } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Pencil, Trash2, Plus } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import ExperienceForm from "@/components/admin/ExperienceForm";
+import { ConfirmDialog } from "@/components/admin/ConfirmDialog";
+import { AdminBreadcrumb } from "@/components/admin/AdminBreadcrumb";
 
 interface Experience {
   id: string;
@@ -28,6 +31,8 @@ export default function AdminExperiences() {
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedExperience, setSelectedExperience] = useState<Experience | null>(null);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -46,7 +51,7 @@ export default function AdminExperiences() {
       const res = await fetch("/api/experiences");
       const data = await res.json();
       setExperiences(data);
-    } catch (error) {
+    } catch {
       toast.error("Erreur lors du chargement");
     } finally {
       setIsLoading(false);
@@ -68,32 +73,57 @@ export default function AdminExperiences() {
     fetchExperiences();
   };
 
-  const handleDelete = async (id: string) => {
-    if (!confirm("Voulez-vous vraiment supprimer cette expérience ?")) return;
-
+  const handleDelete = async () => {
+    if (!deleteId) return;
+    setIsDeleting(true);
     try {
-      const res = await fetch(`/api/experiences/${id}`, { method: "DELETE" });
+      const res = await fetch(`/api/experiences/${deleteId}`, { method: "DELETE" });
       if (res.ok) {
         toast.success("Supprimé avec succès");
-        setExperiences(experiences.filter((e) => e.id !== id));
+        setExperiences(experiences.filter((e) => e.id !== deleteId));
       } else {
         toast.error("Erreur lors de la suppression");
       }
-    } catch (error) {
+    } catch {
       toast.error("Une erreur est survenue");
+    } finally {
+      setIsDeleting(false);
+      setDeleteId(null);
     }
   };
 
   if (status === "loading" || isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-[50vh]">
-        <span className="text-muted-foreground">Chargement des expériences...</span>
+      <div className="flex flex-col gap-5 w-full">
+        <div className="flex items-center justify-between">
+          <Skeleton className="h-7 w-64" />
+          <Skeleton className="h-9 w-36" />
+        </div>
+        <Card>
+          <CardContent className="p-0">
+            <div className="divide-y divide-border">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="flex items-center gap-4 px-6 py-4">
+                  <Skeleton className="h-6 w-16 rounded-full" />
+                  <Skeleton className="h-4 flex-1" />
+                  <Skeleton className="h-4 w-32" />
+                  <div className="flex gap-2">
+                    <Skeleton className="size-8 rounded-md" />
+                    <Skeleton className="size-8 rounded-md" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
       </div>
     );
   }
 
   return (
     <div className="flex flex-col gap-5 lg:gap-7.5 w-full">
+      <AdminBreadcrumb items={[{ label: "CV & Expériences" }]} />
+
       <div className="flex flex-wrap items-center justify-between gap-5">
         <h2 className="text-xl font-bold text-foreground">Gestion du CV (Expériences & Formations)</h2>
         <Button onClick={handleAdd} variant="primary" size="sm">
@@ -120,28 +150,18 @@ export default function AdminExperiences() {
               {experiences.map((exp) => (
                 <TableRow key={exp.id}>
                   <TableCell>
-                    <Badge variant={exp.type === 'WORK' ? 'primary' : 'info'} appearance="light" size="sm">
-                      {exp.type === 'WORK' ? 'Travail' : 'Étude'}
+                    <Badge variant={exp.type === "WORK" ? "primary" : "info"} appearance="light" size="sm">
+                      {exp.type === "WORK" ? "Travail" : "Étude"}
                     </Badge>
                   </TableCell>
                   <TableCell className="font-medium text-foreground">{exp.titleFr}</TableCell>
                   <TableCell className="text-muted-foreground">{exp.organization}</TableCell>
                   <TableCell className="text-right">
                     <div className="flex items-center justify-end gap-2 pr-2">
-                      <Button
-                        onClick={() => handleEdit(exp)}
-                        variant="ghost"
-                        size="icon"
-                        className="size-8"
-                      >
+                      <Button onClick={() => handleEdit(exp)} variant="ghost" size="icon" className="size-8">
                         <Pencil className="size-4 text-primary" />
                       </Button>
-                      <Button
-                        onClick={() => handleDelete(exp.id)}
-                        variant="ghost"
-                        size="icon"
-                        className="size-8"
-                      >
+                      <Button onClick={() => setDeleteId(exp.id)} variant="ghost" size="icon" className="size-8">
                         <Trash2 className="size-4 text-destructive" />
                       </Button>
                     </div>
@@ -160,13 +180,6 @@ export default function AdminExperiences() {
         </CardContent>
       </Card>
 
-      <div>
-        <Button onClick={() => router.push("/admin/dashboard")} variant="ghost" className="text-muted-foreground px-0">
-          <ArrowLeft className="size-4 mr-2" />
-          Retour au tableau de bord
-        </Button>
-      </div>
-
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
@@ -178,14 +191,23 @@ export default function AdminExperiences() {
             </DialogDescription>
           </DialogHeader>
           <div className="py-4">
-            <ExperienceForm 
-              initialData={selectedExperience} 
-              onSuccess={handleSuccess} 
-              onCancel={() => setIsModalOpen(false)} 
+            <ExperienceForm
+              initialData={selectedExperience}
+              onSuccess={handleSuccess}
+              onCancel={() => setIsModalOpen(false)}
             />
           </div>
         </DialogContent>
       </Dialog>
+
+      <ConfirmDialog
+        open={!!deleteId}
+        onOpenChange={(open) => !open && setDeleteId(null)}
+        title="Supprimer l'entrée ?"
+        description="Cette action est irréversible. Cette expérience sera définitivement supprimée."
+        onConfirm={handleDelete}
+        isLoading={isDeleting}
+      />
     </div>
   );
 }

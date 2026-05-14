@@ -3,21 +3,27 @@ import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 
+function generateSlug(text: string) {
+  return text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .replace(/[^a-z0-9\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-");
+}
+
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { id } = await params;
-    const blog = await prisma.blogPost.findUnique({
-      where: { id },
-    });
-    if (!blog) {
-      return NextResponse.json({ error: "Blog post not found" }, { status: 404 });
-    }
+    const blog = await prisma.blogPost.findUnique({ where: { id } });
+    if (!blog) return NextResponse.json({ error: "Blog post not found" }, { status: 404 });
     return NextResponse.json(blog);
   } catch (error) {
-    console.error("GET Blog ID Error:", error);
     return NextResponse.json({ error: "Failed to fetch blog post" }, { status: 500 });
   }
 }
@@ -27,28 +33,27 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const session = await getServerSession(authOptions);
-  if (!session) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   try {
     const { id } = await params;
     const data = await request.json();
-
-    // Generate slug if titleEn is updated and slug is not provided
-    const slug = data.slug || (data.titleEn ? data.titleEn.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '') : undefined);
+    const slug = data.slug ? generateSlug(data.slug) : undefined;
 
     const blog = await prisma.blogPost.update({
       where: { id },
       data: {
         titleEn: data.titleEn,
         titleFr: data.titleFr,
-        slug: slug,
-        contentEn: data.contentEn,
-        contentFr: data.contentFr,
-        imageUrl: data.imageUrl,
+        ...(slug && { slug }),
+        excerptFr: data.excerptFr ?? null,
+        excerptEn: data.excerptEn ?? null,
+        contentEn: data.contentEn ?? null,
+        contentFr: data.contentFr ?? null,
+        imageUrl: data.imageUrl ?? null,
         author: data.author,
-        date: data.date,
+        published: data.published !== undefined ? data.published : undefined,
+        publishedAt: data.publishedAt ? new Date(data.publishedAt) : undefined,
         tags: data.tags,
         categories: data.categories,
         displayOrder: data.displayOrder,
@@ -66,18 +71,13 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const session = await getServerSession(authOptions);
-  if (!session) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   try {
     const { id } = await params;
-    await prisma.blogPost.delete({
-      where: { id },
-    });
+    await prisma.blogPost.delete({ where: { id } });
     return NextResponse.json({ message: "Blog post deleted" });
   } catch (error) {
-    console.error("DELETE Blog ID Error:", error);
     return NextResponse.json({ error: "Failed to delete blog post" }, { status: 500 });
   }
 }

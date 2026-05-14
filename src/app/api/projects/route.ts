@@ -8,7 +8,9 @@ export async function GET() {
     const projects = await prisma.project.findMany({
       orderBy: { displayOrder: "asc" },
     });
-    return NextResponse.json(projects);
+    return NextResponse.json(projects, {
+      headers: { "Cache-Control": "public, s-maxage=300, stale-while-revalidate=3600" },
+    });
   } catch (error: any) {
     return NextResponse.json({ error: "Failed to fetch projects" }, { status: 500 });
   }

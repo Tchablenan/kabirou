@@ -108,7 +108,7 @@ export default async function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         <AuthProvider>
           <I18nProvider locale={locale}>
             <ModalUIProvider>

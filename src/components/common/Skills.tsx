@@ -14,11 +14,15 @@ interface Skill {
 
 export default function Skills({
   parentClass = "tmp-skill-area tmp-section-gapTop",
+  initialSkills,
+}: {
+  parentClass?: string;
+  initialSkills?: Skill[];
 }) {
   const { t } = useTranslation();
   const [activeFilter, setActiveFilter] = useState("all");
-  const [skills, setSkills] = useState<Skill[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [skills, setSkills] = useState<Skill[]>(initialSkills ?? []);
+  const [isLoading, setIsLoading] = useState(!initialSkills);
 
   const categories = [
     { id: "all", label: "skills.category_all" },
@@ -27,18 +31,13 @@ export default function Skills({
   ];
 
   useEffect(() => {
+    if (initialSkills) return;
     fetch("/api/skills")
       .then((res) => res.json())
-      .then((data) => {
-        if (Array.isArray(data)) {
-          setSkills(data);
-        } else {
-          setSkills([]);
-        }
-      })
-      .catch((err) => console.error("Failed to fetch skills", err))
+      .then((data) => setSkills(Array.isArray(data) ? data : []))
+      .catch(() => {})
       .finally(() => setIsLoading(false));
-  }, []);
+  }, [initialSkills]);
 
   const filteredSkills = activeFilter === "all" 
     ? skills 
@@ -49,7 +48,7 @@ export default function Skills({
       <div className="container">
         <div className="section-head mb--50 text-center">
             <span className="subtitle center-title tmp-scroll-trigger tmp-fade-in animation-order-1" style={{ display: 'block', marginBottom: '10px' }}>
-                {t("services.subtitle")}
+                {t("skills.subtitle")}
             </span>
             <h2 className="title split-collab tmp-scroll-trigger tmp-fade-in animation-order-2">
                 {t("navigation.skills")}
@@ -85,7 +84,26 @@ export default function Skills({
         </div>
 
         <div className="row g-4 justify-content-center">
-          {filteredSkills.map((skill, skillIndex) => (
+          {isLoading && Array.from({ length: 12 }).map((_, i) => (
+            <div className="col-lg-2 col-md-3 col-sm-4 col-6" key={`skel-${i}`}>
+              <div style={{
+                background: 'rgba(255, 255, 255, 0.05)',
+                borderRadius: '15px',
+                border: '1px solid rgba(255, 255, 255, 0.08)',
+                height: '120px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '12px',
+                animation: 'pulse 1.5s ease-in-out infinite',
+              }}>
+                <div style={{ width: '50px', height: '50px', background: 'rgba(255,255,255,0.07)', borderRadius: '10px' }} />
+                <div style={{ width: '70%', height: '12px', background: 'rgba(255,255,255,0.05)', borderRadius: '6px' }} />
+              </div>
+            </div>
+          ))}
+          {!isLoading && filteredSkills.map((skill, skillIndex) => (
             <div className="col-lg-2 col-md-3 col-sm-4 col-6" key={`${activeFilter}-${skillIndex}`}>
               <div 
                 className="skill-logo-card p-4 text-center tmponhover tmp-scroll-trigger tmp-zoom-in"

@@ -7,7 +7,10 @@ import { toast } from "react-toastify";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Pencil, Trash2, Plus, ArrowLeft } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Pencil, Trash2, Plus } from "lucide-react";
+import { ConfirmDialog } from "@/components/admin/ConfirmDialog";
+import { AdminBreadcrumb } from "@/components/admin/AdminBreadcrumb";
 
 interface Project {
   id: string;
@@ -22,6 +25,8 @@ export default function AdminProjects() {
   const router = useRouter();
   const [projects, setProjects] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -40,39 +45,65 @@ export default function AdminProjects() {
       const res = await fetch("/api/projects");
       const data = await res.json();
       setProjects(data);
-    } catch (error) {
+    } catch {
       toast.error("Erreur lors du chargement des projets");
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (!confirm("Voulez-vous vraiment supprimer ce projet ?")) return;
-
+  const handleDelete = async () => {
+    if (!deleteId) return;
+    setIsDeleting(true);
     try {
-      const res = await fetch(`/api/projects/${id}`, { method: "DELETE" });
+      const res = await fetch(`/api/projects/${deleteId}`, { method: "DELETE" });
       if (res.ok) {
         toast.success("Projet supprimé");
-        setProjects(projects.filter((p) => p.id !== id));
+        setProjects(projects.filter((p) => p.id !== deleteId));
       } else {
         toast.error("Erreur lors de la suppression");
       }
-    } catch (error) {
+    } catch {
       toast.error("Une erreur est survenue");
+    } finally {
+      setIsDeleting(false);
+      setDeleteId(null);
     }
   };
 
   if (status === "loading" || isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-[50vh]">
-        <span className="text-muted-foreground">Chargement des projets...</span>
+      <div className="flex flex-col gap-5 w-full">
+        <div className="flex items-center justify-between">
+          <Skeleton className="h-7 w-48" />
+          <Skeleton className="h-9 w-36" />
+        </div>
+        <Card>
+          <CardContent className="p-0">
+            <div className="divide-y divide-border">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <div key={i} className="flex items-center gap-4 px-6 py-4">
+                  <Skeleton className="h-4 w-8" />
+                  <Skeleton className="size-10 rounded-lg" />
+                  <Skeleton className="h-4 flex-1" />
+                  <Skeleton className="h-4 w-32" />
+                  <div className="flex gap-2">
+                    <Skeleton className="size-8 rounded-md" />
+                    <Skeleton className="size-8 rounded-md" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
       </div>
     );
   }
 
   return (
     <div className="flex flex-col gap-5 lg:gap-7.5 w-full">
+      <AdminBreadcrumb items={[{ label: "Projets" }]} />
+
       <div className="flex flex-wrap items-center justify-between gap-5">
         <h2 className="text-xl font-bold text-foreground">Gestion des Projets</h2>
         <Button onClick={() => router.push("/admin/projects/new")} variant="primary" size="sm">
@@ -104,9 +135,9 @@ export default function AdminProjects() {
                     <div className="size-10 rounded-lg overflow-hidden border border-border bg-muted flex items-center justify-center">
                       {project.imageUrl ? (
                         /* eslint-disable-next-line @next/next/no-img-element */
-                        <img 
-                          src={project.imageUrl} 
-                          alt={project.title} 
+                        <img
+                          src={project.imageUrl}
+                          alt={project.title}
                           className="size-full object-cover"
                         />
                       ) : (
@@ -127,7 +158,7 @@ export default function AdminProjects() {
                         <Pencil className="size-4 text-primary" />
                       </Button>
                       <Button
-                        onClick={() => handleDelete(project.id)}
+                        onClick={() => setDeleteId(project.id)}
                         variant="ghost"
                         size="icon"
                         className="size-8"
@@ -140,8 +171,8 @@ export default function AdminProjects() {
               ))}
               {projects.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={4} className="h-24 text-center text-muted-foreground">
-                    Aucun projet n'a été créé.
+                  <TableCell colSpan={5} className="h-24 text-center text-muted-foreground">
+                    Aucun projet n&apos;a été créé.
                   </TableCell>
                 </TableRow>
               )}
@@ -150,12 +181,14 @@ export default function AdminProjects() {
         </CardContent>
       </Card>
 
-      <div>
-        <Button onClick={() => router.push("/admin/dashboard")} variant="ghost" className="text-muted-foreground px-0">
-          <ArrowLeft className="size-4 mr-2" />
-          Retour au tableau de bord
-        </Button>
-      </div>
+      <ConfirmDialog
+        open={!!deleteId}
+        onOpenChange={(open) => !open && setDeleteId(null)}
+        title="Supprimer le projet ?"
+        description="Cette action est irréversible. Le projet sera définitivement supprimé de votre portfolio."
+        onConfirm={handleDelete}
+        isLoading={isDeleting}
+      />
     </div>
   );
 }

@@ -58,7 +58,8 @@ export default function LoginPage() {
             <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 text-primary transform hover:scale-105 transition-transform duration-300">
               <Lock className="h-8 w-8" />
             </div>
-            <CardDescription className="text-muted-foreground text-sm mt-6">
+            <h2 className="text-xl font-bold text-foreground mt-4">Kabirou Portfolio</h2>
+            <CardDescription className="text-muted-foreground text-sm mt-1">
               Connectez-vous pour gérer votre Portfolio
             </CardDescription>
           </CardHeader>
@@ -126,7 +127,7 @@ export default function LoginPage() {
         </Card>
         
         <p className="text-center text-xs text-muted-foreground/50 mt-10">
-          &copy; {new Date().getFullYear()} Reeni Portfolio. Espace sécurisé.
+          &copy; {new Date().getFullYear()} Kabirou Djantchiemo. Espace sécurisé.
         </p>
       </div>
     </div>

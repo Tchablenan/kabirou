@@ -5,14 +5,9 @@ import { ReactNode, useEffect, useState, useRef } from 'react';
 import { UIMessage, useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import {
-  Calendar,
   CheckCheck,
-  MoreVertical,
-  Settings2,
-  Shield,
-  Users,
+  X,
 } from 'lucide-react';
-import Link from 'next/link';
 import { toAbsoluteUrl } from '@/lib/helpers';
 import { cn } from '@/lib/utils';
 import { useProfile } from "@/hooks/useProfile";
@@ -24,16 +19,6 @@ import {
   AvatarStatus,
 } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuPortal,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
 import {
   Sheet,
@@ -44,7 +29,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
-import { AvatarGroup } from '@/components/layouts/layout-1/shared/common/avatar-group';
 
 export default function Chat() {
   const { data: session } = useSession();
@@ -149,7 +133,7 @@ export default function Chat() {
   const kabirouName = profile?.name || "Kabirou Djantchiemo";
 
   return (
-    <div className={cn("fixed bottom-[90px] right-[20px] z-[99999] pointer-events-auto transition-opacity duration-300", isOpen && "opacity-0 pointer-events-none")}>
+    <div className="fixed bottom-[90px] right-[20px] z-[99999] pointer-events-auto">
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
         <SheetTrigger asChild>
           <button
@@ -162,15 +146,17 @@ export default function Chat() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.25), 0 4px 6px -2px rgba(255, 1, 79, 0.2)',
               cursor: 'pointer',
               border: 'none',
               padding: 0,
               margin: 0,
-              transition: 'transform 0.3s ease'
+              transition: 'transform 0.3s ease, opacity 0.3s ease',
+              opacity: isOpen ? 0 : 1,
+              pointerEvents: isOpen ? 'none' : 'auto',
             }}
             className="hover:scale-110 active:scale-95"
-            aria-label="Open Chat"
+            aria-label="Ouvrir le chat"
           >
             <i className="fab fa-facebook-messenger" style={{ fontSize: '22px', color: '#fff' }} />
           </button>
@@ -200,43 +186,15 @@ export default function Chat() {
                     </span>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <AvatarGroup
-                    size="size-8"
-                    group={[
-                      { path: kabirouAvatar },
-                      { fallback: 'V', variant: 'bg-blue-500 text-white font-bold' },
-                    ]}
-                  />
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" mode="icon" size="sm">
-                        <MoreVertical className="size-4!" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-44" side="bottom" align="end">
-                      <DropdownMenuItem asChild>
-                        <Link href="#"><Users /> Invite Users</Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuSub>
-                        <DropdownMenuSubTrigger>
-                          <Settings2 />
-                          <span>Team Settings</span>
-                        </DropdownMenuSubTrigger>
-                        <DropdownMenuPortal>
-                          <DropdownMenuSubContent className="w-44">
-                            <DropdownMenuItem asChild>
-                              <Link href="#"><Shield /> Find Members</Link>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem asChild>
-                              <Link href="#"><Calendar /> Meetings</Link>
-                            </DropdownMenuItem>
-                          </DropdownMenuSubContent>
-                        </DropdownMenuPortal>
-                      </DropdownMenuSub>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </div>
+                <Button
+                  variant="ghost"
+                  mode="icon"
+                  size="sm"
+                  onClick={() => setIsOpen(false)}
+                  aria-label="Fermer le chat"
+                >
+                  <X className="size-4" />
+                </Button>
               </div>
             </div>
           </SheetHeader>

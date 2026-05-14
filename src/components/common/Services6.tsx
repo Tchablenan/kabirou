@@ -2,7 +2,6 @@
 
 import { services2 } from "@/data/services";
 import { useTranslation } from "react-i18next";
-import Link from "next/link";
 
 export default function Services({
   parentClass = "latest-service-area tmp-section-gapTop",
@@ -24,66 +23,34 @@ export default function Services({
           <div className="col-lg-6 col-sm-6">
             {services2
               .filter((service) => service.column === 1)
-              .map((service) =>
-                service.isLink ? (
-                  <Link
-                    href={`/service-details${isLight ? "-white" : ""}/${service.slug
-                      }`}
-                    className={`service-card-v2 tmponhover tmp-scroll-trigger tmp-fade-in animation-order-${service.animationOrder}`}
-                    key={service.id}
-                  >
-                    <h2 className="service-card-num">
-                      <span>{service.num}</span>
-                      {t(`services.${service.key}.title`)}
-                    </h2>
-                    <p className="service-para">{t(`services.${service.key}.description`)}</p>
-                  </Link>
-                ) : (
-                  <div
-                    className={`service-card-v2 tmponhover tmp-scroll-trigger tmp-fade-in animation-order-${service.animationOrder}`}
-                    key={service.id}
-                  >
-                    <h2 className="service-card-num">
-                      <span>{service.num}</span>
-                      {t(`services.${service.key}.title`)}
-                    </h2>
-                    <p className="service-para">{t(`services.${service.key}.description`)}</p>
-                  </div>
-                )
-              )}
+              .map((service) => (
+                <div
+                  className={`service-card-v2 tmponhover tmp-scroll-trigger tmp-fade-in animation-order-${service.animationOrder}`}
+                  key={service.id}
+                >
+                  <h2 className="service-card-num">
+                    <span>{service.num}</span>
+                    {t(`services.${service.key}.title`)}
+                  </h2>
+                  <p className="service-para">{t(`services.${service.key}.description`)}</p>
+                </div>
+              ))}
           </div>
-
-          {/* Second column */}
           <div className="col-lg-6 col-sm-6">
             {services2
               .filter((service) => service.column === 2)
-              .map((service) =>
-                service.isLink ? (
-                  <Link
-                    href={`/service-details${isLight ? "-white" : ""}/${service.slug
-                      }`}
-                    className={`service-card-v2 tmponhover tmp-scroll-trigger tmp-fade-in animation-order-${service.animationOrder}`}
-                    key={service.id}
-                  >
-                    <h2 className="service-card-num">
-                      <span>{service.num}</span>
-                      {t(`services.${service.key}.title`)}
-                    </h2>
-                    <p className="service-para">{t(`services.${service.key}.description`)}</p>
-                  </Link>
-                ) : (
-                  <div
-                    className={`service-card-v2 tmponhover tmp-scroll-trigger tmp-fade-in animation-order-${service.animationOrder}`}
-                    key={service.id}
-                  >
-                    <h2 className="service-card-num">
-                      <span>{service.num}</span>
-                      {t(`services.${service.key}.title`)}
-                    </h2>
-                    <p className="service-para">{t(`services.${service.key}.description`)}</p>
-                  </div>
-                )
-              )}
+              .map((service) => (
+                <div
+                  className={`service-card-v2 tmponhover tmp-scroll-trigger tmp-fade-in animation-order-${service.animationOrder}`}
+                  key={service.id}
+                >
+                  <h2 className="service-card-num">
+                    <span>{service.num}</span>
+                    {t(`services.${service.key}.title`)}
+                  </h2>
+                  <p className="service-para">{t(`services.${service.key}.description`)}</p>
+                </div>
+              ))}
           </div>
         </div>
       </div>

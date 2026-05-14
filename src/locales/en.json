@@ -3,7 +3,8 @@
         "iam": "i’m",
         "name": "Kabirou Djantchiemo",
         "description": "I am Kabirou Djantchiemo, a passionate Web & Mobile Developer with a Professional License in Software Engineering from IAI-TOGO. I specialize in building robust backend systems with Laravel and modern, responsive frontends with React.js.",
-        "cv_button": "View Portfolio"
+        "cv_button": "View Portfolio",
+        "download_cv": "Download my CV"
     },
     "titles": {
         "backend": "Backend Developer",
@@ -197,15 +198,25 @@
         "subject": "Subject",
         "message": "Your Message",
         "button": "Appointment Now",
-        "sending": "Sending..."
+        "sending": "Sending...",
+        "success_message": "Message sent successfully! I'll get back to you as soon as possible.",
+        "error_fill_all": "Please fill in all required fields.",
+        "error_invalid_email": "Please enter a valid email address.",
+        "error_failed": "Sending failed. Please try again.",
+        "error_occurred": "An unexpected error occurred. Please try again."
     },
     "footer": {
         "get_ready": "Get Ready To Create Great",
         "quick_link": "Quick Link",
         "contact": "Contact",
-        "find_me": "Find With Me"
+        "find_me": "Find With Me",
+        "values_title": "My Values",
+        "value_expertise": "Expertise",
+        "value_innovation": "Innovation",
+        "value_trust": "Confidentiality"
     },
     "skills": {
+        "subtitle": "My Skills",
         "development_title": "Development Skills",
         "other_title": "Other Skills",
         "category_all": "All",

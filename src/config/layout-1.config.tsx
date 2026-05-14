@@ -75,11 +75,17 @@ export const MENU_SIDEBAR: MenuConfig = [
     icon: Zap,
     path: '/admin/skills',
   },
+  { heading: 'Communication' },
+  {
+    title: 'Messages',
+    icon: MessageSquare,
+    path: '/admin/conversations',
+  },
   { heading: 'Configuration' },
   {
     title: 'Paramètres',
     icon: Settings,
-    path: '#',
+    path: '/admin/settings',
   },
 ];
 

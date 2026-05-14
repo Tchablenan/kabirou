@@ -1,9 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import gsap from "gsap";
 import { usePathname } from "next/navigation";
-// import { SplitText } from "gsap/SplitText";
 import React from "react";
 
 export default function GlobaleffectProvider({ children }: { children: React.ReactNode }) {
@@ -304,8 +302,11 @@ export default function GlobaleffectProvider({ children }: { children: React.Rea
       if (elements.length === 0) return;
 
       try {
-        const { SplitText } = await import("gsap/SplitText");
-        
+        const [{ default: gsap }, { SplitText }] = await Promise.all([
+          import("gsap"),
+          import("gsap/SplitText"),
+        ]);
+
         const observer = new IntersectionObserver(
           (entries) => {
             entries.forEach((entry) => {
@@ -313,33 +314,19 @@ export default function GlobaleffectProvider({ children }: { children: React.Rea
 
               const el = entry.target as HTMLElement & {
                 split?: any;
-                animation?: gsap.core.Animation;
+                animation?: any;
               };
 
-              if (el.animation) {
-                el.animation.progress(1).kill();
-              }
-              if (el.split) {
-                el.split.revert();
-              }
+              if (el.animation) el.animation.progress(1).kill();
+              if (el.split) el.split.revert();
 
               el.split = new SplitText(el, { type: "chars" });
 
               gsap.set(el, { perspective: 400 });
-              gsap.set(el.split.chars, {
-                opacity: 0,
-                x: "-10",
-                rotateX: "0",
-              });
-
+              gsap.set(el.split.chars, { opacity: 0, x: "-10", rotateX: "0" });
               el.animation = gsap.to(el.split.chars, {
-                x: "0",
-                y: "0",
-                rotateX: "0",
-                opacity: 1,
-                duration: 1,
-                ease: "back.out(1.7)",
-                stagger: 0.02,
+                x: "0", y: "0", rotateX: "0", opacity: 1,
+                duration: 1, ease: "back.out(1.7)", stagger: 0.02,
               });
 
               observer.unobserve(el);
@@ -353,10 +340,7 @@ export default function GlobaleffectProvider({ children }: { children: React.Rea
         return () => {
           observer.disconnect();
           elements.forEach((el) => {
-            const e = el as HTMLElement & {
-              split?: any;
-              animation?: gsap.core.Animation;
-            };
+            const e = el as HTMLElement & { split?: any; animation?: any };
             e.animation?.kill();
             e.split?.revert();
             delete e.animation;
