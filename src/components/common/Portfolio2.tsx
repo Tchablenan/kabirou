@@ -14,10 +14,14 @@ interface Project {
   descriptionFr: string | null;
   descriptionEn: string | null;
   imageUrl: string | null;
+  link: string | null;
+  categories: string[];
+  tags: string[];
   displayOrder: number;
 }
 
 const ITEMS_PER_PAGE = 4;
+const MAX_BADGES = 5;
 
 export default function Portfolio({ isLight = false, initialProjects }: { isLight?: boolean; initialProjects?: Project[] }) {
   const { t, i18n } = useTranslation();
@@ -25,6 +29,7 @@ export default function Portfolio({ isLight = false, initialProjects }: { isLigh
   const [projects, setProjects] = useState<Project[]>(initialProjects ?? []);
   const [isLoading, setIsLoading] = useState(!initialProjects);
   const [currentPage, setCurrentPage] = useState(1);
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
   useEffect(() => {
     if (initialProjects) return;
@@ -35,12 +40,25 @@ export default function Portfolio({ isLight = false, initialProjects }: { isLigh
       .finally(() => setIsLoading(false));
   }, [initialProjects]);
 
-  const totalPages = Math.ceil(projects.length / ITEMS_PER_PAGE);
-  const paginated = projects.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
+  const allCategories = Array.from(
+    new Set(projects.flatMap((p) => p.categories || []))
+  ).filter(Boolean);
+
+  const filtered = activeCategory
+    ? projects.filter((p) => p.categories?.includes(activeCategory))
+    : projects;
+
+  const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
+  const paginated = filtered.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
 
   const goToPage = (page: number) => {
     setCurrentPage(page);
     document.getElementById("portfolio")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const selectCategory = (category: string | null) => {
+    setActiveCategory(category);
+    setCurrentPage(1);
   };
 
   return (
@@ -62,20 +80,37 @@ export default function Portfolio({ isLight = false, initialProjects }: { isLigh
           </p>
         </div>
 
+        {/* Category filter — only shown when projects define categories */}
+        {!isLoading && allCategories.length > 1 && (
+          <div className="project-filter-group mb--50" role="group" aria-label={t("portfolio.subtitle")}>
+            <button
+              className={`skill-filter-btn ${activeCategory === null ? "active" : ""}`}
+              onClick={() => selectCategory(null)}
+              aria-pressed={activeCategory === null}
+            >
+              {t("portfolio.filter_all")}
+            </button>
+            {allCategories.map((category) => (
+              <button
+                key={category}
+                className={`skill-filter-btn ${activeCategory === category ? "active" : ""}`}
+                onClick={() => selectCategory(category)}
+                aria-pressed={activeCategory === category}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        )}
+
         <div className="row">
           {isLoading && Array.from({ length: 4 }).map((_, i) => (
             <div className="col-lg-6 col-sm-6" key={`skel-${i}`}>
               <div className="latest-portfolio-card" style={{ borderRadius: '20px', overflow: 'hidden', marginBottom: '30px' }}>
-                <div style={{
-                  width: '100%',
-                  height: '400px',
-                  background: 'rgba(255,255,255,0.07)',
-                  borderRadius: '20px',
-                  animation: 'pulse 1.5s ease-in-out infinite',
-                }} />
+                <div className="skeleton-box" style={{ width: '100%', height: '400px', borderRadius: '20px' }} />
                 <div style={{ padding: '20px 0', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  <div style={{ height: '20px', width: '60%', background: 'rgba(255,255,255,0.07)', borderRadius: '6px', animation: 'pulse 1.5s ease-in-out infinite' }} />
-                  <div style={{ height: '14px', width: '80%', background: 'rgba(255,255,255,0.05)', borderRadius: '6px', animation: 'pulse 1.5s ease-in-out infinite' }} />
+                  <div className="skeleton-box" style={{ height: '20px', width: '60%' }} />
+                  <div className="skeleton-box skeleton-box--soft" style={{ height: '14px', width: '80%' }} />
                 </div>
               </div>
             </div>
@@ -118,24 +153,49 @@ export default function Portfolio({ isLight = false, initialProjects }: { isLigh
                         ? (item.summaryFr || item.descriptionFr)
                         : (item.summaryEn || item.descriptionEn)}
                     </p>
+                    {item.tags?.length > 0 && (
+                      <div className="tech-badge-list">
+                        {item.tags.slice(0, MAX_BADGES).map((tag) => (
+                          <span className="tech-badge" key={tag}>{tag}</span>
+                        ))}
+                        {item.tags.length > MAX_BADGES && (
+                          <span className="tech-badge">+{item.tags.length - MAX_BADGES}</span>
+                        )}
+                      </div>
+                    )}
                   </div>
-                  <Link
-                    href={`/${locale}/project-details${isLight ? "-white" : ""}/${item.slug}`}
-                    className="tmp-arrow-icon-btn"
-                  >
-                    <div className="btn-inner">
-                      <i className="tmp-icon fa-solid fa-arrow-up-right" />
-                      <i className="tmp-icon-bottom fa-solid fa-arrow-up-right" />
-                    </div>
-                  </Link>
+                  <div className="portfolio-card-actions">
+                    {item.link && (
+                      <a
+                        href={item.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="portfolio-demo-link"
+                        aria-label={`${t("portfolio.view_demo")} — ${item.title}`}
+                        title={t("portfolio.view_demo")}
+                      >
+                        <i className="fa-solid fa-globe" aria-hidden="true" />
+                      </a>
+                    )}
+                    <Link
+                      href={`/${locale}/project-details${isLight ? "-white" : ""}/${item.slug}`}
+                      className="tmp-arrow-icon-btn"
+                      aria-label={item.title}
+                    >
+                      <div className="btn-inner">
+                        <i className="tmp-icon fa-solid fa-arrow-up-right" aria-hidden="true" />
+                        <i className="tmp-icon-bottom fa-solid fa-arrow-up-right" aria-hidden="true" />
+                      </div>
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
           ))}
 
-          {!isLoading && projects.length === 0 && (
+          {!isLoading && filtered.length === 0 && (
             <div className="col-lg-12 text-center">
-              <p>Aucun projet à afficher pour le moment.</p>
+              <p className="portfolio-empty">{t("portfolio.empty")}</p>
             </div>
           )}
         </div>
@@ -147,9 +207,9 @@ export default function Portfolio({ isLight = false, initialProjects }: { isLigh
               onClick={() => goToPage(currentPage - 1)}
               disabled={currentPage === 1}
               style={{ opacity: currentPage === 1 ? 0.3 : 1, cursor: currentPage === 1 ? 'not-allowed' : 'pointer', fontSize: '18px' }}
-              aria-label="Page précédente"
+              aria-label="Page précédente / Previous page"
             >
-              <i className="fa-solid fa-arrow-left" />
+              <i className="fa-solid fa-arrow-left" aria-hidden="true" />
             </button>
 
             {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
@@ -158,6 +218,7 @@ export default function Portfolio({ isLight = false, initialProjects }: { isLigh
                 className={`pagination-btn${currentPage === page ? " active" : ""}`}
                 onClick={() => goToPage(page)}
                 style={{ cursor: 'pointer' }}
+                aria-current={currentPage === page ? "page" : undefined}
               >
                 {page}
               </button>
@@ -168,9 +229,9 @@ export default function Portfolio({ isLight = false, initialProjects }: { isLigh
               onClick={() => goToPage(currentPage + 1)}
               disabled={currentPage === totalPages}
               style={{ opacity: currentPage === totalPages ? 0.3 : 1, cursor: currentPage === totalPages ? 'not-allowed' : 'pointer', fontSize: '18px' }}
-              aria-label="Page suivante"
+              aria-label="Page suivante / Next page"
             >
-              <i className="fa-solid fa-arrow-right" />
+              <i className="fa-solid fa-arrow-right" aria-hidden="true" />
             </button>
           </div>
         )}

@@ -5,11 +5,10 @@ import Image from "next/image";
 import OnepageNav2 from "./OnepageNav2";
 import LanguageSwitcher from "../common/LanguageSwitcher";
 import { useTranslation } from "react-i18next";
-import { useProfile } from "@/hooks/useProfile";
+import SocialLinks from "../common/SocialLinks";
 
 export default function Header3() {
-  const { i18n } = useTranslation();
-  const { profile } = useProfile();
+  const { t, i18n } = useTranslation();
   const locale = i18n.language || "fr";
 
   return (
@@ -19,8 +18,8 @@ export default function Header3() {
           <div className="logo-area">
             <Link href={`/${locale}`}>
               <Image
-                alt="personal-logo"
-                src="/assets/images/kbi/4KB.jpeg"
+                alt={t("a11y.logo_alt")}
+                src="/assets/images/kbi/4KB.webp"
                 width={350}
                 height={350}
                 priority
@@ -41,38 +40,7 @@ export default function Header3() {
             <div className="social-share-style-1">
               <span className="title">Find With Me</span>
               <div className="social-link">
-                {profile?.githubUrl && (
-                  <a href={profile.githubUrl} target="_blank" rel="noreferrer">
-                    <i className="fa-brands fa-github" />
-                  </a>
-                )}
-                {profile?.linkedinUrl && (
-                  <a href={profile.linkedinUrl} target="_blank" rel="noreferrer">
-                    <i className="fa-brands fa-linkedin-in" />
-                  </a>
-                )}
-                {profile?.twitterUrl && (
-                  <a href={profile.twitterUrl} target="_blank" rel="noreferrer">
-                    <i className="fa-brands fa-twitter" />
-                  </a>
-                )}
-                {profile?.facebookUrl && (
-                  <a href={profile.facebookUrl} target="_blank" rel="noreferrer">
-                    <i className="fa-brands fa-facebook-f" />
-                  </a>
-                )}
-                
-                {/* Fallback social links if none are provided */}
-                {!profile?.githubUrl && !profile?.linkedinUrl && !profile?.twitterUrl && !profile?.facebookUrl && (
-                   <>
-                    <a href="https://github.com/Tchablenan" target="_blank" rel="noreferrer">
-                      <i className="fa-brands fa-github" />
-                    </a>
-                    <a href="https://linkedin.com/in/kabirou-djantchiemo" target="_blank" rel="noreferrer">
-                      <i className="fa-brands fa-linkedin-in" />
-                    </a>
-                   </>
-                )}
+                <SocialLinks />
               </div>
             </div>
           </div>

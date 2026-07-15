@@ -153,7 +153,10 @@
             "my_role": "Mon Rôle",
             "prev": "Précédent",
             "next": "Suivant"
-        }
+        },
+        "empty": "Aucun projet à afficher pour le moment.",
+        "filter_all": "Tous",
+        "view_demo": "Voir la démo en ligne"
     },
     "resume": {
         "subtitle": "Expérience & Formation",
@@ -189,7 +192,11 @@
                 "years": "2023",
                 "description": "Construction d'une plateforme de billetterie utilisant React.js et Firebase chez Cognitive Factory (Lomé, Togo), réduisant le temps de traitement des tickets de 50%."
             }
-        }
+        },
+        "stats_years": "Années d'expérience",
+        "stats_projects": "Projets réalisés",
+        "stats_countries": "Pays",
+        "empty_experience": "Aucune expérience renseignée."
     },
     "contact": {
         "subtitle": "CONTACTEZ-MOI",
@@ -227,5 +234,12 @@
     },
     "blog": {
         "title": "Innover par le Partage de Connaissances"
+    },
+    "a11y": {
+        "open_menu": "Ouvrir le menu",
+        "close_menu": "Fermer le menu",
+        "scroll_top": "Retour en haut de page",
+        "hero_photo_alt": "Portrait de Kabirou Djantchiemo, développeur Web & Mobile",
+        "logo_alt": "Logo Kabirou Djantchiemo"
     }
 }

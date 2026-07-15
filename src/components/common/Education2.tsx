@@ -44,9 +44,28 @@ function AnimatedCounter({ target, suffix }: { target: number; suffix: string })
   return <span ref={ref}>{count}{suffix}</span>;
 }
 
-export default function Education({ initialExperiences }: { initialExperiences?: Experience[] }) {
+export interface ResumeStats {
+  years: number;
+  projects: number;
+  countries: number;
+}
+
+const DEFAULT_STATS: ResumeStats = { years: 4, projects: 10, countries: 3 };
+
+export default function Education({
+  initialExperiences,
+  initialStats,
+}: {
+  initialExperiences?: Experience[];
+  initialStats?: Partial<ResumeStats>;
+}) {
   const { t, i18n } = useTranslation();
   const locale = i18n.language || "fr";
+  const stats: ResumeStats = {
+    years: initialStats?.years ?? DEFAULT_STATS.years,
+    projects: initialStats?.projects ?? DEFAULT_STATS.projects,
+    countries: initialStats?.countries ?? DEFAULT_STATS.countries,
+  };
   const [experiences, setExperiences] = useState<Experience[]>(initialExperiences ?? []);
   const [isLoading, setIsLoading] = useState(!initialExperiences);
 
@@ -82,21 +101,22 @@ export default function Education({ initialExperiences }: { initialExperiences?:
         {/* ── Bandeau stats ── */}
         <div className="row g-4 mb-5 tmp-scroll-trigger tmp-fade-in animation-order-1">
           {[
-            { value: 4,  suffix: "+", labelFr: "Années d'expérience", labelEn: "Years of experience", icon: "fa-solid fa-calendar-check" },
-            { value: 10, suffix: "+", labelFr: "Projets réalisés",    labelEn: "Projects completed",   icon: "fa-solid fa-briefcase"      },
-            { value: 3,  suffix: "",  labelFr: "Pays",                 labelEn: "Countries",            icon: "fa-solid fa-earth-africa"   },
+            { value: stats.years,     suffix: "+", label: t("resume.stats_years"),     icon: "fa-solid fa-calendar-check" },
+            { value: stats.projects,  suffix: "+", label: t("resume.stats_projects"),  icon: "fa-solid fa-briefcase"      },
+            { value: stats.countries, suffix: "",  label: t("resume.stats_countries"), icon: "fa-solid fa-earth-africa"   },
           ].map((stat, i) => (
             <div className="col-lg-4 col-sm-4 col-12" key={i}>
               <div className="counter-card tmponhover text-center">
                 <i
                   className={stat.icon}
+                  aria-hidden="true"
                   style={{ fontSize: "1.4rem", color: "var(--color-primary)", display: "block", marginBottom: "12px" }}
                 />
                 <h3 className="counter counter-title">
                   <AnimatedCounter target={stat.value} suffix={stat.suffix} />
                 </h3>
                 <p className="counter-para">
-                  {locale === "fr" ? stat.labelFr : stat.labelEn}
+                  {stat.label}
                 </p>
               </div>
             </div>
@@ -136,7 +156,7 @@ export default function Education({ initialExperiences }: { initialExperiences?:
                 </div>
               </div>
             ) : workExp.length === 0 ? (
-              <p style={{ color: "var(--color-gray)" }}>Aucune expérience renseignée.</p>
+              <p style={{ color: "var(--color-gray)" }}>{t("resume.empty_experience")}</p>
             ) : (
               <div className="experience-style-list">
                 <div className="experience-list">

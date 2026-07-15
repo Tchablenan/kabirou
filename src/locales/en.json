@@ -151,7 +151,10 @@
             "prev": "Prev",
             "next": "Next",
             "features_title": "Key Features"
-        }
+        },
+        "empty": "No projects to display yet.",
+        "filter_all": "All",
+        "view_demo": "View live demo"
     },
     "resume": {
         "subtitle": "Experience & Education",
@@ -187,7 +190,11 @@
                 "years": "2023",
                 "description": "Built a ticketing platform using React.js and Firebase at Cognitive Factory (Lomé, Togo), reducing ticket processing time by 50%."
             }
-        }
+        },
+        "stats_years": "Years of experience",
+        "stats_projects": "Projects completed",
+        "stats_countries": "Countries",
+        "empty_experience": "No experience listed yet."
     },
     "contact": {
         "subtitle": "GET IN TOUCH",
@@ -225,5 +232,12 @@
     },
     "blog": {
         "title": "Innovating through Knowledge Sharing"
+    },
+    "a11y": {
+        "open_menu": "Open menu",
+        "close_menu": "Close menu",
+        "scroll_top": "Back to top",
+        "hero_photo_alt": "Portrait of Kabirou Djantchiemo, Web & Mobile developer",
+        "logo_alt": "Kabirou Djantchiemo logo"
     }
 }
