@@ -56,27 +56,13 @@ export default function Skills({
         </div>
 
         {/* Filter Buttons */}
-        <div className="filter-button-group d-flex justify-content-center align-items-center flex-row gap-3 mb--50">
+        <div className="filter-button-group d-flex justify-content-center align-items-center flex-row gap-3 mb--50" role="group" aria-label={t("skills.subtitle")}>
             {categories.map((cat) => (
                 <button
                     key={cat.id}
                     className={`skill-filter-btn ${activeFilter === cat.id ? "active" : ""}`}
                     onClick={() => setActiveFilter(cat.id)}
-                    style={{
-                        padding: "10px 25px",
-                        borderRadius: "10px",
-                        border: "1px solid",
-                        borderColor: activeFilter === cat.id ? "var(--color-primary)" : "rgba(255, 255, 255, 0.1)",
-                        background: activeFilter === cat.id ? "var(--color-primary)" : "rgba(255, 255, 255, 0.03)",
-                        color: "var(--color-white)",
-                        fontSize: "15px",
-                        fontWeight: "500",
-                        transition: "all 0.3s ease",
-                        cursor: "pointer",
-                        outline: "none",
-                        display: "inline-block",
-                        width: "auto"
-                    }}
+                    aria-pressed={activeFilter === cat.id}
                 >
                     {t(cat.label)}
                 </button>
@@ -86,57 +72,29 @@ export default function Skills({
         <div className="row g-4 justify-content-center">
           {isLoading && Array.from({ length: 12 }).map((_, i) => (
             <div className="col-lg-2 col-md-3 col-sm-4 col-6" key={`skel-${i}`}>
-              <div style={{
-                background: 'rgba(255, 255, 255, 0.05)',
-                borderRadius: '15px',
-                border: '1px solid rgba(255, 255, 255, 0.08)',
-                height: '120px',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '12px',
-                animation: 'pulse 1.5s ease-in-out infinite',
-              }}>
-                <div style={{ width: '50px', height: '50px', background: 'rgba(255,255,255,0.07)', borderRadius: '10px' }} />
-                <div style={{ width: '70%', height: '12px', background: 'rgba(255,255,255,0.05)', borderRadius: '6px' }} />
+              <div className="skeleton-card" style={{ height: '120px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '12px' }}>
+                <div className="skeleton-box" style={{ width: '50px', height: '50px', borderRadius: '10px' }} />
+                <div className="skeleton-box skeleton-box--soft" style={{ width: '70%', height: '12px' }} />
               </div>
             </div>
           ))}
-          {!isLoading && filteredSkills.map((skill, skillIndex) => (
-            <div className="col-lg-2 col-md-3 col-sm-4 col-6" key={`${activeFilter}-${skillIndex}`}>
-              <div 
-                className="skill-logo-card p-4 text-center tmponhover tmp-scroll-trigger tmp-zoom-in"
-                style={{
-                   background: "rgba(255, 255, 255, 0.05)",
-                   borderRadius: "15px",
-                   border: "1px solid rgba(255, 255, 255, 0.1)",
-                   transition: "all 0.3s ease",
-                   cursor: "default",
-                   height: "100%",
-                   display: "flex",
-                   flexDirection: "column",
-                   alignItems: "center",
-                   justifyContent: "center"
-                }}
-              >
-                <Image 
-                  src={skill.iconUrl || ""} 
-                  alt={skill.name} 
-                  width={50}
-                  height={50}
-                  style={{ 
-                    maxWidth: "50px", 
-                    maxHeight: "50px", 
-                    marginBottom: "15px",
-                    filter: "grayscale(20%) brightness(1.1)",
-                    objectFit: 'contain'
-                  }} 
-                />
-                <h6 
-                  className="heading heading-h6 mb-0" 
-                  style={{ fontSize: "14px", fontWeight: "600", color: "var(--color-white)" }}
-                >
+          {!isLoading && filteredSkills.map((skill) => (
+            <div className="col-lg-2 col-md-3 col-sm-4 col-6" key={skill.id}>
+              <div className="skill-logo-card p-4 text-center tmponhover tmp-scroll-trigger tmp-zoom-in">
+                {skill.iconUrl ? (
+                  <Image
+                    src={skill.iconUrl}
+                    alt=""
+                    width={50}
+                    height={50}
+                    className="skill-icon"
+                  />
+                ) : (
+                  <span className="skill-icon-fallback" aria-hidden="true">
+                    <i className="fa-solid fa-code" />
+                  </span>
+                )}
+                <h6 className="heading heading-h6 mb-0 skill-name">
                   {skill.name}
                 </h6>
               </div>

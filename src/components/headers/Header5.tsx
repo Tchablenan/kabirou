@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 export default function Header5() {
   const { openModal } = useModalUI();
   const [isSticky, setIsSticky] = useState(false);
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const locale = i18n.language || "fr";
 
   useEffect(() => {
@@ -33,8 +33,8 @@ export default function Header5() {
               <div className="logo">
                 <Link href={`/${locale}`}>
                   <Image
-                    src="/assets/images/kbi/df-scaled.png"
-                    alt="corporate_logo"
+                    src="/assets/images/kbi/df-scaled.webp"
+                    alt={t("a11y.logo_alt")}
                     width={50}
                     height={50}
                     priority
@@ -47,8 +47,9 @@ export default function Header5() {
                 <button
                   className="tmp-hamburger-menu"
                   onClick={() => openModal("mobileMenu2")}
+                  aria-label={t("a11y.open_menu")}
                 >
-                  <i className="fa-sharp fa-regular fa-bars" />
+                  <i className="fa-sharp fa-regular fa-bars" aria-hidden="true" />
                 </button>
               </div>
             </div>

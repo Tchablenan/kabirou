@@ -6,8 +6,10 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
-import { FileText, Save, Loader2 } from "lucide-react";
+import { FileText, Save, Loader2, BarChart3 } from "lucide-react";
 import { AdminBreadcrumb } from "@/components/admin/AdminBreadcrumb";
 import DocumentUpload from "@/components/admin/DocumentUpload";
 
@@ -17,6 +19,9 @@ export default function AdminSettings() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [cvUrl, setCvUrl] = useState("");
+  const [statsYears, setStatsYears] = useState("");
+  const [statsProjects, setStatsProjects] = useState("");
+  const [statsCountries, setStatsCountries] = useState("");
 
   useEffect(() => {
     if (status === "unauthenticated") router.push("/admin/login");
@@ -28,6 +33,9 @@ export default function AdminSettings() {
         .then((r) => r.json())
         .then((data) => {
           setCvUrl(data.cv_url ?? "");
+          setStatsYears(data.stats_years ?? "");
+          setStatsProjects(data.stats_projects ?? "");
+          setStatsCountries(data.stats_countries ?? "");
         })
         .catch(() => toast.error("Erreur lors du chargement des paramètres"))
         .finally(() => setIsLoading(false));
@@ -37,17 +45,28 @@ export default function AdminSettings() {
   const handleSave = async () => {
     setIsSaving(true);
     try {
-      const res = await fetch("/api/settings", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ key: "cv_url", value: cvUrl }),
-      });
-      const data = await res.json();
-      if (res.ok) {
+      const entries = [
+        { key: "cv_url", value: cvUrl },
+        { key: "stats_years", value: statsYears },
+        { key: "stats_projects", value: statsProjects },
+        { key: "stats_countries", value: statsCountries },
+      ];
+      const responses = await Promise.all(
+        entries.map((entry) =>
+          fetch("/api/settings", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(entry),
+          })
+        )
+      );
+      const failed = responses.find((r) => !r.ok);
+      if (!failed) {
         toast.success("Paramètres enregistrés");
       } else {
-        console.error("Settings save error:", res.status, data);
-        toast.error(`Erreur ${res.status}: ${data?.error ?? "Inconnue"}`);
+        const data = await failed.json().catch(() => null);
+        console.error("Settings save error:", failed.status, data);
+        toast.error(`Erreur ${failed.status}: ${data?.error ?? "Inconnue"}`);
       }
     } catch (err) {
       console.error("Settings save exception:", err);
@@ -100,18 +119,68 @@ export default function AdminSettings() {
               value={cvUrl}
               onChange={setCvUrl}
             />
+          </CardContent>
+        </Card>
 
-            <div className="flex justify-end pt-2 border-t border-border">
-              <Button onClick={handleSave} disabled={isSaving} variant="primary" className="min-w-[140px]">
-                {isSaving ? (
-                  <><Loader2 className="size-4 mr-2 animate-spin" /> Sauvegarde...</>
-                ) : (
-                  <><Save className="size-4 mr-2" /> Enregistrer</>
-                )}
-              </Button>
+        <Card className="border-border/60 shadow-sm">
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <BarChart3 className="size-5 text-primary" />
+              <CardTitle className="text-lg">Statistiques</CardTitle>
+            </div>
+            <CardDescription>
+              Chiffres affichés dans le bandeau de la section « Expérience & Formation » de la page d'accueil.
+              Laissez vide pour utiliser les valeurs par défaut (4, 10, 3).
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="stats-years">Années d'expérience</Label>
+                <Input
+                  id="stats-years"
+                  type="number"
+                  min="0"
+                  placeholder="4"
+                  value={statsYears}
+                  onChange={(e) => setStatsYears(e.target.value)}
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="stats-projects">Projets réalisés</Label>
+                <Input
+                  id="stats-projects"
+                  type="number"
+                  min="0"
+                  placeholder="10"
+                  value={statsProjects}
+                  onChange={(e) => setStatsProjects(e.target.value)}
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <Label htmlFor="stats-countries">Pays</Label>
+                <Input
+                  id="stats-countries"
+                  type="number"
+                  min="0"
+                  placeholder="3"
+                  value={statsCountries}
+                  onChange={(e) => setStatsCountries(e.target.value)}
+                />
+              </div>
             </div>
           </CardContent>
         </Card>
+
+        <div className="flex justify-end">
+          <Button onClick={handleSave} disabled={isSaving} variant="primary" className="min-w-[140px]">
+            {isSaving ? (
+              <><Loader2 className="size-4 mr-2 animate-spin" /> Sauvegarde...</>
+            ) : (
+              <><Save className="size-4 mr-2" /> Enregistrer</>
+            )}
+          </Button>
+        </div>
       </div>
     </div>
   );

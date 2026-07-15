@@ -68,9 +68,9 @@ export default function Blogs3({
           {isLoading && Array.from({ length: 3 }).map((_, i) => (
             <div key={`skel-${i}`} className="col-lg-4 col-md-6 col-sm-6">
               <div className="blog-card" style={{ marginBottom: "30px" }}>
-                <div style={{ width: "100%", height: "240px", background: "rgba(255,255,255,0.07)", borderRadius: "12px", animation: "pulse 1.5s ease-in-out infinite", marginBottom: "16px" }} />
-                <div style={{ height: "18px", width: "75%", background: "rgba(255,255,255,0.07)", borderRadius: "6px", marginBottom: "10px", animation: "pulse 1.5s ease-in-out infinite" }} />
-                <div style={{ height: "14px", width: "90%", background: "rgba(255,255,255,0.05)", borderRadius: "6px", animation: "pulse 1.5s ease-in-out infinite" }} />
+                <div className="skeleton-box" style={{ width: "100%", height: "240px", borderRadius: "12px", marginBottom: "16px" }} />
+                <div className="skeleton-box" style={{ height: "18px", width: "75%", marginBottom: "10px" }} />
+                <div className="skeleton-box skeleton-box--soft" style={{ height: "14px", width: "90%" }} />
               </div>
             </div>
           ))}

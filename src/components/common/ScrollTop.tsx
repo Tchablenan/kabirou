@@ -89,9 +89,21 @@ export default function ScrollTop() {
   }, []);
 
   return (
-    <div className="scrollToTop" style={{ display: "block" }}>
+    <div
+      className="scrollToTop"
+      style={{ display: "block" }}
+      role="button"
+      tabIndex={0}
+      aria-label="Retour en haut de page / Back to top"
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      }}
+    >
       <div className="arrowUp">
-        <i className="fa-light fa-arrow-up" />
+        <i className="fa-light fa-arrow-up" aria-hidden="true" />
       </div>
       <div className="water" style={{ transform: "translate(0px, 87%)" }}>
         <svg viewBox="0 0 560 20" className="water_wave water_wave_back">

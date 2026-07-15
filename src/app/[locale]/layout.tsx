@@ -36,11 +36,20 @@ export const metadata: Metadata = {
     description:
       "Découvrez le portfolio de Kabirou Djantchiemo, développeur passionné par la création de solutions web et mobiles innovantes.",
     siteName: "Kabirou Djantchiemo Portfolio",
+    images: [
+      {
+        url: "https://djantchiemo-kabirou.vercel.app/assets/images/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Kabirou Djantchiemo — Développeur Web & Mobile",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Kabirou Djantchiemo | Web & Mobile Developer",
     description: "Portfolio de développeur Web & Mobile Fullstack.",
+    images: ["https://djantchiemo-kabirou.vercel.app/assets/images/og-image.jpg"],
   },
   alternates: {
     canonical: "https://djantchiemo-kabirou.vercel.app/fr",

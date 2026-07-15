@@ -5,14 +5,13 @@ import Link from "next/link";
 import OnepageNavMobile from "./OnepageNavMobile";
 import { useModalUI } from "@/context/ModalUIContext";
 import { useTranslation } from "react-i18next";
-import { useProfile } from "@/hooks/useProfile";
+import SocialLinks from "../common/SocialLinks";
 
 export default function MobileMenuOnepage() {
   const menuRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
   const { openModals, closeModal } = useModalUI();
-  const { i18n } = useTranslation();
-  const { profile } = useProfile();
+  const { t, i18n } = useTranslation();
   const locale = i18n.language || "fr";
   useEffect(() => {
     function handleClick(event: MouseEvent) {
@@ -45,8 +44,8 @@ export default function MobileMenuOnepage() {
               <Link href={`/${locale}`} className="logo-area">
                 <img
                   loading="lazy"
-                  alt="personal-logo"
-                  src="/assets/images/kbi/4KB.jpeg"
+                  alt={t("a11y.logo_alt")}
+                  src="/assets/images/kbi/4KB.webp"
                   style={{ 
                     width: "80px", 
                     height: "80px", 
@@ -61,8 +60,9 @@ export default function MobileMenuOnepage() {
               <button
                 className="close-button tmp-round-action-btn"
                 onClick={() => closeModal("mobileMenu2")}
+                aria-label={t("a11y.close_menu")}
               >
-                <i className="fa-sharp fa-light fa-xmark" />
+                <i className="fa-sharp fa-light fa-xmark" aria-hidden="true" />
               </button>
             </div>
           </div>
@@ -70,38 +70,7 @@ export default function MobileMenuOnepage() {
           <div className="social-wrapper mt--40">
             <span className="subtitle">find with me</span>
             <div className="social-link">
-                {profile?.githubUrl && (
-                  <a href={profile.githubUrl} target="_blank" rel="noreferrer">
-                    <i className="fa-brands fa-github" />
-                  </a>
-                )}
-                {profile?.linkedinUrl && (
-                  <a href={profile.linkedinUrl} target="_blank" rel="noreferrer">
-                    <i className="fa-brands fa-linkedin-in" />
-                  </a>
-                )}
-                {profile?.twitterUrl && (
-                  <a href={profile.twitterUrl} target="_blank" rel="noreferrer">
-                    <i className="fa-brands fa-twitter" />
-                  </a>
-                )}
-                {profile?.facebookUrl && (
-                  <a href={profile.facebookUrl} target="_blank" rel="noreferrer">
-                    <i className="fa-brands fa-facebook-f" />
-                  </a>
-                )}
-                
-                {/* Fallback social links if none are provided */}
-                {!profile?.githubUrl && !profile?.linkedinUrl && !profile?.twitterUrl && !profile?.facebookUrl && (
-                   <>
-                    <a href="https://github.com/Tchablenan" target="_blank" rel="noreferrer">
-                      <i className="fa-brands fa-github" />
-                    </a>
-                    <a href="https://linkedin.com/in/kabirou-djantchiemo" target="_blank" rel="noreferrer">
-                      <i className="fa-brands fa-linkedin-in" />
-                    </a>
-                   </>
-                )}
+                <SocialLinks />
             </div>
           </div>
           {/* social area end */}

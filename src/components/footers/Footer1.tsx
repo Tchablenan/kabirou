@@ -1,11 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import Chat from "../common/Chat";
 import ScrollTop from "../common/ScrollTop";
 import Sidebar from "../headers/Sidebar";
 import MobileMenu from "../headers/MobileMenu";
 import MobileMenuOnepage from "../headers/MobileMenuOnepage";
+import SocialLinks from "../common/SocialLinks";
 import { footerLinks } from "@/data/footerLinks";
 import { useTranslation } from "react-i18next";
 
@@ -24,9 +26,9 @@ export default function Footer1({
                 <div className="single-footer-wrapper border-right mr--20">
                   <div className="logo mb--30">
                     <Link href="/">
-                      <img
-                        src="/assets/images/kbi/df-scaled.png"
-                        alt="KB IT SOLUTIONS"
+                      <Image
+                        src="/assets/images/kbi/df-scaled.webp"
+                        alt={t("a11y.logo_alt")}
                         width={150}
                         height={150}
                         style={{ objectFit: 'contain' }}
@@ -77,18 +79,7 @@ export default function Footer1({
                     </li>
                   </ul>
                   <div className="social-link footer">
-                    <a href="https://github.com/Tchablenan" target="_blank" rel="noreferrer">
-                      <i className="fa-brands fa-github" />
-                    </a>
-                    <a href="https://linkedin.com/in/kabirou-djantchiemo" target="_blank" rel="noreferrer">
-                      <i className="fa-brands fa-linkedin-in" />
-                    </a>
-                    <a href="https://twitter.com/tchablenan" target="_blank" rel="noreferrer">
-                      <i className="fa-brands fa-twitter" />
-                    </a>
-                    <a href="#">
-                      <i className="fa-brands fa-facebook-f" />
-                    </a>
+                    <SocialLinks />
                   </div>
                 </div>
               </div>

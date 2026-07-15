@@ -48,7 +48,14 @@ export default async function HomePage7() {
         <Hero initialCvUrl={settingsMap["cv_url"] ?? ""} />
         <Skills initialSkills={safeSkills} />
         <Services6 />
-        <Education2 initialExperiences={safeExperiences} />
+        <Education2
+          initialExperiences={safeExperiences}
+          initialStats={{
+            years: Number(settingsMap["stats_years"]) || undefined,
+            projects: Number(settingsMap["stats_projects"]) || undefined,
+            countries: Number(settingsMap["stats_countries"]) || undefined,
+          }}
+        />
         <Portfolio2 initialProjects={safeProjects} />
         <Blogs3 initialBlogs={safeBlogs as any} />
         <Contact2 />

@@ -38,8 +38,8 @@ export default function Hero({ initialCvUrl }: { initialCvUrl?: string }) {
               <div className="banner-right-content">
                 <Image
                   className="tmp-scroll-trigger tmp-zoom-in animation-order-1"
-                  alt="banner-img"
-                  src="/assets/images/kbi/Kabi.png"
+                  alt={t("a11y.hero_photo_alt")}
+                  src="/assets/images/kbi/Kabi.webp"
                   width={542}
                   height={802}
                   priority
@@ -98,19 +98,10 @@ export default function Hero({ initialCvUrl }: { initialCvUrl?: string }) {
                     download
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="tmp-btn radius-round"
-                    style={{ background: "transparent", border: "2px solid rgba(255,255,255,0.2)", color: "var(--color-heading)" }}
-                    onMouseEnter={e => {
-                      (e.currentTarget as HTMLAnchorElement).style.borderColor = "var(--color-primary)";
-                      (e.currentTarget as HTMLAnchorElement).style.color = "var(--color-primary)";
-                    }}
-                    onMouseLeave={e => {
-                      (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(255,255,255,0.2)";
-                      (e.currentTarget as HTMLAnchorElement).style.color = "var(--color-heading)";
-                    }}
+                    className="tmp-btn radius-round tmp-btn-outline"
                   >
-                    <span style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                      <i className="fa-solid fa-download" style={{ fontSize: "0.85rem" }} />
+                    <span className="btn-inline-icon">
+                      <i className="fa-solid fa-download" aria-hidden="true" />
                       {t("hero.download_cv")}
                     </span>
                   </a>
