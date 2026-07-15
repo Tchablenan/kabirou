@@ -8,71 +8,104 @@ import AuthProvider from "@/context/AuthProvider";
 import { ToastContainer } from "react-toastify";
 import prisma from "@/lib/prisma";
 
-export const metadata: Metadata = {
-  title: {
-    default: "Kabirou Djantchiemo | Web & Mobile Developer Portfolio",
-    template: "%s | Kabirou Djantchiemo",
-  },
-  description:
-    "Portfolio de Kabirou Djantchiemo - Développeur Web & Mobile Fullstack passionné, spécialisé en React.js, Next.js et Laravel.",
-  keywords: [
-    "Kabirou Djantchiemo",
-    "Développeur Web",
-    "Mobile Developer",
-    "Fullstack",
-    "Portfolio",
-    "Freelance",
-    "React",
-    "Next.js",
-    "Laravel",
-  ],
-  authors: [{ name: "Kabirou Djantchiemo" }],
-  creator: "Kabirou Djantchiemo",
-  openGraph: {
-    type: "website",
-    locale: "fr_FR",
-    url: "https://djantchiemo-kabirou.vercel.app",
-    title: "Kabirou Djantchiemo | Web & Mobile Developer",
+const BASE_URL = "https://djantchiemo-kabirou.vercel.app";
+
+const SEO_TEXT = {
+  fr: {
+    title: "Kabirou Djantchiemo | Développeur Web & Mobile — React.js, Laravel",
     description:
-      "Découvrez le portfolio de Kabirou Djantchiemo, développeur passionné par la création de solutions web et mobiles innovantes.",
-    siteName: "Kabirou Djantchiemo Portfolio",
-    images: [
-      {
-        url: "https://djantchiemo-kabirou.vercel.app/assets/images/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Kabirou Djantchiemo — Développeur Web & Mobile",
-      },
-    ],
+      "Kabirou Djantchiemo, développeur Web & Mobile fullstack (React.js, Next.js, Laravel, Flutter) basé à Accra, Ghana. Disponible en freelance et à distance — découvrez mes projets et contactez-moi.",
+    ogLocale: "fr_FR",
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Kabirou Djantchiemo | Web & Mobile Developer",
-    description: "Portfolio de développeur Web & Mobile Fullstack.",
-    images: ["https://djantchiemo-kabirou.vercel.app/assets/images/og-image.jpg"],
+  en: {
+    title: "Kabirou Djantchiemo | Web & Mobile Developer — React.js, Laravel",
+    description:
+      "Kabirou Djantchiemo, fullstack Web & Mobile developer (React.js, Next.js, Laravel, Flutter) based in Accra, Ghana. Available for freelance and remote work — check out my projects and get in touch.",
+    ogLocale: "en_US",
   },
-  alternates: {
-    canonical: "https://djantchiemo-kabirou.vercel.app/fr",
-    languages: {
-      "fr-FR": "https://djantchiemo-kabirou.vercel.app/fr",
-      "en-US": "https://djantchiemo-kabirou.vercel.app/en",
+} as const;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const seo = SEO_TEXT[locale === "en" ? "en" : "fr"];
+
+  return {
+    metadataBase: new URL(BASE_URL),
+    title: {
+      default: seo.title,
+      template: "%s | Kabirou Djantchiemo",
     },
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
+    description: seo.description,
+    keywords: [
+      "Kabirou Djantchiemo",
+      "Développeur Web",
+      "Développeur Mobile",
+      "Web Developer",
+      "Mobile Developer",
+      "Fullstack",
+      "Freelance",
+      "React.js",
+      "Next.js",
+      "Laravel",
+      "Flutter",
+      "Accra",
+      "Ghana",
+      "Togo",
+      "Lomé",
+      "Développeur React Afrique",
+      "Remote developer",
+    ],
+    authors: [{ name: "Kabirou Djantchiemo" }],
+    creator: "Kabirou Djantchiemo",
+    openGraph: {
+      type: "website",
+      locale: seo.ogLocale,
+      url: `${BASE_URL}/${locale}`,
+      title: seo.title,
+      description: seo.description,
+      siteName: "Kabirou Djantchiemo Portfolio",
+      images: [
+        {
+          url: `${BASE_URL}/assets/images/og-image.jpg`,
+          width: 1200,
+          height: 630,
+          alt: "Kabirou Djantchiemo — Développeur Web & Mobile",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: seo.title,
+      description: seo.description,
+      images: [`${BASE_URL}/assets/images/og-image.jpg`],
+    },
+    alternates: {
+      canonical: `${BASE_URL}/${locale}`,
+      languages: {
+        "fr-FR": `${BASE_URL}/fr`,
+        "en-US": `${BASE_URL}/en`,
+      },
+    },
+    robots: {
       index: true,
       follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
     },
-  },
-  verification: {
-    google: "google7eb8047818001ca5",
-  },
-};
+    verification: {
+      google: "google7eb8047818001ca5",
+    },
+  };
+}
 
 // import Metronic styles
 import "@/styles/metronic/globals.css";
@@ -95,16 +128,53 @@ export default async function RootLayout({
   }
   
   const name = user?.name || "Kabirou Djantchiemo";
-  const title = locale === "fr" ? user?.professionalTitleFr : user?.professionalTitleEn;
-  const description = locale === "fr" ? user?.aboutFr : user?.aboutEn;
+  const title =
+    (locale === "fr" ? user?.professionalTitleFr : user?.professionalTitleEn) ||
+    (locale === "fr" ? "Développeur Web & Mobile" : "Web & Mobile Developer");
+  const description =
+    (locale === "fr" ? user?.aboutFr : user?.aboutEn) ||
+    SEO_TEXT[locale === "en" ? "en" : "fr"].description;
+
+  const sameAs = [user?.githubUrl, user?.linkedinUrl, user?.twitterUrl, user?.facebookUrl].filter(Boolean);
+  if (sameAs.length === 0) {
+    sameAs.push("https://github.com/Tchablenan", "https://linkedin.com/in/kabirou-djantchiemo");
+  }
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
     name: name,
     jobTitle: title,
-    url: "https://djantchiemo-kabirou.vercel.app",
-    sameAs: [user?.githubUrl, user?.linkedinUrl, user?.twitterUrl, user?.facebookUrl].filter(Boolean),
+    url: BASE_URL,
+    image: `${BASE_URL}/assets/images/og-image.jpg`,
+    email: "mailto:kdjantchiemo@gmail.com",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Accra",
+      addressCountry: "GH",
+    },
+    alumniOf: {
+      "@type": "CollegeOrUniversity",
+      name: "Institut Africain d'Informatique (IAI-Togo)",
+    },
+    knowsAbout: [
+      "React.js",
+      "Next.js",
+      "Laravel",
+      "Flutter",
+      "Django",
+      "Java",
+      "Python",
+      "JavaScript",
+      "TypeScript",
+      "PHP",
+      "MySQL",
+      "MongoDB",
+      "Firebase",
+      "API REST",
+    ],
+    knowsLanguage: ["fr", "en"],
+    sameAs,
     description: description,
   };
 
