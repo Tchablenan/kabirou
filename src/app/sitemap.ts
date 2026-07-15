@@ -5,8 +5,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://djantchiemo-kabirou.vercel.app";
   const locales = ["en", "fr"];
 
-  // Static routes
-  const staticRoutes = ["", "/service", "/experience", "/competence", "/portfolio", "/blog", "/contact"];
+  // Static routes — only real pages (sections of the one-page are anchors, not URLs)
+  const staticRoutes = ["", "/blog"];
 
   const routes = locales.flatMap((locale) =>
     staticRoutes.map((route) => ({
@@ -29,7 +29,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   );
 
   // Dynamic Blog Routes
-  const blogs = await prisma.blogPost.findMany({ select: { slug: true, updatedAt: true } });
+  const blogs = await prisma.blogPost.findMany({
+    where: { published: true },
+    select: { slug: true, updatedAt: true },
+  });
   const blogRoutes = locales.flatMap((locale) =>
     blogs.map((blog) => ({
       url: `${baseUrl}/${locale}/blog-details/${blog.slug}`,

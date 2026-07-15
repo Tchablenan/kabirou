@@ -1,33 +1,37 @@
 'use client';
 
-import { I18nextProvider } from 'react-i18next';
-import i18n from '@/i18n';
-import { useEffect, useState } from 'react';
+import { I18nextProvider, initReactI18next } from 'react-i18next';
+import { createInstance } from 'i18next';
+import { useState } from 'react';
+import en from '@/locales/en.json';
+import fr from '@/locales/fr.json';
 
-export default function I18nProvider({ 
-  children, 
-  locale 
-}: { 
-  children: React.ReactNode, 
-  locale: string 
+export default function I18nProvider({
+  children,
+  locale,
+}: {
+  children: React.ReactNode;
+  locale: string;
 }) {
-  const [isReady, setIsReady] = useState(false);
+  // Initialisation synchrone (initImmediate: false) : le contenu traduit est
+  // présent dès le HTML rendu côté serveur — indispensable pour le SEO.
+  // Une instance par arbre évite les collisions de langue entre requêtes SSR.
+  const [instance] = useState(() => {
+    const i18nInstance = createInstance();
+    i18nInstance.use(initReactI18next).init({
+      resources: {
+        en: { translation: en },
+        fr: { translation: fr },
+      },
+      lng: locale,
+      fallbackLng: 'fr',
+      interpolation: {
+        escapeValue: false,
+      },
+      initImmediate: false,
+    });
+    return i18nInstance;
+  });
 
-  useEffect(() => {
-    const initI18n = async () => {
-      if (i18n.language !== locale) {
-        await i18n.changeLanguage(locale);
-      }
-      setIsReady(true);
-    };
-    initI18n();
-  }, [locale]);
-
-  if (!isReady) return null; // Or a loading spinner
-
-  return (
-    <I18nextProvider i18n={i18n}>
-      {children}
-    </I18nextProvider>
-  );
+  return <I18nextProvider i18n={instance}>{children}</I18nextProvider>;
 }
