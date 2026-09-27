@@ -4,8 +4,11 @@ import bcrypt from "bcryptjs";
 const prisma = new PrismaClient();
 
 async function main() {
-  const email = "kdjantchiemo@gmail.com";
-  const password = "Meinoussa2.0"; // Placeholder, same as DB password for ease of setup
+  const email = process.env.ADMIN_EMAIL;
+  const password = process.env.ADMIN_PASSWORD;
+  if (!email || !password) {
+    throw new Error("ADMIN_EMAIL et ADMIN_PASSWORD doivent être définis dans l'environnement.");
+  }
   const hashedPassword = await bcrypt.hash(password, 10);
 
   console.log(`Creating admin user: ${email}...`);
