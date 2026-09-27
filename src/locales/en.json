@@ -1,17 +1,19 @@
 {
     "hero": {
+        "availability": "Available for freelance and full-time / remote roles",
         "iam": "i’m",
         "name": "Kabirou Djantchiemo",
-        "description": "I am Kabirou Djantchiemo, a passionate Web & Mobile Developer with a Professional License in Software Engineering from IAI-TOGO. I specialize in building robust backend systems with Laravel and modern, responsive frontends with React.js.",
+        "description": "I turn your ideas into fast, reliable web and mobile apps built to grow. From solid backends to smooth interfaces, all the way to shipping products that actually work, not just mockups.",
         "cv_button": "View Portfolio",
-        "download_cv": "Download my CV"
+        "contact_button": "Let's discuss your project",
+        "download_cv": "Download my CV",
+        "projects_word": "projects",
+        "projects_done": "Successfully delivered"
     },
     "titles": {
-        "backend": "Backend Developer",
-        "frontend": "Frontend ",
+        "fullstack_developer": "Fullstack Developer",
         "web_developer": "Web Developer",
-        "mobile_developer": "Mobile Developer",
-        "software_engineer": "Software Engineer"
+        "mobile_developer": "Mobile Developer"
     },
     "navigation": {
         "home": "Home",
@@ -45,20 +47,20 @@
         "subtitle": "My Expertise",
         "title": "What I Do",
         "web_app": {
-            "title": "Web App Development",
-            "description": "Building high-quality, responsive web applications using React.js and Laravel for diverse clients."
+            "title": "Custom Web Applications",
+            "description": "Platforms, dashboards, business tools: I build applications that simplify your operations and scale as you grow."
         },
         "mobile": {
-            "title": "Mobile Development",
-            "description": "Creating seamless cross-platform mobile experiences with Flutter, focusing on performance."
-        },
-        "consulting": {
-            "title": "Consulting IT & Digital Strategy",
-            "description": "Strategic guidance and technical expertise to transform your ideas into digital solutions."
+            "title": "Mobile Applications",
+            "description": "One app for both iOS and Android, fast and intuitive, keeping your customers connected to your service wherever they are."
         },
         "automation": {
-            "title": "Task Automation",
-            "description": "Optimization of your business processes through automated tools to increase productivity."
+            "title": "Automation & Integrations",
+            "description": "Mobile Money payments, WhatsApp, automated emails, connecting your tools: I remove repetitive tasks so you can save time."
+        },
+        "support": {
+            "title": "End-to-End Support",
+            "description": "From idea to launch, then maintenance: I advise you, I deliver, and I stay available to keep your product evolving."
         }
     },
     "portfolio": {

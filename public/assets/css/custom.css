@@ -105,6 +105,259 @@ select:focus-visible,
 }
 
 /* ============================================
+   Badge de disponibilité — hero
+   ============================================ */
+.hero-availability {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 16px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--color-heading);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+.hero-availability-dot {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #22c55e;
+}
+.hero-availability-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #22c55e;
+  animation: hero-availability-ping 1.8s ease-out infinite;
+}
+@keyframes hero-availability-ping {
+  0% { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-availability-dot::after { animation: none; }
+}
+
+/* Titre animé du hero : réduit la police seulement si le titre le plus long
+   ("Développeur Fullstack") ne tient pas, pour éviter le passage à la ligne */
+.tmp-banner-one-area .banner-one-main-wrapper .inner {
+  container-type: inline-size;
+}
+.tmp-banner-one-area .banner-one-main-wrapper .inner .title .header-caption {
+  font-size: min(1em, 9cqi);
+  white-space: nowrap;
+}
+
+/* ============================================
+   Visuel du hero : photo en forme organique, pastilles technos, carte projets
+   ============================================ */
+.hero-visual {
+  --hero-visual-size: 420px;
+  position: relative;
+  width: var(--hero-visual-size);
+  height: var(--hero-visual-size);
+  margin: 40px auto;
+}
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  .hero-visual { --hero-visual-size: 330px; }
+}
+@media only screen and (max-width: 991px) {
+  .hero-visual { --hero-visual-size: 340px; margin: 30px auto 60px; }
+}
+@media only screen and (max-width: 575px) {
+  .hero-visual { --hero-visual-size: 260px; margin: 20px auto 60px; }
+}
+
+/* Photo dans une forme qui se déforme en continu */
+.hero-visual-blob {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  border: 2px solid rgba(255, 1, 79, 0.35);
+  background: radial-gradient(circle at 50% 35%, rgba(255, 1, 79, 0.28), #141414 72%);
+  animation: hero-blob 9s ease-in-out infinite;
+}
+.hero-visual-blob img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+/* Halo qui suit la forme */
+.hero-visual-glow {
+  position: absolute;
+  inset: -6px;
+  z-index: 0;
+  background: rgba(255, 1, 79, 0.35);
+  filter: blur(40px);
+  opacity: 0.6;
+  animation: hero-blob 9s ease-in-out infinite, hero-glow 4s ease-in-out infinite alternate;
+}
+/* Anneau en pointillés fixe, parcouru par un point lumineux.
+   Seul le point tourne : un anneau en rotation élargirait la page (boîte carrée en diagonale) */
+.hero-visual-orbit {
+  --orbit-gap: 34px;
+  position: absolute;
+  inset: calc(var(--orbit-gap) * -1);
+  z-index: 0;
+  border: 1px dashed rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+}
+.hero-visual-orbit::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 9px;
+  height: 9px;
+  margin: -4.5px 0 0 -4.5px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  box-shadow: 0 0 12px var(--color-primary);
+  animation: hero-orbit 16s linear infinite;
+}
+
+/* Pastilles technos flottantes */
+.hero-chip {
+  position: absolute;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  background: rgba(20, 20, 20, 0.85);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  color: var(--color-heading);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  opacity: 0;
+  animation:
+    hero-chip-in 0.6s ease-out calc(0.4s + var(--chip-index) * 0.15s) forwards,
+    hero-float 3.4s ease-in-out calc(var(--chip-index) * -0.6s) infinite;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.hero-chip:hover {
+  border-color: rgba(255, 1, 79, 0.6);
+  box-shadow: 0 8px 24px rgba(255, 1, 79, 0.25);
+}
+.hero-chip img {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+.hero-chip--laravel { top: 4%;  left: -8%; }
+.hero-chip--react   { top: 0;   right: -4%; }
+.hero-chip--django  { top: 34%; left: -14%; }
+.hero-chip--flutter { top: 28%; right: -12%; }
+.hero-chip--spring  { top: 60%; left: -12%; }
+.hero-chip--flask   { top: 62%; right: -8%; }
+
+/* Carte « +N projets » */
+.hero-stat-card {
+  position: absolute;
+  z-index: 3;
+  bottom: -6%;
+  left: 4%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  background: rgba(20, 20, 20, 0.9);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+  animation: hero-float 4s ease-in-out -1s infinite;
+}
+.hero-stat-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: rgba(255, 1, 79, 0.15);
+  color: var(--color-primary);
+  font-size: 14px;
+}
+.hero-stat-card-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  line-height: 1.1;
+}
+.hero-stat-card-text strong {
+  color: var(--color-heading);
+  font-size: 16px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.hero-stat-card-text span {
+  color: var(--color-body);
+  font-size: 12px;
+}
+
+@media only screen and (max-width: 575px) {
+  .hero-chip { padding: 5px 9px; font-size: 11px; gap: 5px; }
+  .hero-chip img { width: 13px; height: 13px; }
+  .hero-chip--django  { left: -12%; }
+  .hero-chip--flutter { right: -10%; }
+  .hero-chip--spring  { left: -10%; }
+  .hero-visual-orbit { --orbit-gap: 20px; }
+  .hero-stat-card { padding: 9px 13px; gap: 9px; left: 0; }
+  .hero-stat-card-icon { width: 28px; height: 28px; font-size: 12px; }
+  .hero-stat-card-text strong { font-size: 14px; }
+}
+
+@keyframes hero-blob {
+  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  33%      { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+  66%      { border-radius: 40% 60% 35% 65% / 40% 35% 65% 60%; }
+}
+@keyframes hero-glow {
+  0%   { opacity: 0.35; }
+  100% { opacity: 0.7; }
+}
+@keyframes hero-orbit {
+  from { transform: rotate(0deg)   translateX(calc(var(--hero-visual-size) / 2 + var(--orbit-gap))); }
+  to   { transform: rotate(360deg) translateX(calc(var(--hero-visual-size) / 2 + var(--orbit-gap))); }
+}
+@keyframes hero-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-12px); }
+}
+@keyframes hero-chip-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-visual-blob,
+  .hero-visual-glow,
+  .hero-visual-orbit::after,
+  .hero-stat-card { animation: none; }
+  .hero-visual-orbit::after { display: none; }
+  .hero-visual-blob,
+  .hero-visual-glow { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  .hero-chip { animation: none; opacity: 1; }
+}
+
+/* ============================================
    Skeletons de chargement
    ============================================ */
 .skeleton-box {
