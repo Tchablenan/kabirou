@@ -1,9 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  typescript: {
-    ignoreBuildErrors: true,
-  },
   compress: true,
   poweredByHeader: false,
   images: {
@@ -54,7 +51,6 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: [
       "lucide-react",
-      "@remixicon/react",
       "react-toastify",
     ],
   },
