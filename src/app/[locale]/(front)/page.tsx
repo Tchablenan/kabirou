@@ -2,13 +2,13 @@ import dynamic from "next/dynamic";
 import Header3 from "@/components/headers/Header3";
 import Header5 from "@/components/headers/Header5";
 import Hero from "@/components/homes/home-7/Hero";
-import Skills from "@/components/common/Skills";
 import Services6 from "@/components/common/Services6";
 import Footer1 from "@/components/footers/Footer1";
 import Copyright from "@/components/footers/Copyright";
 import prisma from "@/lib/prisma";
 
 // Sections below the fold are lazy-loaded: no JS downloaded until needed
+const Skills = dynamic(() => import("@/components/common/Skills"), { ssr: true });
 const Education2 = dynamic(() => import("@/components/common/Education2"), { ssr: true });
 const Portfolio2 = dynamic(() => import("@/components/common/Portfolio2"), { ssr: true });
 const Blogs3 = dynamic(() => import("@/components/common/Blogs3"), { ssr: true });
@@ -45,9 +45,12 @@ export default async function HomePage7() {
       <Header3 />
       <Header5 />
       <div className="dashboard-style-header index-seven">
-        <Hero initialCvUrl={settingsMap["cv_url"] ?? ""} />
-        <Skills initialSkills={safeSkills} />
+        <Hero
+          initialCvUrl={settingsMap["cv_url"] ?? ""}
+          projectsCount={Number(settingsMap["stats_projects"]) || undefined}
+        />
         <Services6 />
+        <Portfolio2 initialProjects={safeProjects} />
         <Education2
           initialExperiences={safeExperiences}
           initialStats={{
@@ -56,7 +59,7 @@ export default async function HomePage7() {
             countries: Number(settingsMap["stats_countries"]) || undefined,
           }}
         />
-        <Portfolio2 initialProjects={safeProjects} />
+        <Skills initialSkills={safeSkills} />
         <Blogs3 initialBlogs={safeBlogs as any} />
         <Contact2 />
         <Footer1 />

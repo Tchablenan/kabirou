@@ -1,17 +1,19 @@
 {
     "hero": {
+        "availability": "Disponible en freelance et en CDI / remote",
         "iam": "je suis",
         "name": "Kabirou Djantchiemo",
-        "description": "Je suis Kabirou Djantchiemo, un développeur Web & Mobile passionné, titulaire d'une licence professionnelle en Génie Logiciel de l'IAI-TOGO. Je me spécialise dans la création de systèmes backend robustes avec Laravel et de frontends modernes et réactifs avec React.js.",
+        "description": "Je transforme vos idées en applications web et mobiles rapides, fiables et prêtes à grandir. Du backend solide aux interfaces fluides, jusqu'à la livraison de produits qui fonctionnent vraiment, pas juste des maquettes.",
         "cv_button": "Voir le Portfolio",
-        "download_cv": "Télécharger mon CV"
+        "contact_button": "Discutons de votre projet",
+        "download_cv": "Télécharger mon CV",
+        "projects_word": "projets",
+        "projects_done": "Réalisés avec succès"
     },
     "titles": {
-        "backend": "Développeur Backend",
-        "frontend": "FRONTEND",
+        "fullstack_developer": "Développeur Fullstack",
         "web_developer": "Développeur Web",
-        "mobile_developer": "Développeur Mobile",
-        "software_engineer": "Ingénieur Logiciel"
+        "mobile_developer": "Développeur Mobile"
     },
     "navigation": {
         "home": "Accueil",
@@ -45,20 +47,20 @@
         "subtitle": "Mon Expertise",
         "title": "Mes Services",
         "web_app": {
-            "title": "Développement Web App",
-            "description": "Création d'applications web réactives et de haute qualité utilisant React.js et Laravel."
+            "title": "Applications web sur mesure",
+            "description": "Plateformes, tableaux de bord, outils métier : je conçois des applications qui simplifient votre activité et s'adaptent à votre croissance."
         },
         "mobile": {
-            "title": "Développement Mobile",
-            "description": "Création d'expériences mobiles cross-platform avec Flutter, axées sur la performance."
-        },
-        "consulting": {
-            "title": "Consulting IT & Stratégie Digitale",
-            "description": "Accompagnement stratégique et expertise technique pour vos solutions numériques."
+            "title": "Applications mobiles",
+            "description": "Une seule application pour iOS et Android, rapide et intuitive, pour garder vos clients connectés à votre service où qu'ils soient."
         },
         "automation": {
-            "title": "Automatisation des tâches",
-            "description": "Optimisation de vos processus métier par des outils automatisés pour gagner en productivité."
+            "title": "Automatisation & intégrations",
+            "description": "Paiement Mobile Money, WhatsApp, e-mails automatiques, connexion entre vos outils : je supprime les tâches répétitives pour que vous gagniez du temps."
+        },
+        "support": {
+            "title": "Accompagnement de A à Z",
+            "description": "De l'idée au lancement, puis la maintenance : je vous conseille, je livre, et je reste disponible pour faire évoluer votre produit."
         }
     },
     "portfolio": {

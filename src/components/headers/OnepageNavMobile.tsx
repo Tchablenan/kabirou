@@ -7,10 +7,10 @@ import { useTranslation } from "react-i18next";
 
 const navItems = [
   { id: 1, href: "#home", text: "Home" },
-  { id: 2, href: "#skills", text: "Skills" },
   { id: 3, href: "#service", text: "Service" },
-  { id: 4, href: "#resume", text: "Experiences" },
   { id: 5, href: "#portfolio", text: "Portfolio" },
+  { id: 4, href: "#resume", text: "Experiences" },
+  { id: 2, href: "#skills", text: "Skills" },
   { id: 6, href: "#blog", text: "Blog" },
   { id: 7, href: "#contacts", text: "Contact" },
 ];

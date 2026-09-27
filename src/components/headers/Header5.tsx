@@ -45,7 +45,7 @@ export default function Header5() {
               <div className="header-right-mobile d-flex align-items-center gap-3">
                 <LanguageSwitcher />
                 <button
-                  className="tmp-hamburger-menu"
+                  className="tmp-hamburger-menu d-xl-none"
                   onClick={() => openModal("mobileMenu2")}
                   aria-label={t("a11y.open_menu")}
                 >
