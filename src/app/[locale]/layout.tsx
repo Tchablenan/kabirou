@@ -131,9 +131,10 @@ export default async function RootLayout({
   const title =
     (locale === "fr" ? user?.professionalTitleFr : user?.professionalTitleEn) ||
     (locale === "fr" ? "Développeur Web & Mobile" : "Web & Mobile Developer");
+  // Le champ « about » de l'admin peut contenir un texte de test (ex. « vf ») : on l'ignore s'il est trop court
+  const aboutFromDb = (locale === "fr" ? user?.aboutFr : user?.aboutEn)?.trim() ?? "";
   const description =
-    (locale === "fr" ? user?.aboutFr : user?.aboutEn) ||
-    SEO_TEXT[locale === "en" ? "en" : "fr"].description;
+    aboutFromDb.length >= 80 ? aboutFromDb : SEO_TEXT[locale === "en" ? "en" : "fr"].description;
 
   const sameAs = [user?.githubUrl, user?.linkedinUrl, user?.twitterUrl, user?.facebookUrl].filter(Boolean);
   if (sameAs.length === 0) {

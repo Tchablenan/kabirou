@@ -27,8 +27,8 @@ export async function GET(req: Request) {
     const formattedConversations = conversations.map((c) => ({
       id: c.id,
       visitorName: c.visitorName || "Anonyme",
-      visitorEmail: c.visitorEmail || "N/A",
-      visitorPhone: c.visitorPhone || "N/A",
+      visitorEmail: c.visitorEmail || null,
+      visitorPhone: c.visitorPhone || null,
       status: c.status,
       messageCount: c._count.messages,
       lastMessage: c.messages[0]?.content || "Aucun message",
