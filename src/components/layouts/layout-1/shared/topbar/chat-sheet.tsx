@@ -10,6 +10,9 @@ import {
   Upload,
   Users,
   Send,
+  Mail,
+  Phone,
+  MessageCircle,
 } from 'lucide-react';
 import Link from 'next/link';
 import { toAbsoluteUrl } from '@/lib/helpers';
@@ -104,6 +107,8 @@ export function ChatSheet({
   const userAvatar = session?.user?.image || toAbsoluteUrl('/media/avatars/300-2.png');
   const kabirouAvatar = profile?.image || toAbsoluteUrl('/media/avatars/300-1.png');
   const kabirouName = profile?.name || "Kabirou Djantchiemo";
+  // Dernière réponse envoyée depuis l'admin : préremplit l'e-mail / le message WhatsApp
+  const lastReply = [...messages].reverse().find((m) => m.role === "ADMIN")?.content ?? "";
 
   const content = (
     <SheetContent side="right" className="p-0 gap-0 sm:w-[500px] sm:max-w-none inset-5 start-auto h-auto rounded-lg [&_[data-slot=sheet-close]]:top-4.5 [&_[data-slot=sheet-close]]:end-5 flex flex-col shadow-2xl border border-border">
@@ -170,6 +175,42 @@ export function ChatSheet({
             </div>
           </div>
         </div>
+        {(visitorInfo?.email || visitorInfo?.phone) && (
+          <div className="flex flex-wrap items-center gap-2 px-6 py-3 border-b border-border bg-background">
+            <span className="text-xs text-muted-foreground me-1">Recontacter :</span>
+            {visitorInfo.email && (
+              <Button asChild variant="outline" size="sm">
+                <a
+                  href={`mailto:${visitorInfo.email}?subject=${encodeURIComponent(
+                    "Re : votre message sur mon portfolio"
+                  )}${lastReply ? `&body=${encodeURIComponent(lastReply)}` : ""}`}
+                >
+                  <Mail className="size-3.5" /> {visitorInfo.email}
+                </a>
+              </Button>
+            )}
+            {visitorInfo.phone && (
+              <>
+                <Button asChild variant="outline" size="sm">
+                  <a href={`tel:${visitorInfo.phone.replace(/[^\d+]/g, "")}`}>
+                    <Phone className="size-3.5" /> {visitorInfo.phone}
+                  </a>
+                </Button>
+                <Button asChild variant="outline" size="sm">
+                  <a
+                    href={`https://wa.me/${visitorInfo.phone.replace(/\D/g, "")}${
+                      lastReply ? `?text=${encodeURIComponent(lastReply)}` : ""
+                    }`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <MessageCircle className="size-3.5" /> WhatsApp
+                  </a>
+                </Button>
+              </>
+            )}
+          </div>
+        )}
       </SheetHeader>
 
       <SheetBody 

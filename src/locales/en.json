@@ -241,5 +241,52 @@
         "scroll_top": "Back to top",
         "hero_photo_alt": "Portrait of Kabirou Djantchiemo, Web & Mobile developer",
         "logo_alt": "Kabirou Djantchiemo logo"
+    },
+    "chat": {
+        "open": "Open chat",
+        "close": "Close chat",
+        "status": "Usually replies within a few hours",
+        "welcome": "Hi 👋 I'm {{name}}. A question, a project or an opportunity? Write to me here, I get your message and reply personally.",
+        "notified": "Message received! {{name}} has been notified and will reply here. Keep this page open or come back later: the conversation is saved.",
+        "placeholder": "Write your message...",
+        "send": "Send",
+        "sent": "Sent",
+        "error": "Your message couldn't be sent. Check your connection and try again.",
+        "contact_prompt": "To make sure you get my reply, leave your name and your email or phone number (optional).",
+        "contact_name": "Your name",
+        "contact_value": "Email or phone number",
+        "contact_save": "Save",
+        "contact_later": "Later",
+        "contact_invalid": "Enter a valid email or phone number (with country code, e.g. +233…).",
+        "contact_thanks": "Thanks! {{name}} can get back to you even if you leave the site.",
+        "unread_one": "{{count}} new message",
+        "unread_other": "{{count}} new messages"
+    },
+    "about": {
+        "subtitle": "About me",
+        "title": "The developer behind your projects",
+        "paragraph_1": "Trained in software engineering in Lomé and now based in Accra, I build web and mobile applications for businesses and entrepreneurs, in both French and English.",
+        "paragraph_2": "My approach is simple: understand your business before writing a single line of code, deliver step by step so you can see your product take shape, and stay available after launch.",
+        "highlights": {
+            "languages": {
+                "title": "Bilingual French / English",
+                "text": "Comfortable working with French- and English-speaking clients and teams."
+            },
+            "fullstack": {
+                "title": "One point of contact, end to end",
+                "text": "Design, development, launch and maintenance: no need to coordinate several providers."
+            },
+            "degree": {
+                "title": "Bachelor's in Software Engineering",
+                "text": "African Institute of Computer Science (IAI-TOGO), Lomé."
+            },
+            "communication": {
+                "title": "Clear communication",
+                "text": "Regular check-ins, frequent deliveries and no unnecessary jargon."
+            }
+        },
+        "contact": "Get in touch",
+        "photo_alt": "Kabirou Djantchiemo smiling outdoors",
+        "photo_tag": "Accra, Ghana"
     }
 }

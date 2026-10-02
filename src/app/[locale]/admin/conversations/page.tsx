@@ -21,6 +21,7 @@ import {
   Mail,
   Clock,
   Search,
+  Phone,
 } from "lucide-react";
 import { AdminBreadcrumb } from "@/components/admin/AdminBreadcrumb";
 import { 
@@ -37,8 +38,8 @@ import { Sheet } from "@/components/ui/sheet";
 interface Conversation {
   id: string;
   visitorName: string;
-  visitorEmail: string;
-  visitorPhone: string;
+  visitorEmail: string | null;
+  visitorPhone: string | null;
   status: string;
   messageCount: number;
   lastMessage: string;
@@ -86,7 +87,14 @@ export default function AdminConversations() {
     try {
       const res = await fetch(`/api/chat/history?conversationId=${id}`);
       const data = await res.json();
-      setMessages(data.messages || []);
+      setMessages(
+        (data.messages || []).map((m: { id: string; role: string; text: string; createdAt: string }) => ({
+          id: m.id,
+          role: m.role === "admin" ? "ADMIN" : "user",
+          content: m.text,
+          createdAt: m.createdAt,
+        }))
+      );
     } catch (error) {
       toast.error("Erreur lors du chargement des messages");
     } finally {
@@ -109,10 +117,21 @@ export default function AdminConversations() {
             <UserIcon className="size-3.5 text-muted-foreground" />
             {row.original.visitorName}
           </span>
-          <span className="text-xs text-muted-foreground flex items-center gap-1.5">
-            <Mail className="size-3.5" />
-            {row.original.visitorEmail}
-          </span>
+          {row.original.visitorEmail && (
+            <span className="text-xs text-muted-foreground flex items-center gap-1.5">
+              <Mail className="size-3.5" />
+              {row.original.visitorEmail}
+            </span>
+          )}
+          {row.original.visitorPhone && (
+            <span className="text-xs text-muted-foreground flex items-center gap-1.5">
+              <Phone className="size-3.5" />
+              {row.original.visitorPhone}
+            </span>
+          )}
+          {!row.original.visitorEmail && !row.original.visitorPhone && (
+            <span className="text-xs text-muted-foreground/70 italic">Aucun contact laissé</span>
+          )}
         </div>
       ),
     },
@@ -170,6 +189,7 @@ export default function AdminConversations() {
       (c) =>
         c.visitorName?.toLowerCase().includes(q) ||
         c.visitorEmail?.toLowerCase().includes(q) ||
+        c.visitorPhone?.includes(q) ||
         c.lastMessage?.toLowerCase().includes(q)
     );
   }, [conversations, search]);

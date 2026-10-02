@@ -1,302 +1,401 @@
 "use client";
 
-import { useSession } from "next-auth/react";
-import { ReactNode, useEffect, useState, useRef } from 'react';
-import { UIMessage, useChat } from "@ai-sdk/react";
-import { DefaultChatTransport } from "ai";
-import {
-  CheckCheck,
-  X,
-} from 'lucide-react';
-import { toAbsoluteUrl } from '@/lib/helpers';
-import { cn } from '@/lib/utils';
+import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
+import { useTranslation } from "react-i18next";
 import { useProfile } from "@/hooks/useProfile";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-  AvatarIndicator,
-  AvatarStatus,
-} from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import {
-  Sheet,
-  SheetBody,
-  SheetContent,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from '@/components/ui/sheet';
+
+// Messagerie en direct : le visiteur écrit, Kabirou répond depuis l'admin.
+// Les messages sont stockés via /api/chat et relus via /api/chat/history.
+
+type ChatRole = "user" | "admin";
+
+interface ChatMessage {
+  id: string;
+  role: ChatRole;
+  text: string;
+  createdAt: string;
+  pending?: boolean;
+}
+
+const STORAGE_KEY = "chat_conversation_id";
+const STARTED_KEY = "chat_started";
+const SEEN_KEY = "chat_seen_replies";
+const DISMISSED_KEY = "chat_contact_dismissed";
+const POLL_OPEN_MS = 5000;
+const POLL_CLOSED_MS = 60000;
+const MAX_LENGTH = 2000;
+
+function getConversationId(): string {
+  try {
+    let id = localStorage.getItem(STORAGE_KEY);
+    if (!id) {
+      id = crypto.randomUUID();
+      localStorage.setItem(STORAGE_KEY, id);
+    }
+    return id;
+  } catch {
+    return crypto.randomUUID();
+  }
+}
+
+function readStorage(key: string, storage: "local" | "session" = "local") {
+  try {
+    return (storage === "local" ? localStorage : sessionStorage).getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+function writeStorage(key: string, value: string, storage: "local" | "session" = "local") {
+  try {
+    (storage === "local" ? localStorage : sessionStorage).setItem(key, value);
+  } catch {
+    // Stockage indisponible (navigation privée stricte) : sans conséquence
+  }
+}
+
+function formatTime(iso: string, locale: string) {
+  return new Date(iso).toLocaleTimeString(locale === "en" ? "en-GB" : "fr-FR", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
 
 export default function Chat() {
-  const { data: session } = useSession();
+  const { t, i18n } = useTranslation();
   const { profile } = useProfile();
-  const [mounted, setMounted] = useState(false);
-  const [conversationId, setConversationId] = useState<string>("");
-  const [input, setInput] = useState("");
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const locale = i18n.language || "fr";
 
+  const [mounted, setMounted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [conversationId, setConversationId] = useState("");
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [input, setInput] = useState("");
+  const [isSending, setIsSending] = useState(false);
+  const [error, setError] = useState("");
+
+  // Une conversation existe déjà pour ce navigateur (au moins un message envoyé)
+  const [hasStarted, setHasStarted] = useState(false);
+  // Nombre de réponses de Kabirou déjà vues, pour la pastille « nouveau message »
+  const [seenReplies, setSeenReplies] = useState(0);
+
+  // Carte « laissez vos coordonnées »
+  const [hasContact, setHasContact] = useState(true);
+  const [contactDismissed, setContactDismissed] = useState(false);
+  const [contactName, setContactName] = useState("");
+  const [contactValue, setContactValue] = useState("");
+  const [contactError, setContactError] = useState("");
+  const [isSavingContact, setIsSavingContact] = useState(false);
+  const [contactSaved, setContactSaved] = useState(false);
+
+  const listRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+
+  const firstName = profile?.name?.split(" ")[0] || "Kabirou";
+  const fullName = profile?.name || "Kabirou Djantchiemo";
+  const avatar = profile?.image || "/assets/images/kbi/df-scaled.webp";
 
   useEffect(() => {
     setMounted(true);
-    let id = sessionStorage.getItem("chat_conversation_id");
-    if (!id) {
-      id = crypto.randomUUID();
-      sessionStorage.setItem("chat_conversation_id", id);
-    }
-    setConversationId(id);
+    setConversationId(getConversationId());
+    setHasStarted(readStorage(STARTED_KEY) === "1");
+    setSeenReplies(Number(readStorage(SEEN_KEY)) || 0);
+    setContactDismissed(readStorage(DISMISSED_KEY, "session") === "1");
   }, []);
 
-  useEffect(() => {
-    if (isOpen) {
-      document.body.classList.add('chat-open');
-    } else {
-      document.body.classList.remove('chat-open');
+  const fetchHistory = useCallback(async () => {
+    if (!conversationId) return;
+    try {
+      const res = await fetch(`/api/chat/history?conversationId=${encodeURIComponent(conversationId)}`);
+      if (!res.ok) return;
+      const data = await res.json();
+      if (!Array.isArray(data.messages)) return;
+      setHasContact(Boolean(data.hasContact));
+      setMessages((current) => {
+        // Garde les messages en cours d'envoi tant que le serveur ne les a pas renvoyés
+        const pending = current.filter((m) => m.pending);
+        return [...data.messages, ...pending];
+      });
+    } catch {
+      // Réseau indisponible : on réessaiera au prochain intervalle
     }
-    return () => document.body.classList.remove('chat-open');
+  }, [conversationId]);
+
+  // Historique à l'ouverture, puis rafraîchissement tant que le panneau est ouvert et visible
+  useEffect(() => {
+    if (!isOpen) return;
+    fetchHistory();
+    const interval = setInterval(() => {
+      if (document.visibilityState === "visible") fetchHistory();
+    }, POLL_OPEN_MS);
+    return () => clearInterval(interval);
+  }, [isOpen, fetchHistory]);
+
+  // Panneau fermé : vérifie de temps en temps si Kabirou a répondu (seulement si une conversation existe)
+  useEffect(() => {
+    if (isOpen || !hasStarted) return;
+    fetchHistory();
+    const interval = setInterval(() => {
+      if (document.visibilityState === "visible") fetchHistory();
+    }, POLL_CLOSED_MS);
+    return () => clearInterval(interval);
+  }, [isOpen, hasStarted, fetchHistory]);
+
+  const replyCount = messages.filter((m) => m.role === "admin").length;
+  const unread = Math.max(replyCount - seenReplies, 0);
+
+  // Panneau ouvert : toutes les réponses affichées sont considérées comme lues
+  useEffect(() => {
+    if (!isOpen || replyCount === seenReplies) return;
+    setSeenReplies(replyCount);
+    writeStorage(SEEN_KEY, String(replyCount));
+  }, [isOpen, replyCount, seenReplies]);
+
+  useEffect(() => {
+    document.body.classList.toggle("chat-open", isOpen);
+    if (isOpen) inputRef.current?.focus();
+    return () => document.body.classList.remove("chat-open");
   }, [isOpen]);
 
-  const { messages, sendMessage, status, setMessages } = useChat({
-    transport: new DefaultChatTransport({
-      api: "/api/chat",
-      body: { conversationId },
-    }),
-  });
-
-  const isLoading = status === "submitted" || status === "streaming";
-
   useEffect(() => {
-    if (!conversationId) return;
-
-    const fetchHistory = async () => {
-      try {
-        const response = await fetch(`/api/chat/history?conversationId=${conversationId}`);
-        const data = await response.json();
-        if (data.messages && data.messages.length > 0) {
-          setMessages(data.messages);
-        } else if (messages.length === 0) {
-          setMessages([
-            {
-              id: "welcome",
-              role: "assistant",
-              parts: [
-                {
-                  type: "text",
-                  text: `Bonjour ! Je suis ${profile?.name?.split(' ')[0] || "Kabirou"}. Je suis actuellement en ligne ou occupé par mes projets, mais vous pouvez me laisser un message ici et je vous répondrai directement. Comment puis-je vous aider ?`,
-                },
-              ],
-            },
-          ]);
-        }
-      } catch (error) {
-        console.error("Failed to load chat history:", error);
+    if (!isOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsOpen(false);
+        triggerRef.current?.focus();
       }
     };
-
-    fetchHistory();
-
-    const interval = setInterval(() => {
-      if (!isLoading && isOpen) {
-        fetchHistory();
-      }
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [conversationId, setMessages, isLoading, isOpen, profile?.name]);
-
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [isOpen]);
 
   useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    }
-  }, [messages, isLoading]);
+    const list = listRef.current;
+    if (list) list.scrollTop = list.scrollHeight;
+  }, [messages, isOpen]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!input.trim() || isLoading) return;
-    sendMessage({
-      role: "user",
-      parts: [{ type: "text", text: input }],
-    });
+  const send = async (e?: FormEvent) => {
+    e?.preventDefault();
+    const text = input.trim();
+    if (!text || isSending || !conversationId) return;
+
+    const tempId = `pending-${Date.now()}`;
+    setMessages((m) => [...m, { id: tempId, role: "user", text, createdAt: new Date().toISOString(), pending: true }]);
     setInput("");
+    setError("");
+    setIsSending(true);
+
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ conversationId, content: text }),
+      });
+      if (!res.ok) throw new Error();
+      const data = await res.json();
+      setMessages((m) => m.map((msg) => (msg.id === tempId ? { ...data.message } : msg)));
+      if (!hasStarted) {
+        setHasStarted(true);
+        writeStorage(STARTED_KEY, "1");
+      }
+    } catch {
+      setMessages((m) => m.filter((msg) => msg.id !== tempId));
+      setInput(text);
+      setError(t("chat.error"));
+    } finally {
+      setIsSending(false);
+      inputRef.current?.focus();
+    }
   };
 
-  if (!mounted) {
-    return null;
-  }
+  const saveContact = async (e: FormEvent) => {
+    e.preventDefault();
+    const contact = contactValue.trim();
+    if (!contact || isSavingContact) return;
+    setContactError("");
+    setIsSavingContact(true);
+    try {
+      const res = await fetch("/api/chat/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ conversationId, name: contactName, contact }),
+      });
+      if (res.status === 400) {
+        setContactError(t("chat.contact_invalid"));
+        return;
+      }
+      if (!res.ok) throw new Error();
+      setHasContact(true);
+      setContactSaved(true);
+    } catch {
+      setContactError(t("chat.error"));
+    } finally {
+      setIsSavingContact(false);
+    }
+  };
 
-  const userAvatar = session?.user?.image || toAbsoluteUrl('/media/avatars/300-2.png');
-  const kabirouAvatar = profile?.image || toAbsoluteUrl('/media/avatars/300-1.png');
-  const kabirouName = profile?.name || "Kabirou Djantchiemo";
+  const dismissContact = () => {
+    setContactDismissed(true);
+    writeStorage(DISMISSED_KEY, "1", "session");
+  };
+
+  if (!mounted) return null;
+
+  const hasUserMessage = messages.some((m) => m.role === "user");
 
   return (
-    <div className="fixed bottom-[90px] right-[20px] z-[99999] pointer-events-auto">
-      <Sheet open={isOpen} onOpenChange={setIsOpen}>
-        <SheetTrigger asChild>
-          <button
-            type="button"
-            style={{
-              backgroundColor: '#FF014F',
-              width: '55px',
-              height: '55px',
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.25), 0 4px 6px -2px rgba(255, 1, 79, 0.2)',
-              cursor: 'pointer',
-              border: 'none',
-              padding: 0,
-              margin: 0,
-              transition: 'transform 0.3s ease, opacity 0.3s ease',
-              opacity: isOpen ? 0 : 1,
-              pointerEvents: isOpen ? 'none' : 'auto',
-            }}
-            className="hover:scale-110 active:scale-95"
-            aria-label="Ouvrir le chat"
-          >
-            <i className="fab fa-facebook-messenger" style={{ fontSize: '22px', color: '#fff' }} />
-          </button>
-        </SheetTrigger>
-        <SheetContent side="right" className="p-0 gap-0 sm:w-[500px] sm:max-w-none inset-5 start-auto h-auto rounded-lg [&_[data-slot=sheet-close]]:top-4.5 [&_[data-slot=sheet-close]]:end-5 flex flex-col shadow-2xl border border-border">
-          <SheetHeader className="p-0">
-            <div className="flex items-center justify-between p-4 border-b border-border bg-background">
-              <SheetTitle className="text-sm font-bold ml-2">Chat Direct</SheetTitle>
+    <>
+      <button
+        ref={triggerRef}
+        type="button"
+        className={`kb-chat-trigger ${isOpen ? "is-hidden" : ""}`}
+        onClick={() => setIsOpen(true)}
+        aria-label={t("chat.open")}
+        aria-expanded={isOpen}
+        aria-controls="kb-chat-panel"
+      >
+        <i className="fa-solid fa-comment-dots" aria-hidden="true" />
+        {unread > 0 && (
+          <span className="kb-chat-badge" aria-label={t("chat.unread", { count: unread })}>
+            {unread}
+          </span>
+        )}
+      </button>
+
+      {isOpen && (
+        <div
+          id="kb-chat-panel"
+          className="kb-chat-panel"
+          role="dialog"
+          aria-modal="false"
+          aria-labelledby="kb-chat-title"
+        >
+          <div className="kb-chat-header">
+            <div className="kb-chat-avatar">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={avatar} alt="" width={44} height={44} />
+              <span className="kb-chat-online" aria-hidden="true" />
+            </div>
+            <div className="kb-chat-identity">
+              <span id="kb-chat-title" className="kb-chat-name">{fullName}</span>
+              <span className="kb-chat-status">{t("chat.status")}</span>
+            </div>
+            <button
+              type="button"
+              className="kb-chat-close"
+              onClick={() => {
+                setIsOpen(false);
+                triggerRef.current?.focus();
+              }}
+              aria-label={t("chat.close")}
+            >
+              <i className="fa-solid fa-xmark" aria-hidden="true" />
+            </button>
+          </div>
+
+          <div className="kb-chat-messages" ref={listRef} aria-live="polite">
+            <div className="kb-chat-row is-admin">
+              <div className="kb-chat-bubble">{t("chat.welcome", { name: firstName })}</div>
             </div>
 
-            <div className="p-4 shadow-sm bg-accent/5 border-b border-border">
-              <div className="flex items-center justify-between gap-2 px-2">
-                <div className="flex items-center gap-3">
-                  <Avatar className="size-12 border-2 border-primary/20 bg-background flex items-center justify-center overflow-hidden">
-                    <AvatarImage src={kabirouAvatar} alt={kabirouName} />
-                    <AvatarFallback className="bg-primary/10 text-primary">KA</AvatarFallback>
-                    <AvatarIndicator className="-end-1 -bottom-1">
-                      <AvatarStatus variant="online" className="size-3" />
-                    </AvatarIndicator>
-                  </Avatar>
-                  <div>
-                    <span className="text-sm font-bold text-foreground block">
-                      {kabirouName}
-                    </span>
-                    <span className="text-xs italic text-muted-foreground block">
-                      {isLoading ? "En train de répondre..." : "Disponibilité active"}
-                    </span>
-                  </div>
-                </div>
-                <Button
-                  variant="ghost"
-                  mode="icon"
-                  size="sm"
-                  onClick={() => setIsOpen(false)}
-                  aria-label="Fermer le chat"
-                >
-                  <X className="size-4" />
-                </Button>
+            {messages.map((m) => (
+              <div key={m.id} className={`kb-chat-row ${m.role === "user" ? "is-user" : "is-admin"}`}>
+                <div className={`kb-chat-bubble ${m.pending ? "is-pending" : ""}`}>{m.text}</div>
+                <span className="kb-chat-meta">
+                  {m.role === "admin" && <strong>{firstName} · </strong>}
+                  {formatTime(m.createdAt, locale)}
+                  {m.role === "user" && !m.pending && (
+                    <i className="fa-solid fa-check-double" aria-label={t("chat.sent")} />
+                  )}
+                </span>
               </div>
-            </div>
-          </SheetHeader>
+            ))}
 
-          <SheetBody
-            className="flex-1 overflow-y-auto p-6 space-y-6 bg-background scrollable-y-auto flex flex-col"
-            ref={scrollRef as any}
-          >
-            {messages.map((m: any, index) => {
-              const isUser = m.role === "user";
-              const isAdmin = m.role === "ADMIN";
-              
-              if (isUser) {
-                return (
-                  <div key={m.id || index} className="flex items-end justify-end gap-3 self-end w-full">
-                    <div className="flex flex-col gap-1.5 items-end max-w-[75%]">
-                      <div className="bg-primary text-primary-foreground text-[15px] font-medium px-5 py-3.5 rounded-2xl rounded-tr-none shadow-sm leading-relaxed">
-                        {m.parts ? m.parts.map((part: any, i: number) => part.type === "text" ? part.text : null) : m.content}
-                      </div>
-                      <div className="flex items-center justify-end gap-1.5 px-1">
-                        <span className="text-xs text-muted-foreground">
-                          {new Date(m.createdAt || Date.now()).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
-                        </span>
-                        <CheckCheck size={15} className="text-green-500" />
-                      </div>
-                    </div>
-                    <div className="size-10 rounded-full shrink-0 bg-blue-500 flex items-center justify-center text-white font-bold text-sm">
-                      V
-                    </div>
-                  </div>
-                );
-              }
-
-              return (
-                <div key={m.id || index} className="flex items-end gap-3 self-start w-full pr-4">
-                  <Avatar className={cn("size-10 shrink-0 border", isAdmin ? "border-green-500/30" : "border-border/10")}>
-                    <AvatarImage src={kabirouAvatar} className="object-cover" />
-                    <AvatarFallback className={cn("text-xs font-bold", isAdmin ? "bg-green-500 text-white" : "bg-primary/10 text-primary")}>
-                      KA
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="flex flex-col gap-1.5 max-w-[75%]">
-                    <div className={cn(
-                      "text-[15px] font-medium px-5 py-3.5 rounded-2xl rounded-tl-none shadow-xs border leading-relaxed",
-                      isAdmin ? "bg-green-50 border-green-100 text-green-900" : "bg-accent/50 text-secondary-foreground border-border/5"
-                    )}>
-                      {m.parts ? m.parts.map((part: any, i: number) => part.type === "text" ? part.text : null) : m.content}
-                    </div>
-                    <div className="flex items-center gap-2 px-1">
-                      <span className="text-xs text-muted-foreground">
-                        {new Date(m.createdAt || Date.now()).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
-                      </span>
-                      {isAdmin && (
-                        <span className="text-[10px] bg-green-100 text-green-700 px-1.5 py-0.5 rounded font-bold uppercase tracking-widest">{kabirouName.split(' ')[0]}</span>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-            {isLoading && (
-              <div className="flex items-end gap-3 self-start">
-                <Avatar className="size-10 shrink-0">
-                  <AvatarImage src={kabirouAvatar} className="object-cover" />
-                  <AvatarFallback className="bg-primary/10 text-primary text-sm font-bold">KA</AvatarFallback>
-                </Avatar>
-                <div className="bg-accent/50 px-5 py-4 rounded-2xl rounded-tl-none flex gap-2 items-center shadow-xs border border-border/5">
-                  <span className="size-2 bg-primary/50 rounded-full animate-bounce" />
-                  <span className="size-2 bg-primary/50 rounded-full animate-bounce [animation-delay:0.2s]" />
-                  <span className="size-2 bg-primary/50 rounded-full animate-bounce [animation-delay:0.4s]" />
-                </div>
-              </div>
+            {hasUserMessage && !messages.some((m) => m.role === "admin") && (
+              <p className="kb-chat-notice">{t("chat.notified", { name: firstName })}</p>
             )}
-          </SheetBody>
 
-          <SheetFooter className="block p-0 sm:space-x-0 border-t border-border">
-            <form onSubmit={handleSubmit} className="w-full">
-              <div className="p-5 w-full relative">
-
-                <Input
+            {hasUserMessage && !hasContact && !contactDismissed && (
+              <form className="kb-chat-contact" onSubmit={saveContact}>
+                <p className="kb-chat-contact-text">{t("chat.contact_prompt")}</p>
+                <input
                   type="text"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  placeholder="Écrivez votre message..."
-                  className="w-full ps-12 pe-28 py-4 h-auto text-[15px]"
-                  disabled={isLoading}
+                  className="kb-chat-field"
+                  value={contactName}
+                  onChange={(e) => setContactName(e.target.value)}
+                  placeholder={t("chat.contact_name")}
+                  aria-label={t("chat.contact_name")}
+                  autoComplete="name"
+                  maxLength={100}
                 />
-                <div className="absolute end-7 top-1/2 -translate-y-1/2">
-                  <Button
-                    size="sm"
-                    variant="mono"
-                    type="submit"
-                    disabled={isLoading || !input.trim()}
-                  >
-                    Envoyer
-                  </Button>
+                <input
+                  type="text"
+                  className="kb-chat-field"
+                  value={contactValue}
+                  onChange={(e) => setContactValue(e.target.value)}
+                  placeholder={t("chat.contact_value")}
+                  aria-label={t("chat.contact_value")}
+                  autoComplete="email"
+                  maxLength={200}
+                  required
+                />
+                {contactError && (
+                  <p className="kb-chat-contact-error" role="alert">
+                    {contactError}
+                  </p>
+                )}
+                <div className="kb-chat-contact-actions">
+                  <button type="button" className="kb-chat-link" onClick={dismissContact}>
+                    {t("chat.contact_later")}
+                  </button>
+                  <button type="submit" className="kb-chat-contact-submit" disabled={!contactValue.trim() || isSavingContact}>
+                    {t("chat.contact_save")}
+                  </button>
                 </div>
-              </div>
-            </form>
-          </SheetFooter>
-        </SheetContent>
-      </Sheet>
-    </div>
+              </form>
+            )}
+
+            {contactSaved && (
+              <p className="kb-chat-notice is-success">
+                {t("chat.contact_thanks", { name: firstName })}
+              </p>
+            )}
+          </div>
+
+          {error && (
+            <p className="kb-chat-error" role="alert">
+              {error}
+            </p>
+          )}
+
+          <form className="kb-chat-form" onSubmit={send}>
+            <textarea
+              ref={inputRef}
+              className="kb-chat-input"
+              value={input}
+              onChange={(e) => setInput(e.target.value.slice(0, MAX_LENGTH))}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  send();
+                }
+              }}
+              placeholder={t("chat.placeholder")}
+              aria-label={t("chat.placeholder")}
+              rows={1}
+            />
+            <button
+              type="submit"
+              className="kb-chat-send"
+              disabled={!input.trim() || isSending}
+              aria-label={t("chat.send")}
+            >
+              <i className="fa-solid fa-paper-plane" aria-hidden="true" />
+            </button>
+          </form>
+        </div>
+      )}
+    </>
   );
 }

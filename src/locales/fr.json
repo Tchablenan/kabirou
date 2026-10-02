@@ -243,5 +243,52 @@
         "scroll_top": "Retour en haut de page",
         "hero_photo_alt": "Portrait de Kabirou Djantchiemo, développeur Web & Mobile",
         "logo_alt": "Logo Kabirou Djantchiemo"
+    },
+    "chat": {
+        "open": "Ouvrir la messagerie",
+        "close": "Fermer la messagerie",
+        "status": "Répond généralement en quelques heures",
+        "welcome": "Bonjour 👋 Je suis {{name}}. Une question, un projet ou une opportunité ? Écrivez-moi ici, je reçois votre message et je vous réponds personnellement.",
+        "notified": "Message bien reçu ! {{name}} a été prévenu et vous répondra ici. Gardez cette page ouverte ou revenez plus tard : la conversation est conservée.",
+        "placeholder": "Écrivez votre message...",
+        "send": "Envoyer",
+        "sent": "Envoyé",
+        "error": "Le message n'a pas pu être envoyé. Vérifiez votre connexion et réessayez.",
+        "contact_prompt": "Pour être sûr de recevoir ma réponse, laissez votre nom et votre e-mail ou numéro de téléphone (facultatif).",
+        "contact_name": "Votre nom",
+        "contact_value": "E-mail ou numéro de téléphone",
+        "contact_save": "Enregistrer",
+        "contact_later": "Plus tard",
+        "contact_invalid": "Entrez un e-mail valide ou un numéro de téléphone (avec l'indicatif, ex. +233…).",
+        "contact_thanks": "Merci ! {{name}} pourra vous recontacter même si vous quittez le site.",
+        "unread_one": "{{count}} nouveau message",
+        "unread_other": "{{count}} nouveaux messages"
+    },
+    "about": {
+        "subtitle": "À propos",
+        "title": "Le développeur derrière vos projets",
+        "paragraph_1": "Formé au génie logiciel à Lomé et aujourd'hui basé à Accra, je conçois des applications web et mobiles pour des entreprises et des porteurs de projets, en français comme en anglais.",
+        "paragraph_2": "Ma méthode est simple : comprendre votre métier avant d'écrire la moindre ligne de code, livrer par étapes pour que vous voyiez votre produit avancer, et rester disponible après la mise en ligne.",
+        "highlights": {
+            "languages": {
+                "title": "Bilingue français / anglais",
+                "text": "À l'aise avec des clients et des équipes francophones comme anglophones."
+            },
+            "fullstack": {
+                "title": "Un seul interlocuteur, de A à Z",
+                "text": "Conception, développement, mise en ligne et maintenance : pas besoin de coordonner plusieurs prestataires."
+            },
+            "degree": {
+                "title": "Licence en Génie Logiciel",
+                "text": "Institut Africain d'Informatique (IAI-TOGO), Lomé."
+            },
+            "communication": {
+                "title": "Communication claire",
+                "text": "Des points réguliers, des livraisons fréquentes et zéro jargon inutile."
+            }
+        },
+        "contact": "Me contacter",
+        "photo_alt": "Kabirou Djantchiemo, souriant, en extérieur",
+        "photo_tag": "Accra, Ghana"
     }
 }
