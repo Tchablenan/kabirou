@@ -63,6 +63,30 @@ model Skill {
   @@map("skills")
 }
 
+// Section « Ils me font confiance » de la page d'accueil
+model Company {
+  id           String      @id @default(cuid())
+  name         String
+  kind         CompanyKind @default(CLIENT)
+  logoUrl      String?     @map("logo_url")
+  detailFr     String?     @map("detail_fr") // secteur ou ville
+  detailEn     String?     @map("detail_en")
+  period       String?
+  current      Boolean     @default(false)
+  url          String?
+  visible      Boolean     @default(true)
+  displayOrder Int         @default(0) @map("display_order")
+  createdAt    DateTime    @default(now()) @map("created_at")
+  updatedAt    DateTime    @updatedAt @map("updated_at")
+
+  @@map("companies")
+}
+
+enum CompanyKind {
+  EMPLOYER
+  CLIENT
+}
+
 model BlogPost {
   id           String    @id @default(cuid())
   titleEn      String    @map("title_en")

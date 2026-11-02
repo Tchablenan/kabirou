@@ -9,6 +9,7 @@ import prisma from "@/lib/prisma";
 
 // Sections below the fold are lazy-loaded: no JS downloaded until needed
 const About = dynamic(() => import("@/components/common/About"), { ssr: true });
+const TrustedBy = dynamic(() => import("@/components/common/TrustedBy"), { ssr: true });
 const Skills = dynamic(() => import("@/components/common/Skills"), { ssr: true });
 const Education2 = dynamic(() => import("@/components/common/Education2"), { ssr: true });
 const Portfolio2 = dynamic(() => import("@/components/common/Portfolio2"), { ssr: true });
@@ -17,7 +18,7 @@ const Contact2 = dynamic(() => import("@/components/common/Contact2"), { ssr: tr
 
 export default async function HomePage7() {
   // Single round-trip: all data fetched in parallel server-side
-  const [skills, experiences, projects, blogs, settings] = await Promise.allSettled([
+  const [skills, experiences, projects, blogs, settings, companies] = await Promise.allSettled([
     prisma.skill.findMany({ orderBy: { displayOrder: "asc" } }),
     prisma.experience.findMany({ orderBy: { displayOrder: "asc" } }),
     prisma.project.findMany({ orderBy: { displayOrder: "asc" } }),
@@ -26,11 +27,16 @@ export default async function HomePage7() {
       orderBy: [{ displayOrder: "asc" }, { publishedAt: "desc" }],
     }),
     prisma.setting.findMany(),
+    prisma.company.findMany({
+      where: { visible: true },
+      orderBy: { displayOrder: "asc" },
+      select: { id: true, name: true, kind: true, logoUrl: true, detailFr: true, detailEn: true, period: true, current: true, url: true },
+    }),
   ]).catch(() => []);
 
   // En cas d'échec d'une requête (ex. coupure passagère de la base), on passe `undefined` :
   // la section recharge alors ses données côté navigateur au lieu d'afficher une liste vide.
-  for (const [name, result] of Object.entries({ skills, experiences, projects, blogs, settings })) {
+  for (const [name, result] of Object.entries({ skills, experiences, projects, blogs, settings, companies })) {
     if (result?.status === "rejected") console.error(`Home page: ${name} query failed`, result.reason);
   }
 
@@ -43,6 +49,7 @@ export default async function HomePage7() {
     createdAt: b.createdAt.toISOString(),
     updatedAt: b.updatedAt.toISOString(),
   })) : undefined;
+  const safeCompanies  = companies?.status === "fulfilled"  ? companies.value   : undefined;
   const settingsMap    = settings?.status === "fulfilled"
     ? Object.fromEntries(settings.value.map((s: any) => [s.key, s.value ?? ""]))
     : {};
@@ -68,6 +75,7 @@ export default async function HomePage7() {
           }}
         />
         <Skills initialSkills={safeSkills} />
+        <TrustedBy initialCompanies={safeCompanies} />
         <Blogs3 initialBlogs={safeBlogs as any} />
         <Contact2 />
         <Footer1 />

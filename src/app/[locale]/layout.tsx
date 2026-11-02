@@ -182,7 +182,10 @@ export default async function RootLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/favicon/favicon.ico" sizes="any" />
+        {/* ?v=2 : force les navigateurs à recharger l'icône (elles sont mises en cache longtemps) */}
+        <link rel="icon" href="/favicon/favicon.ico?v=2" sizes="any" />
+        <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png?v=2" sizes="96x96" />
+        <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png?v=2" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

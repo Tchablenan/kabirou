@@ -75,6 +75,11 @@ export const MENU_SIDEBAR: MenuConfig = [
     icon: Zap,
     path: '/admin/skills',
   },
+  {
+    title: 'Entreprises',
+    icon: Building,
+    path: '/admin/companies',
+  },
   { heading: 'Communication' },
   {
     title: 'Messages',

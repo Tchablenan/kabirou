@@ -290,5 +290,12 @@
         "contact": "Me contacter",
         "photo_alt": "Kabirou Djantchiemo, souriant, en extérieur",
         "photo_tag": "Accra, Ghana"
+    },
+    "trusted": {
+        "subtitle": "Références",
+        "title": "Ils me font confiance",
+        "intro": "Entreprises et clients avec lesquels j'ai travaillé ou je travaille actuellement.",
+        "current": "En cours",
+        "title_highlight": "confiance"
     }
 }
