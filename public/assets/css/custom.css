@@ -991,6 +991,11 @@ a.kb-trusted-pill { cursor: pointer; }
   background: #fff;
   box-shadow: 0 14px 30px -12px rgba(255, 1, 79, 0.6), 0 0 0 3px rgba(255, 1, 79, 0.35);
 }
+.kb-trusted-pill-name {
+  color: #14141a;
+  font-size: 17px;
+  font-weight: 700;
+}
 .kb-trusted-pill--logo img {
   display: block;
   width: auto;

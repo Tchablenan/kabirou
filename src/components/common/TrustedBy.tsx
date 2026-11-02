@@ -52,11 +52,24 @@ function useInView<T extends HTMLElement>(ready: boolean) {
   return [ref, inView] as const;
 }
 
+// Un logo presque carré (pictogramme, mascotte) ne contient en général pas de nom lisible :
+// on affiche alors le nom à côté. Les logos larges (avec texte) restent seuls.
+const SQUARE_LOGO_MAX_RATIO = 1.6;
+
 function Pill({ company }: { company: TrustedCompany }) {
   const { t } = useTranslation();
+  const [showName, setShowName] = useState(false);
+  const checkRatio = (img: HTMLImageElement | null) => {
+    if (img?.complete && img.naturalWidth) {
+      setShowName(img.naturalWidth / img.naturalHeight < SQUARE_LOGO_MAX_RATIO);
+    }
+  };
   const content = company.logoUrl ? (
-    // eslint-disable-next-line @next/next/no-img-element -- logos aux proportions variables
-    <img src={company.logoUrl} alt="" loading="lazy" />
+    <>
+      {/* eslint-disable-next-line @next/next/no-img-element -- logos aux proportions variables */}
+      <img src={company.logoUrl} alt="" ref={checkRatio} onLoad={(e) => checkRatio(e.currentTarget)} />
+      {showName && <span className="kb-trusted-pill-name">{company.name}</span>}
+    </>
   ) : (
     <>
       <span className="kb-trusted-pill-logo">{initials(company.name)}</span>
