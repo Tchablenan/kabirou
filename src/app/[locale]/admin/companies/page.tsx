@@ -76,7 +76,7 @@ export default function AdminCompanies() {
     try {
       const res = await fetch(`/api/companies/${deleteId}`, { method: "DELETE" });
       if (res.ok) {
-        toast.success("Entreprise supprimée");
+        toast.success("Partenaire supprimé");
         setCompanies((list) => list.filter((c) => c.id !== deleteId));
       } else {
         toast.error("Erreur lors de la suppression");
@@ -119,24 +119,24 @@ export default function AdminCompanies() {
 
   return (
     <div className="flex flex-col gap-5 lg:gap-7.5 w-full">
-      <AdminBreadcrumb items={[{ label: "Entreprises" }]} />
+      <AdminBreadcrumb items={[{ label: "Partenaires" }]} />
 
       <div className="flex flex-wrap items-center justify-between gap-5">
         <div>
-          <h2 className="text-xl font-bold text-foreground">Ils me font confiance</h2>
+          <h2 className="text-xl font-bold text-foreground">Partenaires — « Ils me font confiance »</h2>
           <p className="text-sm text-muted-foreground">
-            Entreprises affichées sur la page d’accueil, dans l’ordre ci-dessous.
+            Entreprises et clients qui défilent dans la section « Ils me font confiance » de la page d’accueil, dans l’ordre ci-dessous.
           </p>
         </div>
         <Button onClick={() => openForm(null)} variant="primary" size="sm">
           <Plus className="size-4 mr-2" />
-          Ajouter une entreprise
+          Ajouter un partenaire
         </Button>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>Liste des entreprises</CardTitle>
+          <CardTitle>Liste des partenaires</CardTitle>
         </CardHeader>
         <CardContent className="p-0">
           <Table>
@@ -144,7 +144,7 @@ export default function AdminCompanies() {
               <TableRow>
                 <TableHead className="w-[70px]">Ordre</TableHead>
                 <TableHead className="w-[70px]">Logo</TableHead>
-                <TableHead>Entreprise</TableHead>
+                <TableHead>Partenaire</TableHead>
                 <TableHead>Type</TableHead>
                 <TableHead>Période</TableHead>
                 <TableHead className="text-right pr-5">Actions</TableHead>
@@ -216,7 +216,7 @@ export default function AdminCompanies() {
               {companies.length === 0 && (
                 <TableRow>
                   <TableCell colSpan={6} className="h-24 text-center text-muted-foreground">
-                    Aucune entreprise. La section est masquée sur le site tant que la liste est vide.
+                    Aucun partenaire. La section est masquée sur le site tant que la liste est vide.
                   </TableCell>
                 </TableRow>
               )}
@@ -228,7 +228,7 @@ export default function AdminCompanies() {
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>{selected ? "Modifier l'entreprise" : "Ajouter une entreprise"}</DialogTitle>
+            <DialogTitle>{selected ? "Modifier le partenaire" : "Ajouter un partenaire"}</DialogTitle>
             <DialogDescription>Ces informations apparaissent dans la section « Ils me font confiance ».</DialogDescription>
           </DialogHeader>
           <div className="py-4">
@@ -246,8 +246,8 @@ export default function AdminCompanies() {
       <ConfirmDialog
         open={!!deleteId}
         onOpenChange={(open) => !open && setDeleteId(null)}
-        title="Supprimer cette entreprise ?"
-        description="Elle disparaîtra définitivement du site. Pour la retirer temporairement, utilisez plutôt l'icône œil."
+        title="Supprimer ce partenaire ?"
+        description="Il disparaîtra définitivement du site. Pour le retirer temporairement, utilisez plutôt l'icône œil."
         onConfirm={handleDelete}
         isLoading={isDeleting}
       />

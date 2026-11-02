@@ -76,7 +76,7 @@ export const MENU_SIDEBAR: MenuConfig = [
     path: '/admin/skills',
   },
   {
-    title: 'Entreprises',
+    title: 'Partenaires',
     icon: Building,
     path: '/admin/companies',
   },

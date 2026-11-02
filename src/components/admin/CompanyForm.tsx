@@ -59,7 +59,7 @@ export default function CompanyForm({ initialData, nextOrder = 0, onSuccess, onC
         body: JSON.stringify(data),
       });
       if (res.ok) {
-        toast.success(isEdit ? "Entreprise mise à jour" : "Entreprise ajoutée");
+        toast.success(isEdit ? "Partenaire mis à jour" : "Partenaire ajouté");
         onSuccess();
       } else {
         const body = await res.json().catch(() => ({}));
@@ -79,7 +79,7 @@ export default function CompanyForm({ initialData, nextOrder = 0, onSuccess, onC
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-2">
-          <label className="text-sm font-medium text-foreground">Nom de l’entreprise</label>
+          <label className="text-sm font-medium text-foreground">Nom du partenaire</label>
           <Input {...register("name")} placeholder="Ex : Genuine Service Provider" aria-invalid={!!errors.name} />
           {fieldError("name")}
         </div>
