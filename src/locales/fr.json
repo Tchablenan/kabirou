@@ -266,8 +266,8 @@
     },
     "about": {
         "subtitle": "À propos",
-        "title": "Le développeur derrière vos projets",
-        "paragraph_1": "Formé au génie logiciel à Lomé et aujourd'hui basé à Accra, je conçois des applications web et mobiles pour des entreprises et des porteurs de projets, en français comme en anglais.",
+        "title": "Des applications qui tournent, pas des promesses",
+        "paragraph_1": "Développeur full-stack, j'accompagne des entreprises au Togo, au Ghana, en Côte d'Ivoire et au-delà, avec des applications web et mobiles sur mesure : sites vitrines, plateformes de réservation, logiciels de gestion… en français comme en anglais.",
         "paragraph_2": "Ma méthode est simple : comprendre votre métier avant d'écrire la moindre ligne de code, livrer par étapes pour que vous voyiez votre produit avancer, et rester disponible après la mise en ligne.",
         "highlights": {
             "languages": {
