@@ -979,19 +979,25 @@ a.kb-trusted-pill { cursor: pointer; }
   100% { box-shadow: 0 0 0 0 rgba(61, 220, 132, 0); }
 }
 
-/* Entreprise avec logo : logo seul */
-.kb-trusted-pill--logo { padding: 14px 32px; }
+/* Entreprise avec logo : logo seul, sur pastille claire (les logos sont prévus pour fond clair) */
+.kb-trusted-pill--logo {
+  height: 66px;
+  padding: 10px 30px;
+  border-color: rgba(255, 255, 255, 0.85);
+  background: #fff;
+}
+.kb-trusted-pill--logo:hover {
+  border-color: #fff;
+  background: #fff;
+  box-shadow: 0 14px 30px -12px rgba(255, 1, 79, 0.6), 0 0 0 3px rgba(255, 1, 79, 0.35);
+}
 .kb-trusted-pill--logo img {
   display: block;
   width: auto;
-  height: 36px;
-  max-width: 160px;
+  height: 42px;
+  max-width: 170px;
   object-fit: contain;
-  opacity: 0.75;
-  filter: grayscale(1) brightness(1.6);
-  transition: filter 0.3s ease, opacity 0.3s ease;
 }
-.kb-trusted-pill--logo:hover img { opacity: 1; filter: none; }
 
 /* Apparition au défilement (uniquement quand le JS est chargé) */
 .kb-trusted[data-armed] .kb-reveal {
@@ -1014,7 +1020,7 @@ a.kb-trusted-pill { cursor: pointer; }
 .tmp-white-version .kb-trusted-eyebrow,
 .tmp-white-version .kb-trusted-pill { border-color: rgba(0, 0, 0, 0.08); background: #fff; }
 .tmp-white-version .kb-trusted-pill-logo { color: var(--color-primary); }
-.tmp-white-version .kb-trusted-pill--logo img { filter: grayscale(1); }
+.tmp-white-version .kb-trusted-pill--logo { border-color: rgba(0, 0, 0, 0.08); }
 
 /* Responsive */
 @media only screen and (max-width: 767px) {
@@ -1028,8 +1034,8 @@ a.kb-trusted-pill { cursor: pointer; }
   }
   .kb-trusted-pill { gap: 10px; padding: 9px 20px 9px 9px; font-size: 15px; }
   .kb-trusted-pill-logo { width: 32px; height: 32px; font-size: 11px; }
-  .kb-trusted-pill--logo { padding: 11px 24px; }
-  .kb-trusted-pill--logo img { height: 28px; opacity: 1; filter: none; }
+  .kb-trusted-pill--logo { height: 52px; padding: 8px 22px; }
+  .kb-trusted-pill--logo img { height: 34px; max-width: 130px; }
 }
 
 /* Mouvements réduits */
