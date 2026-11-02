@@ -7,8 +7,8 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 export default function Header1({
-  darkLogo = "/assets/images/kbi/df-scaled.webp",
-  lightLogo = "/assets/images/kbi/df-scaled.webp",
+  darkLogo = "/assets/images/kbi/kb-logo.webp",
+  lightLogo = "/assets/images/kbi/kb-logo.webp",
 }) {
   const { openModal } = useModalUI();
   const [isSticky, setIsSticky] = useState(false);

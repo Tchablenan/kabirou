@@ -33,12 +33,12 @@ export default function Header5() {
               <div className="logo">
                 <Link href={`/${locale}`}>
                   <Image
-                    src="/assets/images/kbi/df-scaled.webp"
+                    src="/assets/images/kbi/kb-mark.webp"
                     alt={t("a11y.logo_alt")}
-                    width={50}
-                    height={50}
+                    width={56}
+                    height={56}
                     priority
-                    className="rounded-full object-cover aspect-square"
+                    className="object-contain aspect-square"
                   />
                 </Link>
               </div>

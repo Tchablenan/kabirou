@@ -27,10 +27,10 @@ export default function Footer1({
                   <div className="logo mb--30">
                     <Link href="/">
                       <Image
-                        src="/assets/images/kbi/df-scaled.webp"
+                        src="/assets/images/kbi/kb-logo.webp"
                         alt={t("a11y.logo_alt")}
                         width={150}
-                        height={150}
+                        height={132}
                         style={{ objectFit: 'contain' }}
                       />
                     </Link>

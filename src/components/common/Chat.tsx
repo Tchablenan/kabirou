@@ -94,7 +94,7 @@ export default function Chat() {
 
   const firstName = profile?.name?.split(" ")[0] || "Kabirou";
   const fullName = profile?.name || "Kabirou Djantchiemo";
-  const avatar = profile?.image || "/assets/images/kbi/df-scaled.webp";
+  const avatar = profile?.image || "/assets/images/kbi/kb-mark.webp";
 
   useEffect(() => {
     setMounted(true);
