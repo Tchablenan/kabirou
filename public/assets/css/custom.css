@@ -1055,6 +1055,11 @@ a.kb-trusted-pill { cursor: pointer; }
   .kb-trusted-pill:hover .kb-trusted-pill-logo { transform: none; }
 }
 
+/* Badge de dates des expériences : ne se réduit jamais, c'est le titre qui passe à la ligne */
+.experience-style-list .experience-list .resume-single-list .inner .heading { gap: 16px; }
+.experience-style-list .experience-list .resume-single-list .inner .heading .date-of-time { flex-shrink: 0; }
+.experience-style-list .experience-list .resume-single-list .inner .heading .date-of-time span { white-space: nowrap; }
+
 /* ============================================
    Descriptions des expériences (paragraphes, puces, « Lire la suite »)
    ============================================ */
