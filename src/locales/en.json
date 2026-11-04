@@ -143,7 +143,13 @@
             "performance_optimization": "AI Response Optimization",
             "online_card_applications": "Online card and ambassador applications",
             "custom_cms_backoffice": "Custom back-office to manage all content",
-            "role_based_security": "Role-based access and data security"
+            "role_based_security": "Role-based access and data security",
+            "online_appointment_requests": "Online appointment requests linked to the clinic",
+            "medical_specialties_showcase": "Showcase of 10 specialties and 24/7 emergencies",
+            "patient_portal_access": "Direct access to the patient portal",
+            "consultation_workflow": "9-step guided consultation",
+            "medical_exams_reports": "Exams and reports (ECG, Holter, ultrasound)",
+            "billing_insurance": "Billing, invoices and insurance third-party payment"
         },
         "details": {
             "title": "Project Details",

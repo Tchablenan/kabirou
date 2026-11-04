@@ -143,7 +143,13 @@
             "performance_optimization": "Optimisation des Réponses de l'IA",
             "online_card_applications": "Demandes de carte et d'ambassadeur en ligne",
             "custom_cms_backoffice": "Back-office sur mesure pour gérer tout le contenu",
-            "role_based_security": "Accès par rôles et sécurité des données"
+            "role_based_security": "Accès par rôles et sécurité des données",
+            "online_appointment_requests": "Demandes de rendez-vous en ligne reliées au cabinet",
+            "medical_specialties_showcase": "Présentation des 10 spécialités et des urgences 24h/24",
+            "patient_portal_access": "Accès direct à l'espace patient",
+            "consultation_workflow": "Consultation guidée en 9 étapes",
+            "medical_exams_reports": "Examens et comptes rendus (ECG, Holter, échographies)",
+            "billing_insurance": "Caisse, factures et tiers payant assurance"
         },
         "details": {
             "title": "Détails du Projet",
