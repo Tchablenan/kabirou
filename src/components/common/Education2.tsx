@@ -3,6 +3,7 @@
 import { useTranslation } from "react-i18next";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import RichDescription from "./RichDescription";
 
 interface Experience {
   id: string;
@@ -176,7 +177,7 @@ export default function Education({
                           </div>
                         </div>
                         {(locale === "fr" ? item.descriptionFr : item.descriptionEn) && (
-                          <p>{locale === "fr" ? item.descriptionFr : item.descriptionEn}</p>
+                          <RichDescription text={(locale === "fr" ? item.descriptionFr : item.descriptionEn) ?? ""} />
                         )}
                       </div>
                     </div>
@@ -232,7 +233,7 @@ export default function Education({
                           </div>
                         </div>
                         {(locale === "fr" ? item.descriptionFr : item.descriptionEn) && (
-                          <p>{locale === "fr" ? item.descriptionFr : item.descriptionEn}</p>
+                          <RichDescription text={(locale === "fr" ? item.descriptionFr : item.descriptionEn) ?? ""} />
                         )}
                       </div>
                     </div>

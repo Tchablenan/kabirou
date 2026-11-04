@@ -201,7 +201,9 @@
         "stats_years": "Années d'expérience",
         "stats_projects": "Projets réalisés",
         "stats_countries": "Pays",
-        "empty_experience": "Aucune expérience renseignée."
+        "empty_experience": "Aucune expérience renseignée.",
+        "read_more": "Lire la suite",
+        "read_less": "Réduire"
     },
     "contact": {
         "subtitle": "CONTACTEZ-MOI",

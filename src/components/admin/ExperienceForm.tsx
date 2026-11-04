@@ -146,19 +146,23 @@ export default function ExperienceForm({ initialData, onSuccess, onCancel }: Exp
         </div>
       </div>
 
+      <p className="text-xs text-muted-foreground -mb-3">
+        Mise en forme : une ligne par paragraphe ; une ligne commençant par « - » devient une puce ;
+        dans une puce, « Projet : détail » met « Projet » en gras. Les textes longs sont repliés avec « Lire la suite ».
+      </p>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="space-y-2">
           <label className="text-sm font-medium text-foreground">Description (FR)</label>
           <Textarea
             {...register("descriptionFr")}
-            rows={4}
+            rows={8}
           />
         </div>
         <div className="space-y-2">
           <label className="text-sm font-medium text-foreground">Description (EN)</label>
           <Textarea
             {...register("descriptionEn")}
-            rows={4}
+            rows={8}
           />
         </div>
       </div>

@@ -199,7 +199,9 @@
         "stats_years": "Years of experience",
         "stats_projects": "Projects completed",
         "stats_countries": "Countries",
-        "empty_experience": "No experience listed yet."
+        "empty_experience": "No experience listed yet.",
+        "read_more": "Read more",
+        "read_less": "Show less"
     },
     "contact": {
         "subtitle": "GET IN TOUCH",
