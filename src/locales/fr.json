@@ -140,7 +140,10 @@
             "luxury_focus": "Discrétion et Confort Absolu",
             "ai_tools_research": "Recherche d'Outils IA (Firecrawl, etc.)",
             "technical_integration": "Intégration d'Outils (Crawl4AI)",
-            "performance_optimization": "Optimisation des Réponses de l'IA"
+            "performance_optimization": "Optimisation des Réponses de l'IA",
+            "online_card_applications": "Demandes de carte et d'ambassadeur en ligne",
+            "custom_cms_backoffice": "Back-office sur mesure pour gérer tout le contenu",
+            "role_based_security": "Accès par rôles et sécurité des données"
         },
         "details": {
             "title": "Détails du Projet",
