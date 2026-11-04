@@ -46,7 +46,8 @@ export default function DocumentUpload({
         onChange(data.url);
         toast.success("Document téléchargé avec succès");
       } else {
-        toast.error("Échec du téléchargement");
+        const body = await res.json().catch(() => ({}));
+        toast.error(body.error || "Échec du téléchargement");
       }
     } catch {
       toast.error("Erreur de connexion lors de l'upload");

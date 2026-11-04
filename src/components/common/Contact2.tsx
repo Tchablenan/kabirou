@@ -32,6 +32,7 @@ export default function Contact({
     const name = formData.get("name") as string;
     const subject = formData.get("subject") as string;
     const message = formData.get("message") as string;
+    const website = (formData.get("website") as string) || "";
 
     // Simple client-side validation
     if (!name || !email || !subject || !message) {
@@ -52,12 +53,14 @@ export default function Contact({
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, email, subject, message }),
+        body: JSON.stringify({ name, email, subject, message, website }),
       });
 
       if (response.ok) {
         toast.success(t("contact.success_message"));
         form.current?.reset();
+      } else if (response.status === 429) {
+        toast.error(t("contact.error_rate_limit"));
       } else {
         const data = await response.json();
         console.error('Submission error:', data.error);
@@ -101,6 +104,11 @@ export default function Contact({
                       onSubmit={sandMail}
                     >
                       <div className="contact-form-wrapper row">
+                        {/* Champ piège anti-robots : invisible pour les visiteurs */}
+                        <div aria-hidden="true" style={{ position: "absolute", left: "-10000px", width: 1, height: 1, overflow: "hidden" }}>
+                          <label htmlFor="contact-website">Website</label>
+                          <input id="contact-website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+                        </div>
                         <div className="col-lg-6">
                           <div className="form-group">
                             <input

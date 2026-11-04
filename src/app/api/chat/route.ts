@@ -1,23 +1,20 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { Resend } from "resend";
+import { escapeHtml } from "@/lib/sanitize";
+import { clientIp, rateLimitHit, tooManyRequests } from "@/lib/rate-limit";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 const MAX_LENGTH = 2000;
 const CONVERSATION_ID = /^[0-9a-f-]{36}$/i;
 
-function escapeHtml(text: string) {
-  return text
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
-}
-
 // Message d'un visiteur : enregistré puis notifié par e-mail. Kabirou répond depuis l'admin.
 export async function POST(req: Request) {
+  // Anti-spam : 20 messages par IP toutes les 10 minutes
+  const limit = await rateLimitHit(`chat:${clientIp(req.headers)}`, 20, 10 * 60);
+  if (!limit.ok) return tooManyRequests(limit.retryAfter);
+
   try {
     const { conversationId, content } = await req.json();
 

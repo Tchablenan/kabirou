@@ -7,6 +7,7 @@ import I18nProvider from "@/context/I18nProvider";
 import AuthProvider from "@/context/AuthProvider";
 import { ToastContainer } from "react-toastify";
 import prisma from "@/lib/prisma";
+import { safeJsonForScript } from "@/lib/sanitize";
 
 const BASE_URL = "https://djantchiemo-kabirou.vercel.app";
 
@@ -188,7 +189,7 @@ export default async function RootLayout({
         <link rel="apple-touch-icon" href="/favicon/apple-touch-icon.png?v=2" />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: safeJsonForScript(jsonLd) }}
         />
       </head>
       <body suppressHydrationWarning>

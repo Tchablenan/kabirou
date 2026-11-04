@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { clientIp, rateLimitHit, tooManyRequests } from "@/lib/rate-limit";
 
 const CONVERSATION_ID = /^[0-9a-f-]{36}$/i;
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -7,6 +8,9 @@ const PHONE = /^\+?[0-9 ().-]{6,20}$/;
 
 // Coordonnées laissées par le visiteur dans le chat, pour que Kabirou puisse le recontacter.
 export async function POST(req: Request) {
+  const limit = await rateLimitHit(`chat-contact:${clientIp(req.headers)}`, 10, 60 * 60);
+  if (!limit.ok) return tooManyRequests(limit.retryAfter);
+
   try {
     const { conversationId, name, contact } = await req.json();
 

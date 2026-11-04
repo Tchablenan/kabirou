@@ -223,7 +223,8 @@
         "error_fill_all": "Please fill in all required fields.",
         "error_invalid_email": "Please enter a valid email address.",
         "error_failed": "Sending failed. Please try again.",
-        "error_occurred": "An unexpected error occurred. Please try again."
+        "error_occurred": "An unexpected error occurred. Please try again.",
+        "error_rate_limit": "Too many messages sent. Please try again in an hour or email me directly."
     },
     "footer": {
         "get_ready": "Get Ready To Create Great",

@@ -225,7 +225,8 @@
         "error_fill_all": "Veuillez remplir tous les champs obligatoires.",
         "error_invalid_email": "Veuillez entrer une adresse email valide.",
         "error_failed": "L'envoi a échoué. Veuillez réessayer.",
-        "error_occurred": "Une erreur inattendue s'est produite. Veuillez réessayer."
+        "error_occurred": "Une erreur inattendue s'est produite. Veuillez réessayer.",
+        "error_rate_limit": "Trop de messages envoyés. Réessayez dans une heure ou écrivez-moi directement par e-mail."
     },
     "footer": {
         "get_ready": "Prêt à créer l'exceptionnel",

@@ -29,7 +29,9 @@ export default function LoginPage() {
         password,
       });
 
-      if (result?.error) {
+      if (result?.error === "TooManyAttempts") {
+        toast.error("Trop de tentatives. Réessayez dans 15 minutes.");
+      } else if (result?.error) {
         toast.error("Identifiants invalides");
       } else {
         toast.success("Connexion réussie");

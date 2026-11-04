@@ -63,6 +63,16 @@ model Skill {
   @@map("skills")
 }
 
+// Limitation de débit (connexion admin, contact, messagerie, compteur de visites).
+// Clés hachées : aucune IP ni e-mail en clair. Accès réservé au serveur (RLS, aucun droit anon).
+model RateLimit {
+  key     String   @id
+  count   Int      @default(0)
+  resetAt DateTime @map("reset_at") @db.Timestamptz(3)
+
+  @@map("rate_limits")
+}
+
 // Section « Ils me font confiance » de la page d'accueil
 model Company {
   id           String      @id @default(cuid())

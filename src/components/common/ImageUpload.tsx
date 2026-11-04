@@ -47,7 +47,8 @@ export default function ImageUpload({ value, onChange, folder = "projects", labe
         onChange(data.url);
         toast.success("Image téléchargée");
       } else {
-        toast.error("Échec du téléchargement");
+        const body = await res.json().catch(() => ({}));
+        toast.error(body.error || "Échec du téléchargement");
       }
     } catch (error) {
       toast.error("Erreur de connexion lors de l'upload");
@@ -95,7 +96,7 @@ export default function ImageUpload({ value, onChange, folder = "projects", labe
           <input
             type="file"
             className="hidden"
-            accept="image/*"
+            accept="image/png,image/jpeg,image/webp,image/gif,image/avif"
             ref={fileInputRef}
             onChange={handleUpload}
           />

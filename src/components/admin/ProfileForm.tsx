@@ -161,7 +161,7 @@ export default function ProfileForm() {
             <div className="flex flex-col gap-2">
               <input
                 type="file"
-                accept="image/*"
+                accept="image/png,image/jpeg,image/webp,image/gif,image/avif"
                 className="hidden"
                 ref={fileInputRef}
                 onChange={handleFileChange}
